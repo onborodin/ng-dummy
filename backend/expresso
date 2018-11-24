@@ -1,0 +1,12 @@
+#!/bin/sh
+
+NODE_PATH='/home/ziggi/expresso/backend:/home/ziggi/expresso/backend/models:/home/ziggi/expresso/backend/controllers:/home/ziggi/expresso/backend/models'
+export NODE_PATH
+
+NODE_ENV=production
+export NODE_ENV
+
+cd /home/ziggi/expresso/backend && /usr/local/bin/node /home/ziggi/expresso/backend/exserv.js $@
+#EOF
+
+

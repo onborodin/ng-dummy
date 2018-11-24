@@ -1,0 +1,166 @@
+<div id="users">
+
+    <div class="grid-container">
+        <div class="grid-x grid-margin-x align-center">
+            <div class="cell medium-8">
+
+                <transition name="fade">
+                    <div v-if="alert" class="callout alert">
+                        {{ alert }}
+                        <button class="button small float-right margin-bottom-1" v-on:click="alert = ''">OK</button>
+                    </div>
+                </transition>
+
+                <transition name="fade">
+                    <div v-if="message" class="callout success">
+                        {{ message }}
+                        <button class="button small float-right margin-bottom-1" v-on:click="message = ''">OK</button>
+                    </div>
+                </transition>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="grid-container">
+        <div class="grid-x grid-margin-x align-center">
+            <div class="cell medium-4">
+
+
+                <transition name="fade">
+                    <div v-if="formState.add">
+                        <form accept-charset="UTF-8" v-on:submit.prevent="handleAdd(formData)" class="callout">
+
+                            <h5 class="text-center">Do add user {{ formData.name }}?</h5>
+
+                            <label>Name
+                                <input type="text" v-model.trim="formData.name" />
+                            </label>
+
+                            <label>Password
+                                <input type="text" v-model.trim="formData.password" />
+                            </label>
+
+                            <div class="text-center">
+                                <button class="button small" type="submit">Accept</button>
+                                <div class="button small" v-on:click="formState.add = false">Escape</div>
+                            </div>
+                        </form>
+                    </div>
+                </transition>
+
+
+                <transition name="fade">
+                    <div v-if="formState.update">
+                        <form accept-charset="UTF-8" v-on:submit.prevent="handleUpdate(formData)" class="callout">
+
+                            <h5 class="text-center">Do update user {{ formData.name }}?</h5>
+
+                            <label>Name
+                                <input type="text" v-model.trim="formData.name" />
+                            </label>
+
+                            <label>Password
+                                <input type="text" v-model.trim="formData.password" />
+                            </label>
+
+                            <div class="text-center">
+                                <button class="button small" type="submit">Accept</button>
+                                <div class="button small" v-on:click="formState.update = false">Escape</div>
+                            </div>
+                        </form>
+                    </div>
+                </transition>
+
+
+                <transition name="fade">
+                    <div v-if="formState.drop">
+                        <form accept-charset="UTF-8" v-on:submit.prevent="handleDrop(formData)" class="callout">
+                            <h5 class="text-center">Do drop user {{ formData.name }}?</h5>
+                            <div class="text-center">
+                                <button class="button small" type="submit">Accept</button>
+                                <div class="button small" v-on:click="formState.drop = false">Escape</div>
+                            </div>
+                        </form>
+                    </div>
+                </transition>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="grid-container">
+        <div class="grid-x grid-margin-x align-center">
+            <div class="cell medium-8">
+
+                <h5>Users <a v-on:click="getList()"><i class="fi-refresh"></i></a>
+                    <button class="float-right small button" v-on:click="showAdd()">+</button>
+                </h5>
+
+                <div class="cell">
+                    <div class="float-left">
+                        <small>Updated: {{ timestamp }}</small>
+                    </div>
+                    <div class="float-right">
+                        <small>
+                            <ul class="menu">
+                                <li><a v-on:click="step = 5; first = 0">5</a></li>
+                                <li><a v-on:click="step = 10; first = 0">10</a></li>
+                                <li><a v-on:click="step = 20; first = 0">20</a></li>
+                                <li><a v-on:click="step = 50; first = 0">20</a></li>
+                                <li><a v-on:click="step = 1024; first = 0">all</a></li>
+                            </ul>
+                        </small>
+                    </div>
+                </div>
+
+
+                <transition name="fade">
+                    <div v-if="users">
+
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th width="3em">#</th>
+                                    <th width="20em">name</th>
+                                    <th width="4em"><i class="fi-pencil"></i></th>
+                                    <th width="4em"><i class="fi-trash"></i></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(item, index) in users.slice(first, first + step)">
+                                    <td>{{ index + first + 1 }}</td>
+                                    <td>{{ item.name }}</td>
+                                    <td><a v-on:click="showUpdate(item)"><i class="fi-pencil"></i></a></td>
+                                    <td><a v-on:click="showDrop(item)"><i class="fi-trash"></i></a></td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+                        <nav>
+                            <ul class="pagination text-center">
+                                <li v-if="first >= step"><a v-on:click="first -= step">Prev</a></li>
+                                <li v-if="first < step"><a href="#">Prev</a></li>
+
+                                <li v-for="(page) in pages()">
+                                    <a class="current" v-if="page * step==first" v-on:click="first = page * step">{{ page + 1 }}</a>
+                                    <a v-if="page * step != first" v-on:click="first = page * step">{{ page + 1 }}</a>
+                                </li>
+
+                                <li v-if="first < (users.length - step)"><a v-on:click="first += step">Next</a></li>
+                                <li v-if="first >= (users.length - step)"><a href="#">Next</a></li>
+                            </ul>
+                        </nav>
+
+                    </div>
+                </transition>
+
+            </div>
+        </div>
+    </div>
+
+</div>

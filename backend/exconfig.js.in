@@ -1,0 +1,14 @@
+
+module.exports = {
+    nodeBin: '@node@',
+    appDir: '@app_libdir@',
+    publicDir: '@app_libdir@/public',
+    uploadDir: '@app_libdir@/uploads',
+    port: 3100,
+    address: '127.0.0.1',
+    runUser: '@app_user@',
+    runGroup: '@app_group@',
+    logDir: '@app_logdir@',
+    pidFile: '@app_rundir@/pid',
+    runDir: '@app_rundir@'
+}

@@ -1,0 +1,13 @@
+*~
+*.log
+pid
+*.pid
+config.log
+config.status
+node_modules/
+works/
+sessions/
+autom4te.cache/
+uploads/
+run/
+logs/

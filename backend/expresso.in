@@ -1,0 +1,12 @@
+#!/bin/sh
+
+NODE_PATH='@app_confdir@:@app_libdir@/models:@app_libdir@/controllers:@app_libdir@/models'
+export NODE_PATH
+
+NODE_ENV=production
+export NODE_ENV
+
+cd @app_libdir@ && @node@ @app_libdir@/exserv.js $@
+#EOF
+
+
