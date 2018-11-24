@@ -109,7 +109,7 @@
                                 <li><a v-on:click="step = 5; first = 0">5</a></li>
                                 <li><a v-on:click="step = 10; first = 0">10</a></li>
                                 <li><a v-on:click="step = 20; first = 0">20</a></li>
-                                <li><a v-on:click="step = 50; first = 0">20</a></li>
+                                <li><a v-on:click="step = 50; first = 0">50</a></li>
                                 <li><a v-on:click="step = 1024; first = 0">all</a></li>
                             </ul>
                         </small>
@@ -125,7 +125,10 @@
                             <thead>
                                 <tr>
                                     <th width="3em">#</th>
-                                    <th width="20em">name</th>
+                                    <th width="20em">name
+                                        <a v-on:click="sort('name','up')"><i class="arrow-up"></i></a>
+                                        <a v-on:click="sort('name','down')"><i class="arrow-down"></i></a>
+                                    </th>
                                     <th width="4em"><i class="fi-pencil"></i></th>
                                     <th width="4em"><i class="fi-trash"></i></th>
                                 </tr>
@@ -143,15 +146,15 @@
 
                         <nav>
                             <ul class="pagination text-center">
-                                <li v-if="first >= step"><a v-on:click="first -= step">Prev</a></li>
+                                <li v-if="first >= step"><a v-on:click="first -= step"><i class="arrow-left margin-right-1"></i>Prev</a></li>
                                 <li v-if="first < step"><a href="#">Prev</a></li>
 
                                 <li v-for="(page) in pages()">
-                                    <a class="current" v-if="page * step==first" v-on:click="first = page * step">{{ page + 1 }}</a>
+                                    <a v-if="page * step == first" v-on:click="first = page * step" class="current" >{{ page + 1 }}</a>
                                     <a v-if="page * step != first" v-on:click="first = page * step">{{ page + 1 }}</a>
                                 </li>
 
-                                <li v-if="first < (users.length - step)"><a v-on:click="first += step">Next</a></li>
+                                <li v-if="first < (users.length - step)"><a v-on:click="first += step">Next<i class="arrow-right margin-left-1"></i></a></li>
                                 <li v-if="first >= (users.length - step)"><a href="#">Next</a></li>
                             </ul>
                         </nav>

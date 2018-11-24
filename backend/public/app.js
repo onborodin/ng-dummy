@@ -59096,8 +59096,7 @@ let Users = class Users extends vue_property_decorator__WEBPACK_IMPORTED_MODULE_
         this.users = [];
         this.timestamp = '';
         this.first = 0;
-        this.last = 0;
-        this.step = 5;
+        this.step = 10;
         this.formData = {
             id: 0,
             name: '',
@@ -59109,10 +59108,29 @@ let Users = class Users extends vue_property_decorator__WEBPACK_IMPORTED_MODULE_
             drop: false
         };
     }
+    sort(prop, dir) {
+        this.users = this.users.sort(function (itemA, itemB) {
+            if (dir === 'up') {
+                if (itemA[prop] < itemB[prop])
+                    return 1;
+                if (itemA[prop] > itemB[prop])
+                    return -1;
+                return 0;
+            }
+            else {
+                if (itemA[prop] > itemB[prop])
+                    return 1;
+                if (itemA[prop] < itemB[prop])
+                    return -1;
+                return 0;
+            }
+        });
+    }
     getList() {
         this.$client('/api/list', {})
             .then((res) => {
             this.users = res.data.result;
+            this.sort('name', 'down');
             this.timestamp = moment_mini__WEBPACK_IMPORTED_MODULE_1__().format('LTS');
         })
             .catch((err) => {
@@ -60077,12 +60095,27 @@ var render = function() {
                         {
                           on: {
                             click: function($event) {
+                              _vm.step = 50
+                              _vm.first = 0
+                            }
+                          }
+                        },
+                        [_vm._v("50")]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _c(
+                        "a",
+                        {
+                          on: {
+                            click: function($event) {
                               _vm.step = 1024
                               _vm.first = 0
                             }
                           }
                         },
-                        [_vm._v("All")]
+                        [_vm._v("all")]
                       )
                     ])
                   ])
@@ -60099,7 +60132,32 @@ var render = function() {
                           _c("th", { attrs: { width: "3em" } }, [_vm._v("#")]),
                           _vm._v(" "),
                           _c("th", { attrs: { width: "20em" } }, [
-                            _vm._v("name")
+                            _vm._v(
+                              "name\n                                        "
+                            ),
+                            _c(
+                              "a",
+                              {
+                                on: {
+                                  click: function($event) {
+                                    _vm.sort("name", "up")
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "arrow-up" })]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "a",
+                              {
+                                on: {
+                                  click: function($event) {
+                                    _vm.sort("name", "down")
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "arrow-down" })]
+                            )
                           ]),
                           _vm._v(" "),
                           _c("th", { attrs: { width: "4em" } }, [
@@ -60171,7 +60229,12 @@ var render = function() {
                                       }
                                     }
                                   },
-                                  [_vm._v("Prev")]
+                                  [
+                                    _c("i", {
+                                      staticClass: "arrow-left margin-right-1"
+                                    }),
+                                    _vm._v("Prev")
+                                  ]
                                 )
                               ])
                             : _vm._e(),
@@ -60228,7 +60291,12 @@ var render = function() {
                                       }
                                     }
                                   },
-                                  [_vm._v("Next")]
+                                  [
+                                    _vm._v("Next"),
+                                    _c("i", {
+                                      staticClass: "arrow-right margin-left-1"
+                                    })
+                                  ]
                                 )
                               ])
                             : _vm._e(),

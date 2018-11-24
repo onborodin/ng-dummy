@@ -31,8 +31,7 @@ export default class Users extends Vue {
     timestamp: string = ''
 
     first: number = 0
-    last: number = 0
-    step: number = 5
+    step: number = 10
 
     formData: user = {
         id: 0,
@@ -46,10 +45,26 @@ export default class Users extends Vue {
         drop: false
     }
 
+
+    sort(prop : string, dir : string ) {
+        this.users = this.users.sort(function(itemA, itemB) {
+            if (dir === 'up') {
+                if (itemA[prop] < itemB[prop]) return 1
+                if (itemA[prop] > itemB[prop]) return -1
+                return 0
+            } else {
+                if (itemA[prop] > itemB[prop]) return 1
+                if (itemA[prop] < itemB[prop]) return -1
+                return 0
+            }
+        })
+    }
+
     getList() {
         this.$client('/api/list', {})
             .then((res: any) => {
                 this.users = res.data.result
+                this.sort('name','down')
                 this.timestamp = moment().format('LTS')
             })
             .catch((err: any) => {
