@@ -9,15 +9,15 @@ const knex = require('knex')(
     knexfile.development
 )
 
-const usersModel = require('./models/users')(knex)
+const users = require('./models/users')(knex)
 
 
 var callback = function(err, res) {
     console.log(res)
 }
 
-usersModel
-    .usersFindId({ id: 9 }, callback)
+users
+    .drop({ id: 9 }, callback)
     .finally(function() {
         knex.destroy();
     })

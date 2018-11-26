@@ -54,21 +54,14 @@ app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(responseTime())
 
-app.get('/', function(req, res) {
-     res.sendFile(path.join(exconfig.appDir, '/public/index.html'))
-})
-
 // *** json rpc *** 
 const knexfile = require('knexfile')
 const knex = require('knex')(knexfile.development)
 
-const usersModel = require('./models/users')(knex)
-const methods = Object.assign({}, usersModel)
-
 // *** route ***
 
-var users = require('./users')
-app.use('/api', users)
+var users = require('./routers/users')
+app.use('/api/users', users)
 
 app.get('/*', function(req, res) {
      res.sendFile(path.join(exconfig.appDir, '/public/index.html'))

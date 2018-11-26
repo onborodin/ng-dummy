@@ -3,7 +3,7 @@
 
 module.exports = function(knex) {
 
-    var login = function(params, callback) {
+    var login = function(params) {
         return knex
             .select([
                 'users.*',
@@ -13,25 +13,19 @@ module.exports = function(knex) {
                 'users.name': params.userName,
                 'users.password': params.password,
             })
-            .then(function(res) {
-                callback(null, res)
-            })
     }
 
-    var list = function(params, callback) {
+    var list = function(params) {
         return knex
             .select([
                 'users.*',
             ])
             .from('users')
             .orderBy('users.name')
-            .then(function(res) {
-                callback(null, res)
-            })
     }
 
 
-    var find = function(params, callback) {
+    var find = function(params) {
         return knex
             .select([
                 'users.*',
@@ -41,12 +35,9 @@ module.exports = function(knex) {
                 'users.name': params.name,
             })
             .orderBy('users.name')
-            .then(function(res) {
-                callback(null, res)
-            })
     }
 
-    var get = function(params, callback) {
+    var get = function(params) {
         return knex
             .select([
                 'users.*',
@@ -56,12 +47,9 @@ module.exports = function(knex) {
                 'users.id': params.id,
             })
             .orderBy('users.name')
-            .then(function(res) {
-                callback(null, res)
-            })
     }
 
-    var create = function(params, callback) {
+    var create = function(params) {
         return knex
             .insert({
                 gecos: params.gecos,
@@ -69,12 +57,9 @@ module.exports = function(knex) {
                 password: params.password,
             })
             .into('users')
-            .then(function(res) {
-                callback(null, res)
-            })
     }
 
-    var update = function(params, callback) {
+    var update = function(params) {
         return knex
             .update({
                 gecos: params.gecos,
@@ -85,21 +70,15 @@ module.exports = function(knex) {
             .where({
                 id: params.id
             })
-            .then(function(res) {
-                callback(null, res)
-            })
 
     }
 
-    var drop = function(params, callback) {
+    var drop = function(params) {
         return knex
             .del()
             .from('users')
             .where({
                 id: params.id
-            })
-            .then(function(res) {
-                callback(null, res)
             })
     }
 

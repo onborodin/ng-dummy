@@ -8,7 +8,7 @@ const knex = require('knex')(knexfile.development)
 const fs = require('fs')
 
 //var tableName = 'domains'
-var head = function(tableName) {
+var header = function(tableName) {
   return `exports.seed = function(knex, Promise) {
     return knex('${tableName}').del()
         .then(function() {
@@ -22,15 +22,18 @@ var footer = function() {
 }`
 }
 
-var tables = ['users','domains', 'roles']
+//var tables = ['users','domains', 'roles']
+var tables = ['users']
+
 
 tables.forEach(function(item) {
+    console.log('export table ' + item)
     knex
         .select()
         .from(item)
         .then(function(result) {
             var out = fs.createWriteStream('./seeds/_' + item + '.js', {flags : 'w'})
-            out.write(head(item) + '\n')
+            out.write(header(item) + '\n')
             result.forEach(function(item) {
                 out.write('                ' + JSON.stringify(item) + ',\n')
             })

@@ -1,5 +1,4 @@
 
-
 const child_process = require('child_process')
 
 function child(exe, args, env) {
@@ -13,8 +12,6 @@ function child(exe, args, env) {
 }
 
 module.exports = function(nodeBin) {
-    console.log('Daemonize process')
-
     if (process.env.__daemon) {
         return process.pid
     }

@@ -2,8 +2,10 @@
 var fs = require('fs')
 
 module.exports = {
+
     writable: function(dir) {
         var dummyFile = dir + '/.dummy'
+
         if (fs.existsSync(dir)) {
             try {
                 var fd = fs.openSync(dummyFile, 'w')
@@ -14,7 +16,8 @@ module.exports = {
             } catch (err) {
                 return false
             }
-        } 
+        }
+
         if (!fs.existsSync(dir)) {
             try { 
                 fs.mkdirSync(dir)
@@ -24,5 +27,6 @@ module.exports = {
             }
         }
     }
+
 }
 
