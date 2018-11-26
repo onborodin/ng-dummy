@@ -3,12 +3,22 @@
         <div class="top-bar-container" data-sticky-container>
             <div class="sticky sticky-topbar" data-sticky data-options="anchor: page; marginTop: 0; stickyOn: small;">
 
-                <div class="top-bar">
+                <div class="top-bar" v-if="isAuth">
                     <div class="top-bar-left">
                         <ul class="menu">
                             <li><a href="/"><i class="my-menu-icon"></i></a></li>
                             <li class="menu-text">VuT</li>
                             <li><router-link to="/users">Users</router-link></li>
+                            <li><a v-on:click="logout()"><i class="fi-power"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="top-bar" v-if="!isAuth">
+                    <div class="top-bar-left">
+                        <ul class="menu">
+                            <li><a href="/"><i class="my-menu-icon"></i></a></li>
+                            <li class="menu-text">VuT</li>
                         </ul>
                     </div>
                 </div>
@@ -36,15 +46,31 @@
 </template>
 
 <script lang="ts">
+import { Vue, Component, Prop } from "vue-property-decorator"
+import { State, Action, Getter, Mutation } from 'vuex-class'
+
 import Users from './Users.vue'
 import NotFound from './NotFound.vue'
 
-import { Vue, Component, Prop } from "vue-property-decorator"
 
 @Component({
     components: { Users, NotFound }
 })
 export default class App extends Vue {
+
+    @Getter isAuth: boolean
+    @Action setLogout: () => void
+
+    logout() {
+        this.setLogout()
+        this.$router.push('/login')
+    }
+
+    mounted() {
+        if (!this.isAuth) {
+            this.$router.push('/login')
+        }
+    }
 
 }
 </script>

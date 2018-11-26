@@ -59017,9 +59017,10 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Users_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Users.vue */ "./src/Users.vue");
-/* harmony import */ var _NotFound_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NotFound.vue */ "./src/NotFound.vue");
-/* harmony import */ var vue_property_decorator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-property-decorator */ "./node_modules/vue-property-decorator/lib/vue-property-decorator.js");
+/* harmony import */ var vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-property-decorator */ "./node_modules/vue-property-decorator/lib/vue-property-decorator.js");
+/* harmony import */ var vuex_class__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex-class */ "./node_modules/vuex-class/lib/index.js");
+/* harmony import */ var _Users_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Users.vue */ "./src/Users.vue");
+/* harmony import */ var _NotFound_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NotFound.vue */ "./src/NotFound.vue");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -59029,11 +59030,27 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
-let App = class App extends vue_property_decorator__WEBPACK_IMPORTED_MODULE_2__["Vue"] {
+
+let App = class App extends vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__["Vue"] {
+    logout() {
+        this.setLogout();
+        this.$router.push('/login');
+    }
+    mounted() {
+        if (!this.isAuth) {
+            this.$router.push('/login');
+        }
+    }
 };
+__decorate([
+    vuex_class__WEBPACK_IMPORTED_MODULE_1__["Getter"]
+], App.prototype, "isAuth", void 0);
+__decorate([
+    vuex_class__WEBPACK_IMPORTED_MODULE_1__["Action"]
+], App.prototype, "setLogout", void 0);
 App = __decorate([
-    Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_2__["Component"])({
-        components: { Users: _Users_vue__WEBPACK_IMPORTED_MODULE_0__["default"], NotFound: _NotFound_vue__WEBPACK_IMPORTED_MODULE_1__["default"] }
+    Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+        components: { Users: _Users_vue__WEBPACK_IMPORTED_MODULE_2__["default"], NotFound: _NotFound_vue__WEBPACK_IMPORTED_MODULE_3__["default"] }
     })
 ], App);
 /* harmony default export */ __webpack_exports__["default"] = (App);
@@ -59069,10 +59086,25 @@ let Login = class Login extends vue_property_decorator__WEBPACK_IMPORTED_MODULE_
         this.debug = '';
     }
     submitLogin() {
+        this.$client('/api/users', 'login', {
+            loginName: this.loginName,
+            password: this.password
+        })
+            .then((res) => {
+            if (typeof (res.data.result[0].id) === 'number') {
+                this.message = 'Login OK';
+                this.setLogin();
+                this.$router.push('/users');
+            }
+            else {
+                this.message = 'Login incorrect';
+            }
+        })
+            .catch((err) => {
+            this.message = 'Communication problem';
+        });
     }
     mounted() {
-        this.setLogin();
-        this.debug = this.isAuth;
     }
 };
 __decorate([
@@ -59865,25 +59897,45 @@ var render = function() {
             }
           },
           [
-            _c("div", { staticClass: "top-bar" }, [
-              _c("div", { staticClass: "top-bar-left" }, [
-                _c("ul", { staticClass: "menu" }, [
-                  _vm._m(0),
-                  _vm._v(" "),
-                  _c("li", { staticClass: "menu-text" }, [_vm._v("VuT")]),
-                  _vm._v(" "),
-                  _c(
-                    "li",
-                    [
-                      _c("router-link", { attrs: { to: "/users" } }, [
-                        _vm._v("Users")
+            _vm.isAuth
+              ? _c("div", { staticClass: "top-bar" }, [
+                  _c("div", { staticClass: "top-bar-left" }, [
+                    _c("ul", { staticClass: "menu" }, [
+                      _vm._m(0),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "menu-text" }, [_vm._v("VuT")]),
+                      _vm._v(" "),
+                      _c(
+                        "li",
+                        [
+                          _c("router-link", { attrs: { to: "/users" } }, [
+                            _vm._v("Users")
+                          ])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("li", [
+                        _c(
+                          "a",
+                          {
+                            on: {
+                              click: function($event) {
+                                _vm.logout()
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fi-power" })]
+                        )
                       ])
-                    ],
-                    1
-                  )
+                    ])
+                  ])
                 ])
-              ])
-            ])
+              : _vm._e(),
+            _vm._v(" "),
+            !_vm.isAuth
+              ? _c("div", { staticClass: "top-bar" }, [_vm._m(1)])
+              : _vm._e()
           ]
         )
       ]
@@ -59896,7 +59948,7 @@ var render = function() {
       1
     ),
     _vm._v(" "),
-    _vm._m(1)
+    _vm._m(2)
   ])
 }
 var staticRenderFns = [
@@ -59907,6 +59959,22 @@ var staticRenderFns = [
     return _c("li", [
       _c("a", { attrs: { href: "/" } }, [
         _c("i", { staticClass: "my-menu-icon" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "top-bar-left" }, [
+      _c("ul", { staticClass: "menu" }, [
+        _c("li", [
+          _c("a", { attrs: { href: "/" } }, [
+            _c("i", { staticClass: "my-menu-icon" })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "menu-text" }, [_vm._v("VuT")])
       ])
     ])
   },

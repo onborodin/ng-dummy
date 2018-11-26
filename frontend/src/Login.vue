@@ -52,7 +52,24 @@ export default class Login extends Vue {
     @Action setLogin: () => void
 
     submitLogin() {
-        
+        this.$client('/api/users', 'login', { 
+                loginName: this.loginName,
+                password: this.password
+        })
+        .then((res : any) => {
+            if (typeof(res.data.result[0].id) === 'number') {
+                this.message = 'Login OK'
+                this.setLogin()
+                this.$router.push('/users')
+            } else {
+                this.message = 'Login incorrect'
+            }
+
+        })
+        .catch((err : any) => {
+            this.message = 'Communication problem'
+        })
+
 
     }
 

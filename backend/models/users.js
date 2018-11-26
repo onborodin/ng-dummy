@@ -6,11 +6,11 @@ module.exports = function(knex) {
     var login = function(params) {
         return knex
             .select([
-                'users.*',
+                'users.id',
             ])
             .from('users')
             .where({
-                'users.name': params.userName,
+                'users.name': params.loginName,
                 'users.password': params.password,
             })
     }
