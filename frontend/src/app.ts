@@ -2,14 +2,15 @@ import './app.scss'
 
 import Vue from 'vue'
 import App from './App.vue'
+import Login from './Login.vue'
 
 import router from './router'
 import store from './store'
 
-import client from './client'
+import client from './plugins/client'
 Vue.use(client)
 
-import lodash from './lodash'
+import lodash from './plugins/lodash'
 Vue.use(lodash)
 
 import foundation from './foundation'
@@ -21,7 +22,7 @@ const app = new Vue({
     render: function(h) {
                 return h(App)
     },
-    components: { App },
+    components: { App, Login },
     mounted: function() {
         foundation(document)
     }
