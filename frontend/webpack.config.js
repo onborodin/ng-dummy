@@ -16,7 +16,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const currentDir = path.resolve(__dirname)
 const srcDir = currentDir + '/src'
 
-const entryFile = srcDir + '/app.ts'
+const entryFile = srcDir + '/main.ts'
 const outputDir = currentDir + '/../backend/public'
 
 const jsDir = outputDir
@@ -63,11 +63,11 @@ module.exports = {
         warnings: true,
     },
     resolve: {
-        extensions: ['.js', '.vue', '.ts'],
+        extensions: [ '.js', '.vue', '.ts' ],
+        modules: [ srcDir, 'node_modules' ],
         alias: {
             'vue$': 'vue/dist/vue.esm.js',
             'jquery': 'jquery/dist/jquery.slim.js',
-            '@': srcDir
         }
     },
     module: {
@@ -76,7 +76,7 @@ module.exports = {
                 test: /\.vue$/,
                 loader: 'vue-loader',
                 options: {
-                    hotReload: true
+                    //hotReload: true
                 },
                 exclude: /node_modules/
             },

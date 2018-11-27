@@ -263,8 +263,8 @@ WEBPACK = $(PWD)/../node_modules/.bin/webpack
 BUILD_DEST = $(PWD)/../../backend/public/js/expresso.js
 BUILD_SRC = \
 	App.vue \
-	NotFound.vue \
-	app.ts \
+	components/NotFound.vue \
+	main.ts \
 	router.ts \
 	store.ts
 

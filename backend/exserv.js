@@ -29,7 +29,6 @@ console.error = exlog
 // *** serve ***
 const express = require('express')
 const helmet = require('helmet')
-const session = require('express-session')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const compression = require('compression')
@@ -54,7 +53,25 @@ app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(responseTime())
 
-// *** json rpc *** 
+// *** session *** 
+const session = require('express-session')
+
+const FileStore = require('session-file-store')(session)
+app.use(session({
+    store: new FileStore({ path: exconfig.appDir + '/sessions' }),
+    name: 'session',
+    secret: 'efwe987ysdf9fsd69f9ds',
+    resave: false,
+    rolling: true,
+    saveUninitialized: true,
+    cookie: { 
+            secure: false,
+            maxAge: 6 * 10 * 1000,
+            httpOnly: false
+    }
+}))
+
+
 const knexfile = require('knexfile')
 const knex = require('knex')(knexfile.development)
 

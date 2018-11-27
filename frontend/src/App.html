@@ -1,0 +1,56 @@
+<div id="page">
+
+    <div class="top-bar-container" data-sticky-container>
+        <div class="sticky sticky-topbar" data-sticky data-options="anchor: page; marginTop: 0; stickyOn: small;">
+
+            <div v-if="!isAuth" class="top-bar">
+                <div class="top-bar-left">
+                    <ul class="menu">
+                        <li><a href="/"><i class="my-menu-icon"></i></a></li>
+                        <li class="menu-text">VuT</li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+            <div v-if="isAuth" class="top-bar">
+                <div class="top-bar-left">
+                    <ul class="menu">
+                        <li><a href="/"><i class="my-menu-icon"></i></a></li>
+                        <li class="menu-text">VuT</li>
+                        <li>
+                            <router-link to="/users">Users</router-link>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="top-bar-right margin-right-1">
+                    <ul class="menu">
+                        <li><a v-on:click="logout()"><i class="fi-power"></i></a></li>
+                    </ul>
+                </div>
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="margin-left-2 margin-right-2">
+        <router-view />
+    </div>
+
+    <div class="grid-container">
+        <div class="grid-x grid-margin-x align-center">
+            <div class="cell medium-8">
+                <hr />
+                <p class="text-center">
+                    <small>Made by <a href="http://wiki.unix7.org">Borodin Oleg</a></small>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div>

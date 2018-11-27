@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Login from './Login.vue'
-import Users from './Users.vue'
-import NotFound from './NotFound.vue'
+import Login from './components/Login.vue'
+import Users from './components/Users.vue'
+import NotFound from './components/NotFound.vue'
 
 import store from './store'
 
@@ -30,6 +30,18 @@ var router = new Router({
             component: NotFound,
         }
     ]
+})
+
+router.beforeEach((to, from, next) => {
+    if (to.meta.public) {
+        next()
+    } else {
+        if (store.state.auth == false) {
+            next('/login')
+        } else {
+            next()
+        }
+    }
 })
 
 export default router

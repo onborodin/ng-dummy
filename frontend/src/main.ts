@@ -1,8 +1,7 @@
-import './app.scss'
+import './main.scss'
 
 import Vue from 'vue'
 import App from './App.vue'
-import Login from './Login.vue'
 
 import router from './router'
 import store from './store'
@@ -22,7 +21,7 @@ const app = new Vue({
     render: function(h) {
                 return h(App)
     },
-    components: { App, Login },
+    components: { App },
     mounted: function() {
         foundation(document)
     }
