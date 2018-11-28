@@ -8,7 +8,7 @@ SUBDIRS= src
 prebuild:
 	$(NPM) install
 
-nobase_dist_pkgdata_DATA = \
+EXTRA_DIST = \
 	babel.config.js \
 	package-lock.json \
 	package.json \

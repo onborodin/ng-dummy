@@ -1,12 +1,17 @@
 #!/bin/sh
 
-NODE_PATH='/home/ziggi/expresso/backend:/home/ziggi/expresso/backend/models:/home/ziggi/expresso/backend/controllers:/home/ziggi/expresso/backend/models'
+NODE_PATH="/usr/local/expresso/etc/expresso"
+NODE_PATH="$NODE_PATH:/usr/local/expresso/share/expresso"
+NODE_PATH="$NODE_PATH:/usr/local/expresso/share/expresso/models"
+NODE_PATH="$NODE_PATH:/usr/local/expresso/share/expresso/controllers"
+NODE_PATH="$NODE_PATH:/usr/local/expresso/share/expresso/utils"
+NODE_PATH="$NODE_PATH:/usr/local/expresso/share/expresso/plugins"
 export NODE_PATH
 
 NODE_ENV=production
 export NODE_ENV
 
-cd /home/ziggi/expresso/backend && /usr/local/bin/node /home/ziggi/expresso/backend/exserv.js $@
+cd /usr/local/expresso/share/expresso && /usr/local/bin/node /usr/local/expresso/share/expresso/exserv.js $@
 #EOF
 
 

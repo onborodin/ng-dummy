@@ -1,4 +1,3 @@
-
 'use strict'
 
 module.exports = function(knex) {
@@ -23,7 +22,6 @@ module.exports = function(knex) {
             .from('users')
             .orderBy('users.name')
     }
-
 
     var find = function(params) {
         return knex
@@ -70,7 +68,6 @@ module.exports = function(knex) {
             .where({
                 id: params.id
             })
-
     }
 
     var drop = function(params) {

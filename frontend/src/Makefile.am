@@ -15,16 +15,40 @@ build:
 
 WEBPACK = $(PWD)/../node_modules/.bin/webpack
 
-BUILD_DEST = $(PWD)/../../backend/public/js/expresso.js
+BUILD_DEST = $(PWD)/../../backend/public/app.js
 
 BUILD_SRC = \
+	App.css \
+	App.html \
 	App.vue \
+	assets/favicon.ico \
+	assets/foundation-icons.css \
+	assets/foundation-icons.eot \
+	assets/foundation-icons.html \
+	assets/foundation-icons.svg \
+	assets/foundation-icons.ttf \
+	assets/foundation-icons.woff \
+	components/Login.html \
+	components/Login.vue \
 	components/NotFound.vue \
+	components/Users.css \
+	components/Users.html \
+	components/Users.vue \
+	foundation.d.ts \
+	foundation.js \
+	index.html \
+	main.scss \
 	main.ts \
+	modules/login.ts \
+	plugins/client.ts \
+	plugins/lodash.ts \
 	router.ts \
-	store.ts
+	scss/_fs.scss \
+	scss/_my.scss \
+	store.ts \
+	vue.d.ts
 
-nobase_dist_pkgdata_DATA = \
+EXTRA_DIST = \
 	$(BUILD_SRC)
 
 clean-local:

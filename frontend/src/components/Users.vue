@@ -4,7 +4,7 @@
 <script lang="ts">
 
 import { Vue, Component, Prop, Watch } from "vue-property-decorator"
-import { State, Action, Getter, Mutation } from 'vuex-class'
+//import { State, Action, Getter, Mutation } from 'vuex-class'
 
 import * as moment from 'moment-mini'
 import foundation from '../foundation'
@@ -29,7 +29,7 @@ export default class Users extends Vue {
     dataRecords: any[] = []
     updateStamp: string = ''
 
-    @Getter isAuth: boolean
+    //@Getter isAuth: boolean
 
     firstRecord: number = 0
     recordStep: number = 5
@@ -183,8 +183,6 @@ export default class Users extends Vue {
     }
 
     mounted() {
-
-
         this.fetchData()
     }
 

@@ -8,7 +8,7 @@ import login from './modules/login'
 export default new Vuex.Store({
     state: {},
     modules: {
-        login: login
+        login
     }
 })
 

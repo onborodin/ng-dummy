@@ -14,7 +14,6 @@
 
 
 
-
 am__is_gnu_make = { \
   if test -z '$(MAKELEVEL)'; then \
     false; \
@@ -93,8 +92,7 @@ ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
-DIST_COMMON = $(srcdir)/Makefile.am $(nobase_dist_pkgdata_DATA) \
-	$(am__DIST_COMMON)
+DIST_COMMON = $(srcdir)/Makefile.am $(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
@@ -119,57 +117,30 @@ am__can_run_installinfo = \
     n|no|NO) false;; \
     *) (install-info --version) >/dev/null 2>&1;; \
   esac
-am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
-am__vpath_adj = case $$p in \
-    $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
-    *) f=$$p;; \
-  esac;
-am__strip_dir = f=`echo $$p | sed -e 's|^.*/||'`;
-am__install_max = 40
-am__nobase_strip_setup = \
-  srcdirstrip=`echo "$(srcdir)" | sed 's/[].[^$$\\*|]/\\\\&/g'`
-am__nobase_strip = \
-  for p in $$list; do echo "$$p"; done | sed -e "s|$$srcdirstrip/||"
-am__nobase_list = $(am__nobase_strip_setup); \
-  for p in $$list; do echo "$$p $$p"; done | \
-  sed "s| $$srcdirstrip/| |;"' / .*\//!s/ .*/ ./; s,\( .*\)/[^/]*$$,\1,' | \
-  $(AWK) 'BEGIN { files["."] = "" } { files[$$2] = files[$$2] " " $$1; \
-    if (++n[$$2] == $(am__install_max)) \
-      { print $$2, files[$$2]; n[$$2] = 0; files[$$2] = "" } } \
-    END { for (dir in files) print dir, files[dir] }'
-am__base_list = \
-  sed '$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;s/\n/ /g' | \
-  sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
-am__uninstall_files_from_dir = { \
-  test -z "$$files" \
-    || { test ! -d "$$dir" && test ! -f "$$dir" && test ! -r "$$dir"; } \
-    || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
-         $(am__cd) "$$dir" && rm -f $$files; }; \
-  }
-am__installdirs = "$(DESTDIR)$(pkgdatadir)"
-DATA = $(nobase_dist_pkgdata_DATA)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 am__DIST_COMMON = $(srcdir)/Makefile.in
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = ${SHELL} /home/ziggi/expresso/missing aclocal
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 1
-APP_CONFDIR = /home/ziggi/expresso/backend
+APP_CONFDIR = /usr/local/expresso/etc/expresso
 APP_DATADIR = /var/expresso
-APP_GROUP = wheel
-APP_LIBDIR = /home/ziggi/expresso/backend
-APP_LOGDIR = /home/ziggi/expresso/backend/logs
-APP_RUNDIR = /home/ziggi/expresso/backend/run
-APP_USER = ziggi
+APP_GROUP = www
+APP_LIBDIR = /usr/local/expresso/share/expresso
+APP_LOGDIR = /var/log/expresso
+APP_RUNDIR = /var/run/expresso
+APP_USER = www
 AUTOCONF = ${SHELL} /home/ziggi/expresso/missing autoconf
 AUTOHEADER = ${SHELL} /home/ziggi/expresso/missing autoheader
 AUTOMAKE = ${SHELL} /home/ziggi/expresso/missing automake
 AWK = gawk
+CP = /bin/cp
 CYGPATH_W = echo
-DEFS = -DPACKAGE_NAME=\"index.js\" -DPACKAGE_TARNAME=\"index-js\" -DPACKAGE_VERSION=\"0.01\" -DPACKAGE_STRING=\"index.js\ 0.01\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"index-js\" -DVERSION=\"0.01\" -DAPP_CONFDIR=\"/home/ziggi/expresso/backend\" -Dapp_confdir=\"/home/ziggi/expresso/backend\" -DAPP_LOGDIR=\"/home/ziggi/expresso/backend/logs\" -Dapp_logdir=\"/home/ziggi/expresso/backend/logs\" -DAPP_RUNDIR=\"/home/ziggi/expresso/backend/run\" -Dapp_rundir=\"/home/ziggi/expresso/backend/run\" -DAPP_LIBDIR=\"/home/ziggi/expresso/backend\" -Dapp_libdir=\"/home/ziggi/expresso/backend\" -DAPP_USER=\"ziggi\" -Dapp_user=\"ziggi\" -DAPP_GROUP=\"wheel\" -Dapp_group=\"wheel\" -DAPP_DATADIR=\"/var/expresso\" -Dapp_datadir=\"/var/expresso\"
+DEFS = -DPACKAGE_NAME=\"index.js\" -DPACKAGE_TARNAME=\"index-js\" -DPACKAGE_VERSION=\"0.01\" -DPACKAGE_STRING=\"index.js\ 0.01\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"index-js\" -DVERSION=\"0.01\" -DAPP_CONFDIR=\"/usr/local/expresso/etc/expresso\" -Dapp_confdir=\"/usr/local/expresso/etc/expresso\" -DAPP_LOGDIR=\"/var/log/expresso\" -Dapp_logdir=\"/var/log/expresso\" -DAPP_RUNDIR=\"/var/run/expresso\" -Dapp_rundir=\"/var/run/expresso\" -DAPP_LIBDIR=\"/usr/local/expresso/share/expresso\" -Dapp_libdir=\"/usr/local/expresso/share/expresso\" -DAPP_USER=\"www\" -Dapp_user=\"www\" -DAPP_GROUP=\"www\" -Dapp_group=\"www\" -DAPP_DATADIR=\"/var/expresso\" -Dapp_datadir=\"/var/expresso\"
 ECHO_C = 
 ECHO_N = -n
 ECHO_T = 
+HAVE_CP = true
 HAVE_NODE = true
 HAVE_NPM = true
 INSTALL = /usr/bin/install -c
@@ -204,13 +175,13 @@ abs_top_srcdir = /home/ziggi/expresso
 am__leading_dot = .
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
-app_confdir = /home/ziggi/expresso/backend
+app_confdir = /usr/local/expresso/etc/expresso
 app_datadir = /var/expresso
-app_group = wheel
-app_libdir = /home/ziggi/expresso/backend
-app_logdir = /home/ziggi/expresso/backend/logs
-app_rundir = /home/ziggi/expresso/backend/run
-app_user = ziggi
+app_group = www
+app_libdir = /usr/local/expresso/share/expresso
+app_logdir = /var/log/expresso
+app_rundir = /var/run/expresso
+app_user = www
 bindir = ${exec_prefix}/bin
 build = amd64-unknown-freebsd11.2
 build_alias = 
@@ -242,13 +213,13 @@ node = /usr/local/bin/node
 npm = /usr/local/bin/npm
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = /usr/local
+prefix = /usr/local/expresso
 program_transform_name = s,x,x,
 psdir = ${docdir}
 sbindir = ${exec_prefix}/sbin
 sharedstatedir = ${prefix}/com
 srcdir = .
-sysconfdir = /home/ziggi/expresso/backend
+sysconfdir = ${prefix}/etc
 target_alias = 
 top_build_prefix = ../../
 top_builddir = ../..
@@ -260,15 +231,39 @@ top_srcdir = ../..
 AUTOMAKE_OPTIONS = foreign no-dependencies no-installinfo
 PWD = $(shell pwd)
 WEBPACK = $(PWD)/../node_modules/.bin/webpack
-BUILD_DEST = $(PWD)/../../backend/public/js/expresso.js
+BUILD_DEST = $(PWD)/../../backend/public/app.js
 BUILD_SRC = \
+	App.css \
+	App.html \
 	App.vue \
+	assets/favicon.ico \
+	assets/foundation-icons.css \
+	assets/foundation-icons.eot \
+	assets/foundation-icons.html \
+	assets/foundation-icons.svg \
+	assets/foundation-icons.ttf \
+	assets/foundation-icons.woff \
+	components/Login.html \
+	components/Login.vue \
 	components/NotFound.vue \
+	components/Users.css \
+	components/Users.html \
+	components/Users.vue \
+	foundation.d.ts \
+	foundation.js \
+	index.html \
+	main.scss \
 	main.ts \
+	modules/login.ts \
+	plugins/client.ts \
+	plugins/lodash.ts \
 	router.ts \
-	store.ts
+	scss/_fs.scss \
+	scss/_my.scss \
+	store.ts \
+	vue.d.ts
 
-nobase_dist_pkgdata_DATA = \
+EXTRA_DIST = \
 	$(BUILD_SRC)
 
 all: all-am
@@ -303,30 +298,6 @@ $(top_srcdir)/configure:  $(am__configure_deps)
 $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
-install-nobase_dist_pkgdataDATA: $(nobase_dist_pkgdata_DATA)
-	@$(NORMAL_INSTALL)
-	@list='$(nobase_dist_pkgdata_DATA)'; test -n "$(pkgdatadir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(pkgdatadir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(pkgdatadir)" || exit 1; \
-	fi; \
-	$(am__nobase_list) | while read dir files; do \
-	  xfiles=; for file in $$files; do \
-	    if test -f "$$file"; then xfiles="$$xfiles $$file"; \
-	    else xfiles="$$xfiles $(srcdir)/$$file"; fi; done; \
-	  test -z "$$xfiles" || { \
-	    test "x$$dir" = x. || { \
-	      echo " $(MKDIR_P) '$(DESTDIR)$(pkgdatadir)/$$dir'"; \
-	      $(MKDIR_P) "$(DESTDIR)$(pkgdatadir)/$$dir"; }; \
-	    echo " $(INSTALL_DATA) $$xfiles '$(DESTDIR)$(pkgdatadir)/$$dir'"; \
-	    $(INSTALL_DATA) $$xfiles "$(DESTDIR)$(pkgdatadir)/$$dir" || exit $$?; }; \
-	done
-
-uninstall-nobase_dist_pkgdataDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(nobase_dist_pkgdata_DATA)'; test -n "$(pkgdatadir)" || list=; \
-	$(am__nobase_strip_setup); files=`$(am__nobase_strip)`; \
-	dir='$(DESTDIR)$(pkgdatadir)'; $(am__uninstall_files_from_dir)
 tags TAGS:
 
 ctags CTAGS:
@@ -366,11 +337,8 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(DATA)
+all-am: Makefile
 installdirs:
-	for dir in "$(DESTDIR)$(pkgdatadir)"; do \
-	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
-	done
 install: install-am
 install-exec: install-exec-am
 install-data: install-data-am
@@ -421,7 +389,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-nobase_dist_pkgdataDATA
+install-data-am:
 
 install-dvi: install-dvi-am
 
@@ -465,7 +433,7 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-nobase_dist_pkgdataDATA
+uninstall-am:
 
 .MAKE: install-am install-strip
 
@@ -474,13 +442,11 @@ uninstall-am: uninstall-nobase_dist_pkgdataDATA
 	dvi-am html html-am info info-am install install-am \
 	install-data install-data-am install-dvi install-dvi-am \
 	install-exec install-exec-am install-html install-html-am \
-	install-info install-info-am install-man \
-	install-nobase_dist_pkgdataDATA install-pdf install-pdf-am \
-	install-ps install-ps-am install-strip installcheck \
-	installcheck-am installdirs maintainer-clean \
+	install-info install-info-am install-man install-pdf \
+	install-pdf-am install-ps install-ps-am install-strip \
+	installcheck installcheck-am installdirs maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-generic pdf \
-	pdf-am ps ps-am tags-am uninstall uninstall-am \
-	uninstall-nobase_dist_pkgdataDATA
+	pdf-am ps ps-am tags-am uninstall uninstall-am
 
 .PRECIOUS: Makefile
 

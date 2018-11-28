@@ -26,7 +26,7 @@ console.error = exlog
 // *** throw ***
 //throw new Error('Boum!')
 
-// *** serve ***
+// *** attach express plugins ***
 const express = require('express')
 const helmet = require('helmet')
 const cookieParser = require('cookie-parser')
@@ -53,12 +53,12 @@ app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(responseTime())
 
-// *** session *** 
+// *** create session *** 
 const session = require('express-session')
 
 const FileStore = require('session-file-store')(session)
 app.use(session({
-    store: new FileStore({ path: exconfig.appDir + '/sessions' }),
+    store: new FileStore({ path: exconfig.runDir }),
     name: 'session',
     secret: 'efwe987ysdf9fsd69f9ds',
     resave: false,
@@ -71,12 +71,11 @@ app.use(session({
     }
 }))
 
-
+// *** create knex shared object ***
 const knexfile = require('knexfile')
 const knex = require('knex')(knexfile.development)
 
-// *** route ***
-
+// *** set routes ***
 var users = require('./routers/users')
 app.use('/api/users', users)
 
@@ -116,3 +115,4 @@ if (cluster.isMaster) {
         }
     })
 }
+

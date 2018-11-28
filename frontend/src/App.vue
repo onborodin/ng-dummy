@@ -4,11 +4,12 @@
 <script lang="ts">
 
 import { Vue, Component, Prop } from "vue-property-decorator"
-import { State, Action, Getter, Mutation } from 'vuex-class'
+import { State, Action, Getter, Mutation, namespace } from 'vuex-class'
 
 import Users from './components/Users.vue'
 import NotFound from './components/NotFound.vue'
 
+const login = namespace('./modules')
 
 @Component({
     components: { Users, NotFound }
@@ -57,6 +58,5 @@ export default class App extends Vue {
                 }
             }, 1000)
     }
-
 }
 </script>

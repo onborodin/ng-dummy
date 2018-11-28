@@ -3659,7 +3659,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\n.fade-enter-active[data-v-040e3608],\n.fade-leave-active[data-v-040e3608] {\n    -webkit-transition: all 0.3s ease;\n    -o-transition: all 0.3s ease;\n    transition: all 0.3s ease;\n}\n.fade-enter[data-v-040e3608],\n.fade-leave-to[data-v-040e3608] {\n    opacity: 0;\n}\n.slide-fade-enter-active[data-v-040e3608] {\n    -webkit-transition: all .3s ease;\n    -o-transition: all .3s ease;\n    transition: all .3s ease;\n}\n.slide-fade-leave-active[data-v-040e3608] {\n    -webkit-transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);\n    -o-transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);\n    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);\n}\n.slide-fade-enter[data-v-040e3608],\n.slide-fade-leave-to[data-v-040e3608] {\n    opacity: 0;\n}", ""]);
+exports.push([module.i, "\n.fade-enter-active[data-v-040e3608],\n.fade-leave-active[data-v-040e3608] {\n    -webkit-transition: all 0.3s ease;\n    -o-transition: all 0.3s ease;\n    transition: all 0.3s ease;\n}\n.fade-enter[data-v-040e3608],\n.fade-leave-to[data-v-040e3608] {\n    opacity: 0;\n}\n.slide-fade-enter-active[data-v-040e3608] {\n    -webkit-transition: all .3s ease;\n    -o-transition: all .3s ease;\n    transition: all .3s ease;\n}\n.slide-fade-leave-active[data-v-040e3608] {\n    -webkit-transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);\n    -o-transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);\n    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);\n}\n.slide-fade-enter[data-v-040e3608],\n.slide-fade-leave-to[data-v-040e3608] {\n    opacity: 0;\n}\n", ""]);
 
 // exports
 
@@ -59031,6 +59031,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+const login = Object(vuex_class__WEBPACK_IMPORTED_MODULE_1__["namespace"])('./modules');
 let App = class App extends vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__["Vue"] {
     constructor() {
         super(...arguments);
@@ -59103,6 +59104,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 };
 
 
+const loginN = Object(vuex_class__WEBPACK_IMPORTED_MODULE_1__["namespace"])('login');
 let Login = class Login extends vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__["Vue"] {
     constructor() {
         super(...arguments);
@@ -59196,6 +59198,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 
+//import { State, Action, Getter, Mutation } from 'vuex-class'
 
 let Users = class Users extends vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__["Vue"] {
     constructor() {
@@ -59204,7 +59207,7 @@ let Users = class Users extends vue_property_decorator__WEBPACK_IMPORTED_MODULE_
         this.alertMessage = '';
         this.dataRecords = [];
         this.updateStamp = '';
-        this.debug = '';
+        //@Getter isAuth: boolean
         this.firstRecord = 0;
         this.recordStep = 5;
         this.formData = {
@@ -60280,13 +60283,7 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "grid-container" }, [
-      _c("div", { staticClass: "grid-x grid-margin-x align-center" }, [
-        _c("div", { staticClass: "cell medium-8" }, [
-          _c("pre", [_vm._v(_vm._s(_vm.debug))])
-        ])
-      ])
-    ]),
+    _vm._m(0),
     _vm._v(" "),
     _c("div", { staticClass: "grid-container" }, [
       _c("div", { staticClass: "grid-x grid-margin-x align-center" }, [
@@ -60911,7 +60908,18 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "grid-container" }, [
+      _c("div", { staticClass: "grid-x grid-margin-x align-center" }, [
+        _c("div", { staticClass: "cell medium-8" })
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -77573,17 +77581,17 @@ let login = class login extends vuex_module_decorators__WEBPACK_IMPORTED_MODULE_
         super(...arguments);
         this.auth = false;
     }
-    login() {
+    loginMutation() {
         this.auth = true;
     }
-    logout() {
+    logoutMutation() {
         this.auth = false;
     }
     setLogin() {
-        this.context.commit('login');
+        this.context.commit('loginMutation');
     }
     setLogout() {
-        this.context.commit('logout');
+        this.context.commit('logoutMutation');
     }
     get isAuth() {
         return this.auth;
@@ -77591,10 +77599,10 @@ let login = class login extends vuex_module_decorators__WEBPACK_IMPORTED_MODULE_
 };
 __decorate([
     vuex_module_decorators__WEBPACK_IMPORTED_MODULE_0__["Mutation"]
-], login.prototype, "login", null);
+], login.prototype, "loginMutation", null);
 __decorate([
     vuex_module_decorators__WEBPACK_IMPORTED_MODULE_0__["Mutation"]
-], login.prototype, "logout", null);
+], login.prototype, "logoutMutation", null);
 __decorate([
     vuex_module_decorators__WEBPACK_IMPORTED_MODULE_0__["Action"]
 ], login.prototype, "setLogin", null);

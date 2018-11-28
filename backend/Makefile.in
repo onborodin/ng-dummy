@@ -126,7 +126,8 @@ am__uninstall_files_from_dir = { \
     || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
-am__installdirs = "$(DESTDIR)$(sbindir)" "$(DESTDIR)$(pkgdatadir)"
+am__installdirs = "$(DESTDIR)$(sbindir)" "$(DESTDIR)$(confdir)" \
+	"$(DESTDIR)$(pkgdatadir)"
 SCRIPTS = $(sbin_SCRIPTS)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -149,7 +150,7 @@ am__can_run_installinfo = \
     n|no|NO) false;; \
     *) (install-info --version) >/dev/null 2>&1;; \
   esac
-DATA = $(nobase_dist_pkgdata_DATA)
+DATA = $(conf_DATA) $(nobase_dist_pkgdata_DATA)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/exconfig.js.in \
 	$(srcdir)/expresso.in
@@ -168,11 +169,13 @@ AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
+CP = @CP@
 CYGPATH_W = @CYGPATH_W@
 DEFS = @DEFS@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
+HAVE_CP = @HAVE_CP@
 HAVE_NODE = @HAVE_NODE@
 HAVE_NPM = @HAVE_NPM@
 INSTALL = @INSTALL@
@@ -262,33 +265,42 @@ top_srcdir = @top_srcdir@
 #
 AUTOMAKE_OPTIONS = foreign no-dependencies no-installinfo
 sbin_SCRIPTS = expresso
+confdir = $(DESTDIR)$(APP_CONFDIR)
+conf_DATA = \
+	knexfile.js \
+	exconfig.js
+
+EXTRA_DIST = \
+	package-lock.json \
+	package.json \
+	knexfile.js \
+	node_modules
+
 nobase_dist_pkgdata_DATA = \
-	expid.js \
-	exdir.js \
-	exdaemon.js \
 	exserv.js \
+	migrations/20181020094820.js \
+	models/users.js \
+	routers/users.js \
+	seeds/users.js \
+	utils/exdaemon.js \
+	utils/exlog.js \
+	utils/exmkdir.js \
+	utils/expid.js \
+	utils/exsig.js \
+	plugins/excors.js \
+	\
+	public/app.css \
+	public/app.css.map \
+	public/app.js \
+	public/app.js.map \
 	public/favicon.ico \
-	public/css/datatables.min.css \
-	public/css/foundation-float.css \
-	public/css/datatables.css \
-	public/css/foundation-float.min.css \
-	public/js/jquery.js \
-	public/js/front.js \
-	public/js/datatables.js \
-	public/js/lodash.js \
-	public/js/lodash.min.js \
-	public/js/foundation.js \
-	public/js/marked.js \
-	public/js/foundation.min.js \
-	public/js/marked.min.js \
-	public/js/datatables.min.js \
-	public/js/jquery.min.js \
-	public/icons/foundation-icons.ttf \
-	public/icons/foundation-icons.woff \
-	public/icons/foundation-icons.eot \
-	public/icons/foundation-icons.svg \
-	public/icons/foundation-icons.css \
-	public/icons/preview.html
+	public/foundation-icons.css \
+	public/foundation-icons.eot \
+	public/foundation-icons.html \
+	public/foundation-icons.svg \
+	public/foundation-icons.ttf \
+	public/foundation-icons.woff \
+	public/index.html
 
 all: all-am
 
@@ -361,6 +373,27 @@ uninstall-sbinSCRIPTS:
 	files=`for p in $$list; do echo "$$p"; done | \
 	       sed -e 's,.*/,,;$(transform)'`; \
 	dir='$(DESTDIR)$(sbindir)'; $(am__uninstall_files_from_dir)
+install-confDATA: $(conf_DATA)
+	@$(NORMAL_INSTALL)
+	@list='$(conf_DATA)'; test -n "$(confdir)" || list=; \
+	if test -n "$$list"; then \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(confdir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(confdir)" || exit 1; \
+	fi; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(confdir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(confdir)" || exit $$?; \
+	done
+
+uninstall-confDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(conf_DATA)'; test -n "$(confdir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	dir='$(DESTDIR)$(confdir)'; $(am__uninstall_files_from_dir)
 install-nobase_dist_pkgdataDATA: $(nobase_dist_pkgdata_DATA)
 	@$(NORMAL_INSTALL)
 	@list='$(nobase_dist_pkgdata_DATA)'; test -n "$(pkgdatadir)" || list=; \
@@ -426,7 +459,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(SCRIPTS) $(DATA)
 installdirs:
-	for dir in "$(DESTDIR)$(sbindir)" "$(DESTDIR)$(pkgdatadir)"; do \
+	for dir in "$(DESTDIR)$(sbindir)" "$(DESTDIR)$(confdir)" "$(DESTDIR)$(pkgdatadir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -479,7 +512,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-nobase_dist_pkgdataDATA
+install-data-am: install-confDATA install-nobase_dist_pkgdataDATA
 	@$(NORMAL_INSTALL)
 	$(MAKE) $(AM_MAKEFLAGS) install-data-hook
 install-dvi: install-dvi-am
@@ -524,21 +557,23 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-nobase_dist_pkgdataDATA uninstall-sbinSCRIPTS
+uninstall-am: uninstall-confDATA uninstall-nobase_dist_pkgdataDATA \
+	uninstall-sbinSCRIPTS
 
 .MAKE: install-am install-data-am install-strip
 
 .PHONY: all all-am check check-am clean clean-generic clean-local \
 	cscopelist-am ctags-am distclean distclean-generic distdir dvi \
 	dvi-am html html-am info info-am install install-am \
-	install-data install-data-am install-data-hook install-dvi \
-	install-dvi-am install-exec install-exec-am install-html \
-	install-html-am install-info install-info-am install-man \
-	install-nobase_dist_pkgdataDATA install-pdf install-pdf-am \
-	install-ps install-ps-am install-sbinSCRIPTS install-strip \
-	installcheck installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-generic pdf \
-	pdf-am ps ps-am tags-am uninstall uninstall-am \
+	install-confDATA install-data install-data-am \
+	install-data-hook install-dvi install-dvi-am install-exec \
+	install-exec-am install-html install-html-am install-info \
+	install-info-am install-man install-nobase_dist_pkgdataDATA \
+	install-pdf install-pdf-am install-ps install-ps-am \
+	install-sbinSCRIPTS install-strip installcheck installcheck-am \
+	installdirs maintainer-clean maintainer-clean-generic \
+	mostlyclean mostlyclean-generic pdf pdf-am ps ps-am tags-am \
+	uninstall uninstall-am uninstall-confDATA \
 	uninstall-nobase_dist_pkgdataDATA uninstall-sbinSCRIPTS
 
 .PRECIOUS: Makefile
@@ -548,9 +583,11 @@ prebuild:
 	CFLAGS="$(CFLAGS)" $(NPM) install
 
 install-data-hook:
+	$(INSTALL) -d -m 750 -o $(APP_USER) -g $(APP_GROUP) $(DESTDIR)$(APP_CONFDIR)
 	$(INSTALL) -d -m 750 -o $(APP_USER) -g $(APP_GROUP) $(DESTDIR)$(APP_LOGDIR)
 	$(INSTALL) -d -m 750 -o $(APP_USER) -g $(APP_GROUP) $(DESTDIR)$(APP_RUNDIR)
 	$(INSTALL) -d -m 755 -o $(APP_USER) -g $(APP_GROUP) $(DESTDIR)$(APP_LIBDIR)
+	$(CP) -R node_modules $(DESTDIR)$(APP_LIBDIR)
 
 clean-local:
 	rm -f *~ logs/*.log run/pid

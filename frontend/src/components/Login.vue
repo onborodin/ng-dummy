@@ -3,8 +3,9 @@
 <script lang="ts">
 
 import { Vue, Component, Prop, Watch } from "vue-property-decorator"
-import { State, Action, Getter, Mutation } from 'vuex-class'
+import { State, Action, Getter, Mutation, namespace } from 'vuex-class'
 
+const loginN = namespace('login')
 
 @Component
 export default class Login extends Vue {

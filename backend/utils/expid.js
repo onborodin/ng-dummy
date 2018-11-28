@@ -3,7 +3,7 @@
 
 var fs = require('fs')
 var path = require('path')
-var exdir = require('exdir')
+var exmkdir = require('exmkdir')
 
 var _write = function(path) {
         try {
@@ -28,7 +28,7 @@ var drop = function(path) {
 var create = function(pidFile) {
     var pidDir = path.basename(path.dirname(pidFile))
 
-    if (!exdir.writable(pidDir)) {
+    if (!exmkdir(pidDir)) {
         console.log('Cannot write to  directory ' + pidDir + '. Exit process.')
         process.exit(1)
     }
@@ -43,4 +43,3 @@ module.exports = {
     create: create,
     drop: drop
 }
-

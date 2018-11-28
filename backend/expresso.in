@@ -1,6 +1,11 @@
 #!/bin/sh
 
-NODE_PATH='@app_confdir@:@app_libdir@/models:@app_libdir@/controllers:@app_libdir@/models'
+NODE_PATH="@app_confdir@"
+NODE_PATH="$NODE_PATH:@app_libdir@"
+NODE_PATH="$NODE_PATH:@app_libdir@/models"
+NODE_PATH="$NODE_PATH:@app_libdir@/controllers"
+NODE_PATH="$NODE_PATH:@app_libdir@/utils"
+NODE_PATH="$NODE_PATH:@app_libdir@/plugins"
 export NODE_PATH
 
 NODE_ENV=production

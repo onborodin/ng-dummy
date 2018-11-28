@@ -1,9 +1,7 @@
 
 var fs = require('fs')
 
-module.exports = {
-
-    writable: function(dir) {
+module.exports = function(dir) {
         var dummyFile = dir + '/.dummy'
 
         if (fs.existsSync(dir)) {
@@ -27,6 +25,3 @@ module.exports = {
             }
         }
     }
-
-}
-

@@ -126,7 +126,8 @@ am__uninstall_files_from_dir = { \
     || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
-am__installdirs = "$(DESTDIR)$(sbindir)" "$(DESTDIR)$(pkgdatadir)"
+am__installdirs = "$(DESTDIR)$(sbindir)" "$(DESTDIR)$(confdir)" \
+	"$(DESTDIR)$(pkgdatadir)"
 SCRIPTS = $(sbin_SCRIPTS)
 AM_V_P = $(am__v_P_$(V))
 am__v_P_ = $(am__v_P_$(AM_DEFAULT_VERBOSITY))
@@ -149,7 +150,7 @@ am__can_run_installinfo = \
     n|no|NO) false;; \
     *) (install-info --version) >/dev/null 2>&1;; \
   esac
-DATA = $(nobase_dist_pkgdata_DATA)
+DATA = $(conf_DATA) $(nobase_dist_pkgdata_DATA)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/exconfig.js.in \
 	$(srcdir)/expresso.in
@@ -157,22 +158,24 @@ DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = ${SHELL} /home/ziggi/expresso/missing aclocal
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 1
-APP_CONFDIR = /home/ziggi/expresso/backend
+APP_CONFDIR = /usr/local/expresso/etc/expresso
 APP_DATADIR = /var/expresso
-APP_GROUP = wheel
-APP_LIBDIR = /home/ziggi/expresso/backend
-APP_LOGDIR = /home/ziggi/expresso/backend/logs
-APP_RUNDIR = /home/ziggi/expresso/backend/run
-APP_USER = ziggi
+APP_GROUP = www
+APP_LIBDIR = /usr/local/expresso/share/expresso
+APP_LOGDIR = /var/log/expresso
+APP_RUNDIR = /var/run/expresso
+APP_USER = www
 AUTOCONF = ${SHELL} /home/ziggi/expresso/missing autoconf
 AUTOHEADER = ${SHELL} /home/ziggi/expresso/missing autoheader
 AUTOMAKE = ${SHELL} /home/ziggi/expresso/missing automake
 AWK = gawk
+CP = /bin/cp
 CYGPATH_W = echo
-DEFS = -DPACKAGE_NAME=\"index.js\" -DPACKAGE_TARNAME=\"index-js\" -DPACKAGE_VERSION=\"0.01\" -DPACKAGE_STRING=\"index.js\ 0.01\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"index-js\" -DVERSION=\"0.01\" -DAPP_CONFDIR=\"/home/ziggi/expresso/backend\" -Dapp_confdir=\"/home/ziggi/expresso/backend\" -DAPP_LOGDIR=\"/home/ziggi/expresso/backend/logs\" -Dapp_logdir=\"/home/ziggi/expresso/backend/logs\" -DAPP_RUNDIR=\"/home/ziggi/expresso/backend/run\" -Dapp_rundir=\"/home/ziggi/expresso/backend/run\" -DAPP_LIBDIR=\"/home/ziggi/expresso/backend\" -Dapp_libdir=\"/home/ziggi/expresso/backend\" -DAPP_USER=\"ziggi\" -Dapp_user=\"ziggi\" -DAPP_GROUP=\"wheel\" -Dapp_group=\"wheel\" -DAPP_DATADIR=\"/var/expresso\" -Dapp_datadir=\"/var/expresso\"
+DEFS = -DPACKAGE_NAME=\"index.js\" -DPACKAGE_TARNAME=\"index-js\" -DPACKAGE_VERSION=\"0.01\" -DPACKAGE_STRING=\"index.js\ 0.01\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"index-js\" -DVERSION=\"0.01\" -DAPP_CONFDIR=\"/usr/local/expresso/etc/expresso\" -Dapp_confdir=\"/usr/local/expresso/etc/expresso\" -DAPP_LOGDIR=\"/var/log/expresso\" -Dapp_logdir=\"/var/log/expresso\" -DAPP_RUNDIR=\"/var/run/expresso\" -Dapp_rundir=\"/var/run/expresso\" -DAPP_LIBDIR=\"/usr/local/expresso/share/expresso\" -Dapp_libdir=\"/usr/local/expresso/share/expresso\" -DAPP_USER=\"www\" -Dapp_user=\"www\" -DAPP_GROUP=\"www\" -Dapp_group=\"www\" -DAPP_DATADIR=\"/var/expresso\" -Dapp_datadir=\"/var/expresso\"
 ECHO_C = 
 ECHO_N = -n
 ECHO_T = 
+HAVE_CP = true
 HAVE_NODE = true
 HAVE_NPM = true
 INSTALL = /usr/bin/install -c
@@ -207,13 +210,13 @@ abs_top_srcdir = /home/ziggi/expresso
 am__leading_dot = .
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
-app_confdir = /home/ziggi/expresso/backend
+app_confdir = /usr/local/expresso/etc/expresso
 app_datadir = /var/expresso
-app_group = wheel
-app_libdir = /home/ziggi/expresso/backend
-app_logdir = /home/ziggi/expresso/backend/logs
-app_rundir = /home/ziggi/expresso/backend/run
-app_user = ziggi
+app_group = www
+app_libdir = /usr/local/expresso/share/expresso
+app_logdir = /var/log/expresso
+app_rundir = /var/run/expresso
+app_user = www
 bindir = ${exec_prefix}/bin
 build = amd64-unknown-freebsd11.2
 build_alias = 
@@ -245,13 +248,13 @@ node = /usr/local/bin/node
 npm = /usr/local/bin/npm
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = /usr/local
+prefix = /usr/local/expresso
 program_transform_name = s,x,x,
 psdir = ${docdir}
 sbindir = ${exec_prefix}/sbin
 sharedstatedir = ${prefix}/com
 srcdir = .
-sysconfdir = /home/ziggi/expresso/backend
+sysconfdir = ${prefix}/etc
 target_alias = 
 top_build_prefix = ../
 top_builddir = ..
@@ -262,33 +265,42 @@ top_srcdir = ..
 #
 AUTOMAKE_OPTIONS = foreign no-dependencies no-installinfo
 sbin_SCRIPTS = expresso
+confdir = $(DESTDIR)$(APP_CONFDIR)
+conf_DATA = \
+	knexfile.js \
+	exconfig.js
+
+EXTRA_DIST = \
+	package-lock.json \
+	package.json \
+	knexfile.js \
+	node_modules
+
 nobase_dist_pkgdata_DATA = \
-	expid.js \
-	exdir.js \
-	exdaemon.js \
 	exserv.js \
+	migrations/20181020094820.js \
+	models/users.js \
+	routers/users.js \
+	seeds/users.js \
+	utils/exdaemon.js \
+	utils/exlog.js \
+	utils/exmkdir.js \
+	utils/expid.js \
+	utils/exsig.js \
+	plugins/excors.js \
+	\
+	public/app.css \
+	public/app.css.map \
+	public/app.js \
+	public/app.js.map \
 	public/favicon.ico \
-	public/css/datatables.min.css \
-	public/css/foundation-float.css \
-	public/css/datatables.css \
-	public/css/foundation-float.min.css \
-	public/js/jquery.js \
-	public/js/front.js \
-	public/js/datatables.js \
-	public/js/lodash.js \
-	public/js/lodash.min.js \
-	public/js/foundation.js \
-	public/js/marked.js \
-	public/js/foundation.min.js \
-	public/js/marked.min.js \
-	public/js/datatables.min.js \
-	public/js/jquery.min.js \
-	public/icons/foundation-icons.ttf \
-	public/icons/foundation-icons.woff \
-	public/icons/foundation-icons.eot \
-	public/icons/foundation-icons.svg \
-	public/icons/foundation-icons.css \
-	public/icons/preview.html
+	public/foundation-icons.css \
+	public/foundation-icons.eot \
+	public/foundation-icons.html \
+	public/foundation-icons.svg \
+	public/foundation-icons.ttf \
+	public/foundation-icons.woff \
+	public/index.html
 
 all: all-am
 
@@ -361,6 +373,27 @@ uninstall-sbinSCRIPTS:
 	files=`for p in $$list; do echo "$$p"; done | \
 	       sed -e 's,.*/,,;$(transform)'`; \
 	dir='$(DESTDIR)$(sbindir)'; $(am__uninstall_files_from_dir)
+install-confDATA: $(conf_DATA)
+	@$(NORMAL_INSTALL)
+	@list='$(conf_DATA)'; test -n "$(confdir)" || list=; \
+	if test -n "$$list"; then \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(confdir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(confdir)" || exit 1; \
+	fi; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(confdir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(confdir)" || exit $$?; \
+	done
+
+uninstall-confDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(conf_DATA)'; test -n "$(confdir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	dir='$(DESTDIR)$(confdir)'; $(am__uninstall_files_from_dir)
 install-nobase_dist_pkgdataDATA: $(nobase_dist_pkgdata_DATA)
 	@$(NORMAL_INSTALL)
 	@list='$(nobase_dist_pkgdata_DATA)'; test -n "$(pkgdatadir)" || list=; \
@@ -426,7 +459,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(SCRIPTS) $(DATA)
 installdirs:
-	for dir in "$(DESTDIR)$(sbindir)" "$(DESTDIR)$(pkgdatadir)"; do \
+	for dir in "$(DESTDIR)$(sbindir)" "$(DESTDIR)$(confdir)" "$(DESTDIR)$(pkgdatadir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -479,7 +512,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-nobase_dist_pkgdataDATA
+install-data-am: install-confDATA install-nobase_dist_pkgdataDATA
 	@$(NORMAL_INSTALL)
 	$(MAKE) $(AM_MAKEFLAGS) install-data-hook
 install-dvi: install-dvi-am
@@ -524,21 +557,23 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-nobase_dist_pkgdataDATA uninstall-sbinSCRIPTS
+uninstall-am: uninstall-confDATA uninstall-nobase_dist_pkgdataDATA \
+	uninstall-sbinSCRIPTS
 
 .MAKE: install-am install-data-am install-strip
 
 .PHONY: all all-am check check-am clean clean-generic clean-local \
 	cscopelist-am ctags-am distclean distclean-generic distdir dvi \
 	dvi-am html html-am info info-am install install-am \
-	install-data install-data-am install-data-hook install-dvi \
-	install-dvi-am install-exec install-exec-am install-html \
-	install-html-am install-info install-info-am install-man \
-	install-nobase_dist_pkgdataDATA install-pdf install-pdf-am \
-	install-ps install-ps-am install-sbinSCRIPTS install-strip \
-	installcheck installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-generic pdf \
-	pdf-am ps ps-am tags-am uninstall uninstall-am \
+	install-confDATA install-data install-data-am \
+	install-data-hook install-dvi install-dvi-am install-exec \
+	install-exec-am install-html install-html-am install-info \
+	install-info-am install-man install-nobase_dist_pkgdataDATA \
+	install-pdf install-pdf-am install-ps install-ps-am \
+	install-sbinSCRIPTS install-strip installcheck installcheck-am \
+	installdirs maintainer-clean maintainer-clean-generic \
+	mostlyclean mostlyclean-generic pdf pdf-am ps ps-am tags-am \
+	uninstall uninstall-am uninstall-confDATA \
 	uninstall-nobase_dist_pkgdataDATA uninstall-sbinSCRIPTS
 
 .PRECIOUS: Makefile
@@ -548,9 +583,11 @@ prebuild:
 	CFLAGS="$(CFLAGS)" $(NPM) install
 
 install-data-hook:
+	$(INSTALL) -d -m 750 -o $(APP_USER) -g $(APP_GROUP) $(DESTDIR)$(APP_CONFDIR)
 	$(INSTALL) -d -m 750 -o $(APP_USER) -g $(APP_GROUP) $(DESTDIR)$(APP_LOGDIR)
 	$(INSTALL) -d -m 750 -o $(APP_USER) -g $(APP_GROUP) $(DESTDIR)$(APP_RUNDIR)
 	$(INSTALL) -d -m 755 -o $(APP_USER) -g $(APP_GROUP) $(DESTDIR)$(APP_LIBDIR)
+	$(CP) -R node_modules $(DESTDIR)$(APP_LIBDIR)
 
 clean-local:
 	rm -f *~ logs/*.log run/pid

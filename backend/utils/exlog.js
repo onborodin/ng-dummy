@@ -2,11 +2,11 @@
 const path = require('path')
 const fs = require('fs')
 const util = require('util')
-const exdir = require('exdir')
+const exmkdir = require('exmkdir')
 
 module.exports = function(logDir) {
 
-    if (!exdir.writable(logDir)) {
+    if (!exmkdir(logDir)) {
         console.log('Cannot write to log directory ' + logDir + '. Exit process.')
         process.exit(1)
     }

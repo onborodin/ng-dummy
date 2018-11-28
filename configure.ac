@@ -20,6 +20,12 @@ AC_SUBST(npm, npm)
 AC_PATH_PROG([NPM],[npm])
 AC_PATH_PROG([npm],[npm])
 
+AC_CHECK_PROG(HAVE_CP, cp, true, false, /bin /usr/local/bin /usr/bin)
+if test "x$HAVE_CP" = "xfalse"; then
+	AC_MSG_ERROR([Requested program cp not found])
+fi
+AC_PATH_PROG([CP],[cp])
+
 AC_PROG_INSTALL
 
 AC_CANONICAL_HOST
@@ -50,13 +56,14 @@ fi
 AC_ARG_ENABLE([devel-mode],
     AS_HELP_STRING([--enable-devel-mod], [Enable developmend mode]))
 
-enable_devel_mode=yes
+enable_devel_mode=no
 
 AS_IF([test "x$enable_devel_mode" = "xyes"], [
     SRCDIR=`pwd`/backend
 ])
 
 test "x$prefix" == "xNONE" && prefix=$ac_default_prefix
+PREFIX=$prefix
 
 dnl --------------------------------------------------------------------------------------
 AC_ARG_WITH(confdir,
