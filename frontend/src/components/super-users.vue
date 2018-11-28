@@ -1,52 +1,54 @@
-<template src="./Users.html"></template>
-<style scoped src="./Users.css"></style>
+<template src="./super-users.html"></template>
+<style scoped src="./super-users.css"></style>
 
 <script lang="ts">
 
-import { Vue, Component, Prop, Watch } from "vue-property-decorator"
+import { Vue, Component, Mixins } from "vue-property-decorator"
 
 import * as moment from 'moment-mini'
 import foundation from '../foundation'
 
-interface SuperUser {
+interface DataRecord {
     id: number,
     name: string,
     gecos?: string,
     password?: string
 }
 
-interface formState {
+interface FormState {
     create: boolean,
     update: boolean,
     drop: boolean
 }
 
-@Component
-export default class SuperUsers extends Vue {
+import PageNav from "./page-nav.vue"
+import PageNavMixin from "./page-nav-mixin"
 
-    infoMessage: string = ''
-    alertMessage: string = ''
-    dataRecords: any[] = []
-    updateStamp: string = ''
+@Component({
+   components: { PageNav },
+})
+export default class SuperUsers extends Mixins(PageNavMixin) {
 
-    firstRecord: number = 0
-    recordStep: number = 5
+    dataRecords : DataRecord[] = []
 
-    formData: SuperUser = {
+    infoMessage : string = ''
+    alertMessage : string = ''
+    updateStamp : string = ''
+
+    formData : DataRecord = {
         id: 0,
         name: '',
         password: ''
     }
 
-    formState: formState = {
+    formState : FormState = {
         create: false,
         update: false,
         drop: false
     }
 
-
     sortData(prop : string, dir : string ) {
-        this.dataRecords = this.dataRecords.sort(function(itemA, itemB) {
+        this.dataRecords = this.dataRecords.sort(function(itemA : any, itemB : any) : number {
             if (dir === 'up') {
                 if (itemA[prop] < itemB[prop]) return 1
                 if (itemA[prop] > itemB[prop]) return -1
@@ -80,7 +82,6 @@ export default class SuperUsers extends Vue {
             })
     }
 
-
     resetFormData() {
         this.formData = {
             id: 0,
@@ -104,7 +105,6 @@ export default class SuperUsers extends Vue {
         this.alertMessage = ''
     }
 
-
     showCreateForm() {
         this.hideInfo()
         this.resetFormData()
@@ -113,7 +113,7 @@ export default class SuperUsers extends Vue {
         this.formState.create = !this.formState.create
     }
 
-    showUpdateForm(item: SuperUser) {
+    showUpdateForm(item : DataRecord) {
         this.hideInfo()
         this.formState.drop = false
         this.formState.create = false
@@ -128,7 +128,7 @@ export default class SuperUsers extends Vue {
 
     }
 
-    showDropForm(item: SuperUser) {
+    showDropForm(item : DataRecord) {
         this.hideInfo()
         this.formState.update = false
         this.formState.create = false
@@ -142,7 +142,7 @@ export default class SuperUsers extends Vue {
         }
     }
 
-    handleCreate(item: SuperUser) {
+    handleCreate(item : DataRecord) {
         this.formState.create = false
         this.formState.update = false
         this.$client('/api/superusers', 'create', item)
@@ -155,7 +155,7 @@ export default class SuperUsers extends Vue {
             })
     }
 
-    handleUpdate(item: SuperUser) {
+    handleUpdate(item : DataRecord) {
         this.formState.update = false
         this.$client('/api/superusers', 'update', item)
             .then((res : any) => {
@@ -167,7 +167,7 @@ export default class SuperUsers extends Vue {
             })
     }
 
-    handleDrop(item: SuperUser) {
+    handleDrop(item : DataRecord) {
         this.formState.drop = false
         this.formState.update = false
         this.$client('/api/superusers', 'drop', item)

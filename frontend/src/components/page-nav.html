@@ -13,8 +13,8 @@
             </li>
 
             <li v-for="(page) in pageArray()">
-                <a v-if="page * recordStep == firstRecord" v-on:click="firstRecord = page * recordStep" class="current">{{ page + 1 }}</a>
-                <a v-if="page * recordStep != firstRecord" v-on:click="firstRecord = page * recordStep">{{ page + 1 }}</a>
+                <a v-if="page * recordStep == firstRecord" v-on:click="onChangePage(page)" class="current">{{ page + 1 }}</a>
+                <a v-if="page * recordStep != firstRecord" v-on:click="onChangePage(page)">{{ page + 1 }}</a>
             </li>
 
             <li v-if="firstRecord < (dataLength - recordStep)">

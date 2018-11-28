@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Domains from './components/Domains.vue'
-import Login from './components/Login.vue'
-import Users from './components/Users.vue'
-import SuperUsers from './components/SuperUsers.vue'
-import NotFound from './components/NotFound.vue'
+import Domains from './components/domains.vue'
+import Login from './components/login.vue'
+import Users from './components/users.vue'
+import SuperUsers from './components/super-users.vue'
+import NotFound from './components/not-found.vue'
 
 import store from './store'
 

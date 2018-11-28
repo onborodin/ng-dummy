@@ -1,15 +1,15 @@
-<template src="./App.html"></template>
-<style src="./App.css"></style>
+<template src="./app.html"></template>
+<style src="./app.css"></style>
 
 <script lang="ts">
 
 import { Vue, Component, Prop } from "vue-property-decorator"
 import { State, Action, Getter, Mutation, namespace } from 'vuex-class'
 
-import Domains from './components/Domains.vue'
-import Users from './components/Users.vue'
-import SuperUsers from './components/SuperUsers.vue'
-import NotFound from './components/NotFound.vue'
+import Domains from './components/domains.vue'
+import Users from './components/users.vue'
+import SuperUsers from './components/super-users.vue'
+import NotFound from './components/not-found.vue'
 
 const login = namespace('./modules')
 

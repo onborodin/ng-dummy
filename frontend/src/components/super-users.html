@@ -1,4 +1,4 @@
-<div id="domains">
+<div id="superusers">
 
     <div class="grid-container">
         <div class="grid-x grid-margin-x align-center">
@@ -41,10 +41,14 @@
                     <div v-if="formState.create">
                         <form accept-charset="UTF-8" v-on:submit.prevent="handleCreate(formData)" class="callout">
 
-                            <h5 class="text-center">Do create domain {{ formData.name }}?</h5>
+                            <h5 class="text-center">Do create superuser {{ formData.name }}?</h5>
 
                             <label>Name
                                 <input type="text" v-model.trim="formData.name" />
+                            </label>
+
+                            <label>Password
+                                <input type="text" v-model.trim="formData.password" />
                             </label>
 
                             <div class="text-center">
@@ -60,10 +64,14 @@
                     <div v-if="formState.update">
                         <form accept-charset="UTF-8" v-on:submit.prevent="handleUpdate(formData)" class="callout">
 
-                            <h5 class="text-center">Do update domain {{ formData.name }}?</h5>
+                            <h5 class="text-center">Do update superuser {{ formData.name }}?</h5>
 
                             <label>Name
                                 <input type="text" v-model.trim="formData.name" />
+                            </label>
+
+                            <label>Password
+                                <input type="text" v-model.trim="formData.password" />
                             </label>
 
                             <div class="text-center">
@@ -78,7 +86,7 @@
                 <transition name="fade">
                     <div v-if="formState.drop">
                         <form accept-charset="UTF-8" v-on:submit.prevent="handleDrop(formData)" class="callout">
-                            <h5 class="text-center">Do drop domain {{ formData.name }}?</h5>
+                            <h5 class="text-center">Do drop superuser {{ formData.name }}?</h5>
                             <div class="text-center">
                                 <button class="button small" type="submit">Accept</button>
                                 <div class="button small" v-on:click="hideForms()">Escape</div>
@@ -96,7 +104,7 @@
         <div class="grid-x grid-margin-x align-center">
             <div class="cell medium-8">
 
-                <h5>Domains <a v-on:click="fetchData()"><i class="fi-refresh"></i></a>
+                <h5>Users <a v-on:click="fetchData()"><i class="fi-refresh"></i></a>
                     <button class="float-right small button" v-on:click="showCreateForm()">+</button>
                 </h5>
 
@@ -144,33 +152,13 @@
 
                         </table>
 
+                        <page-nav 
+                            class="text-center" 
+                            v-on:pageNumberChanged="onPageNumberChanged" 
+                            v-bind:record-step="recordStep"
+                            v-bind:data-length="dataRecords.length"
+                        />
 
-                        <nav v-if="pageArray().length - 1">
-                            <ul class="pagination text-center">
-
-                                <li v-if="firstRecord >= recordStep">
-                                    <a v-on:click="firstRecord -= recordStep">
-                                        <i class="arrow-left margin-right-1"></i>Prev
-                                    </a>
-                                </li>
-                                <li v-if="firstRecord < recordStep">
-                                    <a href="#">Prev</a>
-                                </li>
-
-                                <li v-for="(page) in pageArray()">
-                                    <a v-if="page * recordStep == firstRecord" v-on:click="firstRecord = page * recordStep" class="current" >{{ page + 1 }}</a>
-                                    <a v-if="page * recordStep != firstRecord" v-on:click="firstRecord = page * recordStep">{{ page + 1 }}</a>
-                                </li>
-
-                                <li v-if="firstRecord < (dataRecords.length - recordStep)">
-                                    <a v-on:click="firstRecord += recordStep">Next<i class="arrow-right margin-left-1"></i></a>
-                                </li>
-                                <li v-if="firstRecord >= (dataRecords.length - recordStep)">
-                                    <a href="#">Next</a>
-                                </li>
-
-                            </ul>
-                        </nav>
 
                     </div>
                 </transition>

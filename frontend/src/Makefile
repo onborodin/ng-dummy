@@ -233,9 +233,9 @@ PWD = $(shell pwd)
 WEBPACK = $(PWD)/../node_modules/.bin/webpack
 BUILD_DEST = $(PWD)/../../backend/public/app.js
 BUILD_SRC = \
-	App.css \
-	App.html \
-	App.vue \
+	app.css \
+	app.html \
+	app.vue \
 	assets/favicon.ico \
 	assets/foundation-icons.css \
 	assets/foundation-icons.eot \
@@ -243,12 +243,12 @@ BUILD_SRC = \
 	assets/foundation-icons.svg \
 	assets/foundation-icons.ttf \
 	assets/foundation-icons.woff \
-	components/Login.html \
-	components/Login.vue \
-	components/NotFound.vue \
-	components/Users.css \
-	components/Users.html \
-	components/Users.vue \
+	components/login.html \
+	components/login.vue \
+	components/not-found.vue \
+	components/users.css \
+	components/users.html \
+	components/users.vue \
 	foundation.d.ts \
 	foundation.js \
 	index.html \
