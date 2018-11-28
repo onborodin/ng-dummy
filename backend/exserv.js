@@ -76,8 +76,16 @@ const knexfile = require('knexfile')
 const knex = require('knex')(knexfile.development)
 
 // *** set routes ***
+
 var users = require('./routers/users')(knex)
 app.use('/api/users', users)
+
+var domains = require('./routers/domains')(knex)
+app.use('/api/domains', domains)
+
+
+var superusers = require('./routers/superusers')(knex)
+app.use('/api/superusers', superusers)
 
 app.get('/*', function(req, res) {
      res.sendFile(path.join(exconfig.appDir, '/public/index.html'))

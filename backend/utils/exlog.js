@@ -6,6 +6,8 @@ const exmkdir = require('exmkdir')
 
 module.exports = function(logDir) {
 
+    exmkdir(logDir)
+
     if (!exmkdir(logDir)) {
         console.log('Cannot write to log directory ' + logDir + '. Exit process.')
         process.exit(1)

@@ -35,12 +35,12 @@ const error = {
     }
 }
 
-const express = require('express')
-const router = express.Router()
-
 module.exports = function(model) {
 
-    const responder = function(req, res) {
+    const express = require('express')
+    const router = express.Router()
+
+    function responder(req, res) {
 
         if (typeof req.body.method !== 'string') {
             res.send(error.invalidRequest)
