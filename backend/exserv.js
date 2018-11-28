@@ -76,7 +76,7 @@ const knexfile = require('knexfile')
 const knex = require('knex')(knexfile.development)
 
 // *** set routes ***
-var users = require('./routers/users')
+var users = require('./routers/users')(knex)
 app.use('/api/users', users)
 
 app.get('/*', function(req, res) {

@@ -1,14 +1,14 @@
 
 module.exports = {
     nodeBin: '/usr/local/bin/node',
-    appDir: '/usr/local/expresso/share/expresso',
-    publicDir: '/usr/local/expresso/share/expresso/public',
-    uploadDir: '/usr/local/expresso/share/expresso/uploads',
+    appDir: '/home/ziggi/expresso-maacom/backend',
+    publicDir: '/home/ziggi/expresso-maacom/backend/public',
+    uploadDir: '/home/ziggi/expresso-maacom/backend/uploads',
     port: 3100,
     address: '127.0.0.1',
-    runUser: 'www',
-    runGroup: 'www',
-    logDir: '/var/log/expresso',
-    pidFile: '/var/run/expresso/pid',
-    runDir: '/var/run/expresso'
+    runUser: 'ziggi',
+    runGroup: 'wheel',
+    logDir: '/home/ziggi/expresso-maacom/backend/logs',
+    pidFile: '/home/ziggi/expresso-maacom/backend/run/pid',
+    runDir: '/home/ziggi/expresso-maacom/backend/run'
 }

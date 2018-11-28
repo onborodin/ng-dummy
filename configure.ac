@@ -53,13 +53,14 @@ if test -d /lib/systemd/system; then
 fi
 
 
-AC_ARG_ENABLE([devel-mode],
-    AS_HELP_STRING([--enable-devel-mod], [Enable developmend mode]))
 
-enable_devel_mode=no
+AC_ARG_ENABLE([devel-mode],
+    AS_HELP_STRING([--enable-devel-mode], [Enable developmend mode]))
+
 
 AS_IF([test "x$enable_devel_mode" = "xyes"], [
     SRCDIR=`pwd`/backend
+    enable_devel_mode=yes
 ])
 
 test "x$prefix" == "xNONE" && prefix=$ac_default_prefix

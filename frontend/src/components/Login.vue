@@ -1,4 +1,5 @@
 <template src="./Login.html"></template>
+<style src="./Login.css"></style>
 
 <script lang="ts">
 
