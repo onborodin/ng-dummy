@@ -3,7 +3,7 @@
         <div class="grid-container">
             <div class="grid-x grid-padding-x align-center">
                 <div class="cell medium-8">
-                    <div class="callout second">
+                    <div class="callout second margin-top-2 margin-bottom-2">
 
                         <h5>Page not found</h5>
 

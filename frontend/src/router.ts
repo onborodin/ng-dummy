@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+import Domains from './components/Domains.vue'
 import Login from './components/Login.vue'
 import Users from './components/Users.vue'
+import SuperUsers from './components/SuperUsers.vue'
 import NotFound from './components/NotFound.vue'
 
 import store from './store'
@@ -17,8 +19,16 @@ var router = new Router({
             redirect: '/login'
         },
         {
+            path: '/domains',
+            component: Domains
+        },
+        {
             path: '/users',
             component: Users
+        },
+        {
+            path: '/superusers',
+            component: SuperUsers
         },
         {
             path: '/login',

@@ -6,13 +6,15 @@
 import { Vue, Component, Prop } from "vue-property-decorator"
 import { State, Action, Getter, Mutation, namespace } from 'vuex-class'
 
+import Domains from './components/Domains.vue'
 import Users from './components/Users.vue'
+import SuperUsers from './components/SuperUsers.vue'
 import NotFound from './components/NotFound.vue'
 
 const login = namespace('./modules')
 
 @Component({
-    components: { Users, NotFound }
+    components: { Domains, Users, SuperUsers, NotFound }
 })
 export default class App extends Vue {
 
@@ -28,35 +30,6 @@ export default class App extends Vue {
     }
 
     mounted() {
-        setInterval(
-            () => {
-                // find cookie with name, else push to login page
-                var cookieName = 'session'
-                var name = cookieName + "="
-                var decodedCookie = decodeURIComponent(document.cookie)
-
-                console.log('cookie: '+ decodedCookie)
-
-                var cookArray = decodedCookie.split(';')
-
-                for (var i = 0; i < cookArray.length; i++) {
-                    var c = cookArray[i]
-                    while (c.charAt(0) == ' ') {
-                        c = c.substring(1)
-                    }
-
-                    if (c.indexOf(name) == 0) {
-                        this.cookie = c.substring(name.length, c.length)
-                    } else {
-                        this.cookie = ''
-                    }
-                }
-
-                if (this.cookie === '') {
-                    this.setLogout()
-                    this.$router.push('/login')
-                }
-            }, 1000)
     }
 }
 </script>

@@ -20,7 +20,7 @@ export default class Login extends Vue {
     @Action setLogin: () => void
 
     submitLogin() {
-        this.$client('/api/users', 'login', { 
+        this.$client('/api/superusers', 'login', { 
                 loginName: this.loginName,
                 password: this.password
         })

@@ -12,15 +12,19 @@
                 </div>
             </div>
 
-
-
             <div v-if="isAuth" class="top-bar">
                 <div class="top-bar-left">
                     <ul class="menu">
                         <li><a href="/"><i class="my-menu-icon"></i></a></li>
                         <li class="menu-text">VuT</li>
                         <li>
+                            <router-link to="/domains">Domains</router-link>
+                        </li>
+                        <li>
                             <router-link to="/users">Users</router-link>
+                        </li>
+                        <li>
+                            <router-link to="/superusers">SUsers</router-link>
                         </li>
                     </ul>
                 </div>

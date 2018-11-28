@@ -1,5 +1,5 @@
-<template src="./Users.html"></template>
-<style scoped src="./Users.css"></style>
+<template src="./Domains.html"></template>
+<style scoped src="./Domains.css"></style>
 
 <script lang="ts">
 
@@ -8,10 +8,10 @@ import { Vue, Component, Prop, Watch } from "vue-property-decorator"
 import * as moment from 'moment-mini'
 import foundation from '../foundation'
 
-interface user {
+interface Domain {
     id: number,
     name: string,
-    password?: string
+    gecos?: string
 }
 
 interface formState {
@@ -21,7 +21,7 @@ interface formState {
 }
 
 @Component
-export default class Users extends Vue {
+export default class Domains extends Vue {
 
     infoMessage: string = ''
     alertMessage: string = ''
@@ -31,10 +31,9 @@ export default class Users extends Vue {
     firstRecord: number = 0
     recordStep: number = 5
 
-    formData: user = {
+    formData: Domain = {
         id: 0,
         name: '',
-        password: ''
     }
 
     formState: formState = {
@@ -59,7 +58,7 @@ export default class Users extends Vue {
     }
 
     fetchData() {
-        this.$client('/api/users', 'list', {})
+        this.$client('/api/domains', 'list', {})
             .then((res : any) => {
                 this.dataRecords = res.data.result
                 this.updateStamp = moment().format('h:mm:ss a')
@@ -84,7 +83,6 @@ export default class Users extends Vue {
         this.formData = {
             id: 0,
             name: '',
-            password: ''
         }
     }
 
@@ -112,7 +110,7 @@ export default class Users extends Vue {
         this.formState.create = !this.formState.create
     }
 
-    showUpdateForm(item: user) {
+    showUpdateForm(item: Domain) {
         this.hideInfo()
         this.formState.drop = false
         this.formState.create = false
@@ -127,7 +125,7 @@ export default class Users extends Vue {
 
     }
 
-    showDropForm(item: user) {
+    showDropForm(item: Domain) {
         this.hideInfo()
         this.formState.update = false
         this.formState.create = false
@@ -141,12 +139,12 @@ export default class Users extends Vue {
         }
     }
 
-    handleCreate(item: user) {
+    handleCreate(item: Domain) {
         this.formState.create = false
         this.formState.update = false
-        this.$client('/api/users', 'create', item)
+        this.$client('/api/domains', 'create', item)
             .then((res : any) => {
-                this.infoMessage = 'User ' + this.$lodash.clone(this.formData.name) + ' created'
+                this.infoMessage = 'Domain ' + this.$lodash.clone(this.formData.name) + ' created'
                 this.fetchData()
             })
             .catch((err : any) => {
@@ -154,11 +152,11 @@ export default class Users extends Vue {
             })
     }
 
-    handleUpdate(item: user) {
+    handleUpdate(item: Domain) {
         this.formState.update = false
-        this.$client('/api/users', 'update', item)
+        this.$client('/api/domains', 'update', item)
             .then((res : any) => {
-                this.infoMessage = 'User ' + this.$lodash.clone(this.formData.name) + ' updated'
+                this.infoMessage = 'Domain ' + this.$lodash.clone(this.formData.name) + ' updated'
                 this.fetchData()
             })
             .catch((err : any) => {
@@ -166,12 +164,12 @@ export default class Users extends Vue {
             })
     }
 
-    handleDrop(item: user) {
+    handleDrop(item: Domain) {
         this.formState.drop = false
         this.formState.update = false
-        this.$client('/api/users', 'drop', item)
+        this.$client('/api/domains', 'drop', item)
             .then((res : any) => {
-                this.infoMessage = 'User ' + this.$lodash.clone(this.formData.name) + ' deleted'
+                this.infoMessage = 'Domain ' + this.$lodash.clone(this.formData.name) + ' deleted'
                 this.fetchData()
             })
             .catch((err : any) => {

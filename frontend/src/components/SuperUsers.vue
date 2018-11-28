@@ -8,9 +8,10 @@ import { Vue, Component, Prop, Watch } from "vue-property-decorator"
 import * as moment from 'moment-mini'
 import foundation from '../foundation'
 
-interface user {
+interface SuperUser {
     id: number,
     name: string,
+    gecos?: string,
     password?: string
 }
 
@@ -21,7 +22,7 @@ interface formState {
 }
 
 @Component
-export default class Users extends Vue {
+export default class SuperUsers extends Vue {
 
     infoMessage: string = ''
     alertMessage: string = ''
@@ -31,7 +32,7 @@ export default class Users extends Vue {
     firstRecord: number = 0
     recordStep: number = 5
 
-    formData: user = {
+    formData: SuperUser = {
         id: 0,
         name: '',
         password: ''
@@ -59,7 +60,7 @@ export default class Users extends Vue {
     }
 
     fetchData() {
-        this.$client('/api/users', 'list', {})
+        this.$client('/api/superusers', 'list', {})
             .then((res : any) => {
                 this.dataRecords = res.data.result
                 this.updateStamp = moment().format('h:mm:ss a')
@@ -112,7 +113,7 @@ export default class Users extends Vue {
         this.formState.create = !this.formState.create
     }
 
-    showUpdateForm(item: user) {
+    showUpdateForm(item: SuperUser) {
         this.hideInfo()
         this.formState.drop = false
         this.formState.create = false
@@ -127,7 +128,7 @@ export default class Users extends Vue {
 
     }
 
-    showDropForm(item: user) {
+    showDropForm(item: SuperUser) {
         this.hideInfo()
         this.formState.update = false
         this.formState.create = false
@@ -141,10 +142,10 @@ export default class Users extends Vue {
         }
     }
 
-    handleCreate(item: user) {
+    handleCreate(item: SuperUser) {
         this.formState.create = false
         this.formState.update = false
-        this.$client('/api/users', 'create', item)
+        this.$client('/api/superusers', 'create', item)
             .then((res : any) => {
                 this.infoMessage = 'User ' + this.$lodash.clone(this.formData.name) + ' created'
                 this.fetchData()
@@ -154,9 +155,9 @@ export default class Users extends Vue {
             })
     }
 
-    handleUpdate(item: user) {
+    handleUpdate(item: SuperUser) {
         this.formState.update = false
-        this.$client('/api/users', 'update', item)
+        this.$client('/api/superusers', 'update', item)
             .then((res : any) => {
                 this.infoMessage = 'User ' + this.$lodash.clone(this.formData.name) + ' updated'
                 this.fetchData()
@@ -166,10 +167,10 @@ export default class Users extends Vue {
             })
     }
 
-    handleDrop(item: user) {
+    handleDrop(item: SuperUser) {
         this.formState.drop = false
         this.formState.update = false
-        this.$client('/api/users', 'drop', item)
+        this.$client('/api/superusers', 'drop', item)
             .then((res : any) => {
                 this.infoMessage = 'User ' + this.$lodash.clone(this.formData.name) + ' deleted'
                 this.fetchData()
