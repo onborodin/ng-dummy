@@ -1,17 +1,18 @@
 #!/bin/sh
 
-NODE_PATH="/home/ziggi/expresso-maacom/backend"
-NODE_PATH="$NODE_PATH:/home/ziggi/expresso-maacom/backend"
-NODE_PATH="$NODE_PATH:/home/ziggi/expresso-maacom/backend/models"
-NODE_PATH="$NODE_PATH:/home/ziggi/expresso-maacom/backend/controllers"
-NODE_PATH="$NODE_PATH:/home/ziggi/expresso-maacom/backend/utils"
-NODE_PATH="$NODE_PATH:/home/ziggi/expresso-maacom/backend/plugins"
+NODE_PATH="/home/ziggi/expresso/backend"
+NODE_PATH="$NODE_PATH:/home/ziggi/expresso/backend"
+NODE_PATH="$NODE_PATH:/home/ziggi/expresso/backend/models"
+NODE_PATH="$NODE_PATH:/home/ziggi/expresso/backend/controllers"
+NODE_PATH="$NODE_PATH:/home/ziggi/expresso/backend/utils"
+NODE_PATH="$NODE_PATH:/home/ziggi/expresso/backend/plugins"
+NODE_PATH="$NODE_PATH:/home/ziggi/expresso/backend/routers"
 export NODE_PATH
 
 NODE_ENV=production
 export NODE_ENV
 
-cd /home/ziggi/expresso-maacom/backend && /usr/local/bin/node /home/ziggi/expresso-maacom/backend/exserv.js $@
+cd /home/ziggi/expresso/backend && /usr/local/bin/node /home/ziggi/expresso/backend/exserv.js $@
 #EOF
 
 
