@@ -80,7 +80,7 @@ module.exports = function(knex) {
     }
 
     return {
-        model: "superusers",
+        modelName: "superusers",
         login: login,
         list: list,
         find: find,

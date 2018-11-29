@@ -23,7 +23,7 @@ export default class App extends Vue {
     @Getter isAuth: boolean
     @Action setLogout: () => void
 
-    cookie : string = ''
+    cookieName : string = 'session'
     debug : any = ''
     alertMessage : string = ''
     infoMessage : string = ''
@@ -44,7 +44,7 @@ export default class App extends Vue {
 
     mounted() {
         setInterval(() => {
-                if (typeof(esCookies.get('session')) === 'undefined' && this.isAuth ) {
+                if (typeof(esCookies.get(this.cookieName)) === 'undefined' && this.isAuth == true ) {
                     this.alertMessage = 'Session expired'
                     this.logout()
                 }

@@ -77,6 +77,18 @@ const knex = require('knex')(knexfile.development)
 
 // *** set routes ***
 
+var login = require('./routers/login')(knex)
+app.use('/api/login', login)
+
+app.use(function(req, res, next) {
+    if (typeof(req.session.userId) != 'undefined') {
+        req.session.touch()
+        next()
+    } else {
+         res.sendFile(path.join(exconfig.appDir, '/public/index.html'))
+    }
+})
+
 var users = require('./routers/users')(knex)
 app.use('/api/users', users)
 

@@ -13,12 +13,13 @@ export default class Login extends Vue {
     password : string = ''
     message : string = ''
     debug : any = ''
+    attemptsCount : number = 0
 
     @Getter isAuth: boolean
     @Action setLogin: () => void
 
     submitLogin() {
-        this.$client('/api/superusers', 'login', { 
+        this.$client('/api/login', 'login', { 
                 loginName: this.loginName,
                 password: this.password
         })
@@ -32,7 +33,8 @@ export default class Login extends Vue {
                     this.message = 'Login incorrect'
                 }
             } else {
-                this.message = 'Login incorrect'
+                this.attemptsCount += 1
+                this.message = 'Login incorrect, attempt ' + this.attemptsCount
             }
         })
         .catch((err : any) => {

@@ -66,7 +66,7 @@ module.exports = function(knex) {
     }
 
     return {
-        model: "domains",
+        modelName: "domains",
         list: list,
         find: find,
         create: create,

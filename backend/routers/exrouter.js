@@ -68,6 +68,19 @@ module.exports = function(model) {
 
         model[method](params)
             .then(function(data) {
+
+                if (method === 'login') {
+                    if (typeof(data[0]) === 'object') {
+                        if (typeof(data[0].id) === 'number') {
+                            console.log('#login correct with id = ' + data[0].id)
+                            req.session.userId = data[0].id
+                            req.session.userProfile = data[0]
+                        }
+                    } else {
+                        console.log('#login attempt with login ' + JSON.stringify(req.body.params.loginName))
+                    }
+                }
+
                 res.send({
                     jsonrpc: "2.0",
                     result: data,

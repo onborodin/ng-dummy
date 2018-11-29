@@ -17,12 +17,21 @@
                         <div class="text-center">
                             <button class="button small" type="submit">Send</button>
                         </div>
-                        <p class="text-center">
-                            {{ message }}
-                        </p>
                     </form>
                 </div>
 
+
+            </div>
+        </div>
+    </div>
+
+    <div v-if="message" class="grid-container margin-top-2">
+        <div class="grid-x grid-padding-x align-center">
+            <div class="cell small-10 medium-6 large-4">
+
+                        <p class="text-center callout warning">
+                            {{ message }}
+                        </p>
             </div>
         </div>
     </div>

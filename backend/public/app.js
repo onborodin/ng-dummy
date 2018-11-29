@@ -3829,6 +3829,96 @@ function toComment(sourceMap) {
 
 /***/ }),
 
+/***/ "./node_modules/es-cookie/src/es-cookie.js":
+/*!*************************************************!*\
+  !*** ./node_modules/es-cookie/src/es-cookie.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
+exports.__esModule = true;
+function stringifyAttribute(name, value) {
+    if (!value) {
+        return '';
+    }
+    var stringified = '; ' + name;
+    if (value === true) {
+        return stringified; // boolean attributes shouldn't have a value
+    }
+    return stringified + '=' + value;
+}
+function stringifyAttributes(attributes) {
+    if (typeof attributes.expires === 'number') {
+        var expires = new Date();
+        expires.setMilliseconds(expires.getMilliseconds() + attributes.expires * 864e+5);
+        attributes.expires = expires;
+    }
+    return stringifyAttribute('Expires', attributes.expires ? attributes.expires.toUTCString() : '')
+        + stringifyAttribute('Domain', attributes.domain)
+        + stringifyAttribute('Path', attributes.path)
+        + stringifyAttribute('Secure', attributes.secure)
+        + stringifyAttribute('SameSite', attributes.sameSite);
+}
+function encode(name, value, attributes) {
+    return encodeURIComponent(name)
+        .replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent) // allowed special characters
+        .replace(/\(/g, '%28').replace(/\)/g, '%29') // replace opening and closing parens
+        + '=' + encodeURIComponent(value)
+        .replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g, decodeURIComponent) // allowed special characters
+        + stringifyAttributes(attributes);
+}
+exports.encode = encode;
+function parse(cookieString) {
+    var result = {};
+    var cookies = cookieString ? cookieString.split('; ') : [];
+    var rdecode = /(%[0-9A-Z]{2})+/g;
+    for (var i = 0; i < cookies.length; i++) {
+        var parts = cookies[i].split('=');
+        var cookie = parts.slice(1).join('=');
+        if (cookie.charAt(0) === '"') {
+            cookie = cookie.slice(1, -1);
+        }
+        try {
+            var name_1 = parts[0].replace(rdecode, decodeURIComponent);
+            result[name_1] = cookie.replace(rdecode, decodeURIComponent);
+        }
+        catch (e) {
+            // ignore cookies with invalid name/value encoding
+        }
+    }
+    return result;
+}
+exports.parse = parse;
+function getAll() {
+    return parse(document.cookie);
+}
+exports.getAll = getAll;
+function get(name) {
+    return getAll()[name];
+}
+exports.get = get;
+function set(name, value, attributes) {
+    document.cookie = encode(name, value, __assign({ path: '/' }, attributes));
+}
+exports.set = set;
+function remove(name, attributes) {
+    set(name, '', __assign({}, attributes, { expires: -1 }));
+}
+exports.remove = remove;
+
+
+/***/ }),
+
 /***/ "./node_modules/foundation-sites/dist/js/foundation.js":
 /*!*************************************************************!*\
   !*** ./node_modules/foundation-sites/dist/js/foundation.js ***!
@@ -59095,10 +59185,12 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-property-decorator */ "./node_modules/vue-property-decorator/lib/vue-property-decorator.js");
 /* harmony import */ var vuex_class__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex-class */ "./node_modules/vuex-class/lib/index.js");
-/* harmony import */ var _components_domains_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/domains.vue */ "./src/components/domains.vue");
-/* harmony import */ var _components_users_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/users.vue */ "./src/components/users.vue");
-/* harmony import */ var _components_super_users_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/super-users.vue */ "./src/components/super-users.vue");
-/* harmony import */ var _components_not_found_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/not-found.vue */ "./src/components/not-found.vue");
+/* harmony import */ var es_cookie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! es-cookie */ "./node_modules/es-cookie/src/es-cookie.js");
+/* harmony import */ var es_cookie__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(es_cookie__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _components_domains_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/domains.vue */ "./src/components/domains.vue");
+/* harmony import */ var _components_users_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/users.vue */ "./src/components/users.vue");
+/* harmony import */ var _components_super_users_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/super-users.vue */ "./src/components/super-users.vue");
+/* harmony import */ var _components_not_found_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/not-found.vue */ "./src/components/not-found.vue");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -59111,18 +59203,34 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
 const login = Object(vuex_class__WEBPACK_IMPORTED_MODULE_1__["namespace"])('./modules');
 let App = class App extends vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__["Vue"] {
     constructor() {
         super(...arguments);
-        this.cookie = '';
+        this.cookieName = 'session';
         this.debug = '';
+        this.alertMessage = '';
+        this.infoMessage = '';
+    }
+    hideInfo() {
+        this.infoMessage = '';
+    }
+    hideAlert() {
+        this.alertMessage = '';
     }
     logout() {
         this.setLogout();
+        es_cookie__WEBPACK_IMPORTED_MODULE_2__["remove"]('session');
         this.$router.push('/login');
     }
     mounted() {
+        setInterval(() => {
+            if (typeof (es_cookie__WEBPACK_IMPORTED_MODULE_2__["get"](this.cookieName)) === 'undefined' && this.isAuth == true) {
+                this.alertMessage = 'Session expired';
+                this.logout();
+            }
+        }, 1000);
     }
 };
 __decorate([
@@ -59133,7 +59241,7 @@ __decorate([
 ], App.prototype, "setLogout", void 0);
 App = __decorate([
     Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-        components: { Domains: _components_domains_vue__WEBPACK_IMPORTED_MODULE_2__["default"], Users: _components_users_vue__WEBPACK_IMPORTED_MODULE_3__["default"], SuperUsers: _components_super_users_vue__WEBPACK_IMPORTED_MODULE_4__["default"], NotFound: _components_not_found_vue__WEBPACK_IMPORTED_MODULE_5__["default"] }
+        components: { Domains: _components_domains_vue__WEBPACK_IMPORTED_MODULE_3__["default"], Users: _components_users_vue__WEBPACK_IMPORTED_MODULE_4__["default"], SuperUsers: _components_super_users_vue__WEBPACK_IMPORTED_MODULE_5__["default"], NotFound: _components_not_found_vue__WEBPACK_IMPORTED_MODULE_6__["default"] }
     })
 ], App);
 /* harmony default export */ __webpack_exports__["default"] = (App);
@@ -59151,10 +59259,10 @@ App = __decorate([
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-property-decorator */ "./node_modules/vue-property-decorator/lib/vue-property-decorator.js");
-/* harmony import */ var moment_mini__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment-mini */ "./node_modules/moment-mini/moment.min.js");
-/* harmony import */ var moment_mini__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment_mini__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _page_nav__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./page-nav */ "./src/components/page-nav.vue");
-/* harmony import */ var _page_nav_mixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./page-nav-mixin */ "./src/components/page-nav-mixin.ts");
+/* harmony import */ var _page_nav__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./page-nav */ "./src/components/page-nav.vue");
+/* harmony import */ var _mixins_page_nav_mixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./mixins/page-nav-mixin */ "./src/components/mixins/page-nav-mixin.ts");
+/* harmony import */ var _mixins_sort_records_mixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./mixins/sort-records-mixin */ "./src/components/mixins/sort-records-mixin.ts");
+/* harmony import */ var _mixins_crud_forms_mixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./mixins/crud-forms-mixin */ "./src/components/mixins/crud-forms-mixin.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -59165,135 +59273,24 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
-let Domains = class Domains extends Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__["Mixins"])(_page_nav_mixin__WEBPACK_IMPORTED_MODULE_3__["default"]) {
+
+let Domains = class Domains extends Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__["Mixins"])(_mixins_page_nav_mixin__WEBPACK_IMPORTED_MODULE_2__["default"], _mixins_crud_forms_mixin__WEBPACK_IMPORTED_MODULE_4__["default"], _mixins_sort_records_mixin__WEBPACK_IMPORTED_MODULE_3__["default"]) {
     constructor() {
         super(...arguments);
         this.dataRecords = [];
-        this.infoMessage = '';
-        this.alertMessage = '';
-        this.updateStamp = '';
+        this.apiURL = '/api/domains';
         this.formData = {
             id: 0,
             name: '',
+            desc: ''
         };
-        this.formState = {
-            create: false,
-            update: false,
-            drop: false
-        };
-    }
-    sortData(prop, dir) {
-        this.dataRecords = this.dataRecords.sort(function (itemA, itemB) {
-            if (dir === 'up') {
-                if (itemA[prop] < itemB[prop])
-                    return 1;
-                if (itemA[prop] > itemB[prop])
-                    return -1;
-                return 0;
-            }
-            else {
-                if (itemA[prop] > itemB[prop])
-                    return 1;
-                if (itemA[prop] < itemB[prop])
-                    return -1;
-                return 0;
-            }
-        });
-    }
-    fetchData() {
-        this.$client('/api/domains', 'list', {})
-            .then((res) => {
-            this.dataRecords = res.data.result;
-            this.updateStamp = moment_mini__WEBPACK_IMPORTED_MODULE_1__().format('h:mm:ss a');
-        })
-            .catch((err) => {
-            this.alertMessage = 'Communication problem';
-        });
     }
     resetFormData() {
         this.formData = {
             id: 0,
             name: '',
+            desc: ''
         };
-    }
-    hideForms() {
-        this.formState.create = false;
-        this.formState.update = false;
-        this.formState.drop = false;
-    }
-    hideInfo() {
-        this.infoMessage = '';
-    }
-    hideAlert() {
-        this.alertMessage = '';
-    }
-    showCreateForm() {
-        this.hideInfo();
-        this.resetFormData();
-        this.formState.update = false;
-        this.formState.drop = false;
-        this.formState.create = !this.formState.create;
-    }
-    showUpdateForm(item) {
-        this.hideInfo();
-        this.formState.drop = false;
-        this.formState.create = false;
-        if (this.formData.id == item.id) {
-            this.formState.update = false;
-            this.resetFormData();
-        }
-        else {
-            this.formData = this.$lodash.clone(item);
-            this.formState.update = true;
-        }
-    }
-    showDropForm(item) {
-        this.hideInfo();
-        this.formState.update = false;
-        this.formState.create = false;
-        if (this.formData.id == item.id) {
-            this.formState.drop = false;
-            this.resetFormData();
-        }
-        else {
-            this.formData = this.$lodash.clone(item);
-            this.formState.drop = true;
-        }
-    }
-    handleCreate(item) {
-        this.formState.create = false;
-        this.formState.update = false;
-        this.$client('/api/domains', 'create', item)
-            .then((res) => {
-            this.infoMessage = 'Domain ' + this.$lodash.clone(this.formData.name) + ' created';
-            this.fetchData();
-        })
-            .catch((err) => {
-            this.alertMessage = 'Communication problem';
-        });
-    }
-    handleUpdate(item) {
-        this.formState.update = false;
-        this.$client('/api/domains', 'update', item)
-            .then((res) => {
-            this.infoMessage = 'Domain ' + this.$lodash.clone(this.formData.name) + ' updated';
-            this.fetchData();
-        })
-            .catch((err) => {
-            this.alertMessage = 'Communication problem';
-        });
-    }
-    handleDrop(item) {
-        this.formState.drop = false;
-        this.formState.update = false;
-        this.$client('/api/domains', 'drop', item)
-            .then((res) => {
-            this.infoMessage = 'Domain ' + this.$lodash.clone(this.formData.name) + ' deleted';
-            this.fetchData();
-        })
-            .catch((err) => {
-            this.alertMessage = 'Communication problem';
-        });
     }
     mounted() {
         this.fetchData();
@@ -59301,7 +59298,7 @@ let Domains = class Domains extends Object(vue_property_decorator__WEBPACK_IMPOR
 };
 Domains = __decorate([
     Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-        components: { PageNav: _page_nav__WEBPACK_IMPORTED_MODULE_2__["default"] },
+        components: { PageNav: _page_nav__WEBPACK_IMPORTED_MODULE_1__["default"] },
     })
 ], Domains);
 /* harmony default export */ __webpack_exports__["default"] = (Domains);
@@ -59335,9 +59332,10 @@ let Login = class Login extends vue_property_decorator__WEBPACK_IMPORTED_MODULE_
         this.password = '';
         this.message = '';
         this.debug = '';
+        this.attemptsCount = 0;
     }
     submitLogin() {
-        this.$client('/api/superusers', 'login', {
+        this.$client('/api/login', 'login', {
             loginName: this.loginName,
             password: this.password
         })
@@ -59353,7 +59351,8 @@ let Login = class Login extends vue_property_decorator__WEBPACK_IMPORTED_MODULE_
                 }
             }
             else {
-                this.message = 'Login incorrect';
+                this.attemptsCount += 1;
+                this.message = 'Login incorrect, attempt ' + this.attemptsCount;
             }
         })
             .catch((err) => {
@@ -59462,10 +59461,10 @@ PageNav = __decorate([
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-property-decorator */ "./node_modules/vue-property-decorator/lib/vue-property-decorator.js");
-/* harmony import */ var moment_mini__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment-mini */ "./node_modules/moment-mini/moment.min.js");
-/* harmony import */ var moment_mini__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment_mini__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _page_nav_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./page-nav.vue */ "./src/components/page-nav.vue");
-/* harmony import */ var _page_nav_mixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./page-nav-mixin */ "./src/components/page-nav-mixin.ts");
+/* harmony import */ var _page_nav__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./page-nav */ "./src/components/page-nav.vue");
+/* harmony import */ var _mixins_page_nav_mixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./mixins/page-nav-mixin */ "./src/components/mixins/page-nav-mixin.ts");
+/* harmony import */ var _mixins_sort_records_mixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./mixins/sort-records-mixin */ "./src/components/mixins/sort-records-mixin.ts");
+/* harmony import */ var _mixins_crud_forms_mixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./mixins/crud-forms-mixin */ "./src/components/mixins/crud-forms-mixin.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -59476,60 +59475,17 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
-let SuperUsers = class SuperUsers extends Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__["Mixins"])(_page_nav_mixin__WEBPACK_IMPORTED_MODULE_3__["default"]) {
+
+let SuperUsers = class SuperUsers extends Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__["Mixins"])(_mixins_page_nav_mixin__WEBPACK_IMPORTED_MODULE_2__["default"], _mixins_sort_records_mixin__WEBPACK_IMPORTED_MODULE_3__["default"], _mixins_crud_forms_mixin__WEBPACK_IMPORTED_MODULE_4__["default"]) {
     constructor() {
         super(...arguments);
         this.dataRecords = [];
-        this.infoMessage = '';
-        this.alertMessage = '';
-        this.updateStamp = '';
+        this.apiURL = '/api/superusers';
         this.formData = {
             id: 0,
             name: '',
-            password: ''
+            password: '',
         };
-        this.formState = {
-            create: false,
-            update: false,
-            drop: false
-        };
-    }
-    sortData(prop, dir) {
-        this.dataRecords = this.dataRecords.sort(function (itemA, itemB) {
-            if (dir === 'up') {
-                if (itemA[prop] < itemB[prop])
-                    return 1;
-                if (itemA[prop] > itemB[prop])
-                    return -1;
-                return 0;
-            }
-            else {
-                if (itemA[prop] > itemB[prop])
-                    return 1;
-                if (itemA[prop] < itemB[prop])
-                    return -1;
-                return 0;
-            }
-        });
-    }
-    fetchData() {
-        this.$client('/api/superusers', 'list', {})
-            .then((res) => {
-            this.dataRecords = res.data.result;
-            this.updateStamp = moment_mini__WEBPACK_IMPORTED_MODULE_1__().format('h:mm:ss a');
-        })
-            .catch((err) => {
-            this.alertMessage = 'Communication problem';
-        });
-    }
-    pageArray() {
-        return Array
-            .apply(null, {
-            length: Math.floor((this.dataRecords.length) / this.recordStep + 0.999)
-        })
-            .map(function (value, index) {
-            return index;
-        });
     }
     resetFormData() {
         this.formData = {
@@ -59538,92 +59494,13 @@ let SuperUsers = class SuperUsers extends Object(vue_property_decorator__WEBPACK
             password: ''
         };
     }
-    hideForms() {
-        this.formState.create = false;
-        this.formState.update = false;
-        this.formState.drop = false;
-    }
-    hideInfo() {
-        this.infoMessage = '';
-    }
-    hideAlert() {
-        this.alertMessage = '';
-    }
-    showCreateForm() {
-        this.hideInfo();
-        this.resetFormData();
-        this.formState.update = false;
-        this.formState.drop = false;
-        this.formState.create = !this.formState.create;
-    }
-    showUpdateForm(item) {
-        this.hideInfo();
-        this.formState.drop = false;
-        this.formState.create = false;
-        if (this.formData.id == item.id) {
-            this.formState.update = false;
-            this.resetFormData();
-        }
-        else {
-            this.formData = this.$lodash.clone(item);
-            this.formState.update = true;
-        }
-    }
-    showDropForm(item) {
-        this.hideInfo();
-        this.formState.update = false;
-        this.formState.create = false;
-        if (this.formData.id == item.id) {
-            this.formState.drop = false;
-            this.resetFormData();
-        }
-        else {
-            this.formData = this.$lodash.clone(item);
-            this.formState.drop = true;
-        }
-    }
-    handleCreate(item) {
-        this.formState.create = false;
-        this.formState.update = false;
-        this.$client('/api/superusers', 'create', item)
-            .then((res) => {
-            this.infoMessage = 'User ' + this.$lodash.clone(this.formData.name) + ' created';
-            this.fetchData();
-        })
-            .catch((err) => {
-            this.alertMessage = 'Communication problem';
-        });
-    }
-    handleUpdate(item) {
-        this.formState.update = false;
-        this.$client('/api/superusers', 'update', item)
-            .then((res) => {
-            this.infoMessage = 'User ' + this.$lodash.clone(this.formData.name) + ' updated';
-            this.fetchData();
-        })
-            .catch((err) => {
-            this.alertMessage = 'Communication problem';
-        });
-    }
-    handleDrop(item) {
-        this.formState.drop = false;
-        this.formState.update = false;
-        this.$client('/api/superusers', 'drop', item)
-            .then((res) => {
-            this.infoMessage = 'User ' + this.$lodash.clone(this.formData.name) + ' deleted';
-            this.fetchData();
-        })
-            .catch((err) => {
-            this.alertMessage = 'Communication problem';
-        });
-    }
     mounted() {
         this.fetchData();
     }
 };
 SuperUsers = __decorate([
     Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-        components: { PageNav: _page_nav_vue__WEBPACK_IMPORTED_MODULE_2__["default"] },
+        components: { PageNav: _page_nav__WEBPACK_IMPORTED_MODULE_1__["default"] },
     })
 ], SuperUsers);
 /* harmony default export */ __webpack_exports__["default"] = (SuperUsers);
@@ -59641,10 +59518,10 @@ SuperUsers = __decorate([
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-property-decorator */ "./node_modules/vue-property-decorator/lib/vue-property-decorator.js");
-/* harmony import */ var moment_mini__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment-mini */ "./node_modules/moment-mini/moment.min.js");
-/* harmony import */ var moment_mini__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment_mini__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _page_nav__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./page-nav */ "./src/components/page-nav.vue");
-/* harmony import */ var _page_nav_mixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./page-nav-mixin */ "./src/components/page-nav-mixin.ts");
+/* harmony import */ var _page_nav__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./page-nav */ "./src/components/page-nav.vue");
+/* harmony import */ var _mixins_page_nav_mixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./mixins/page-nav-mixin */ "./src/components/mixins/page-nav-mixin.ts");
+/* harmony import */ var _mixins_crud_forms_mixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./mixins/crud-forms-mixin */ "./src/components/mixins/crud-forms-mixin.ts");
+/* harmony import */ var _mixins_sort_records_mixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./mixins/sort-records-mixin */ "./src/components/mixins/sort-records-mixin.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -59655,51 +59532,17 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
-let Users = class Users extends Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__["Mixins"])(_page_nav_mixin__WEBPACK_IMPORTED_MODULE_3__["default"]) {
+
+let Users = class Users extends Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__["Mixins"])(_mixins_page_nav_mixin__WEBPACK_IMPORTED_MODULE_2__["default"], _mixins_crud_forms_mixin__WEBPACK_IMPORTED_MODULE_3__["default"], _mixins_sort_records_mixin__WEBPACK_IMPORTED_MODULE_4__["default"]) {
     constructor() {
         super(...arguments);
         this.dataRecords = [];
-        this.infoMessage = '';
-        this.alertMessage = '';
-        this.updateStamp = '';
+        this.apiURL = '/api/users';
         this.formData = {
             id: 0,
             name: '',
             password: ''
         };
-        this.formState = {
-            create: false,
-            update: false,
-            drop: false
-        };
-    }
-    sortData(prop, dir) {
-        this.dataRecords = this.dataRecords.sort((itemA, itemB) => {
-            if (dir === 'up') {
-                if (itemA[prop] < itemB[prop])
-                    return 1;
-                if (itemA[prop] > itemB[prop])
-                    return -1;
-                return 0;
-            }
-            else {
-                if (itemA[prop] > itemB[prop])
-                    return 1;
-                if (itemA[prop] < itemB[prop])
-                    return -1;
-                return 0;
-            }
-        });
-    }
-    fetchData() {
-        this.$client('/api/users', 'list', {})
-            .then((res) => {
-            this.dataRecords = res.data.result;
-            this.updateStamp = moment_mini__WEBPACK_IMPORTED_MODULE_1__().format('h:mm:ss a');
-        })
-            .catch((err) => {
-            this.alertMessage = 'Communication problem';
-        });
     }
     resetFormData() {
         this.formData = {
@@ -59708,92 +59551,13 @@ let Users = class Users extends Object(vue_property_decorator__WEBPACK_IMPORTED_
             password: ''
         };
     }
-    hideForms() {
-        this.formState.create = false;
-        this.formState.update = false;
-        this.formState.drop = false;
-    }
-    hideInfo() {
-        this.infoMessage = '';
-    }
-    hideAlert() {
-        this.alertMessage = '';
-    }
-    showCreateForm() {
-        this.hideInfo();
-        this.resetFormData();
-        this.formState.update = false;
-        this.formState.drop = false;
-        this.formState.create = !this.formState.create;
-    }
-    showUpdateForm(item) {
-        this.hideInfo();
-        this.formState.drop = false;
-        this.formState.create = false;
-        if (this.formData.id == item.id) {
-            this.formState.update = false;
-            this.resetFormData();
-        }
-        else {
-            this.formData = this.$lodash.clone(item);
-            this.formState.update = true;
-        }
-    }
-    showDropForm(item) {
-        this.hideInfo();
-        this.formState.update = false;
-        this.formState.create = false;
-        if (this.formData.id == item.id) {
-            this.formState.drop = false;
-            this.resetFormData();
-        }
-        else {
-            this.formData = this.$lodash.clone(item);
-            this.formState.drop = true;
-        }
-    }
-    handleCreate(item) {
-        this.formState.create = false;
-        this.formState.update = false;
-        this.$client('/api/users', 'create', item)
-            .then((res) => {
-            this.infoMessage = 'User ' + this.$lodash.clone(this.formData.name) + ' created';
-            this.fetchData();
-        })
-            .catch((err) => {
-            this.alertMessage = 'Communication problem';
-        });
-    }
-    handleUpdate(item) {
-        this.formState.update = false;
-        this.$client('/api/users', 'update', item)
-            .then((res) => {
-            this.infoMessage = 'User ' + this.$lodash.clone(this.formData.name) + ' updated';
-            this.fetchData();
-        })
-            .catch((err) => {
-            this.alertMessage = 'Communication problem';
-        });
-    }
-    handleDrop(item) {
-        this.formState.drop = false;
-        this.formState.update = false;
-        this.$client('/api/users', 'drop', item)
-            .then((res) => {
-            this.infoMessage = 'User ' + this.$lodash.clone(this.formData.name) + ' deleted';
-            this.fetchData();
-        })
-            .catch((err) => {
-            this.alertMessage = 'Communication problem';
-        });
-    }
     mounted() {
         this.fetchData();
     }
 };
 Users = __decorate([
     Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-        components: { PageNav: _page_nav__WEBPACK_IMPORTED_MODULE_2__["default"] }
+        components: { PageNav: _page_nav__WEBPACK_IMPORTED_MODULE_1__["default"] }
     })
 ], Users);
 /* harmony default export */ __webpack_exports__["default"] = (Users);
@@ -60485,9 +60249,70 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
+    _c("pre", [_vm._v(_vm._s(_vm.debug))]),
+    _vm._v(" "),
+    _c("div", { staticClass: "grid-container" }, [
+      _c("div", { staticClass: "grid-x grid-margin-x align-center" }, [
+        _c(
+          "div",
+          { staticClass: "cell medium-8" },
+          [
+            _c("transition", { attrs: { name: "fade" } }, [
+              _vm.alertMessage
+                ? _c("div", { staticClass: "callout alert" }, [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(_vm.alertMessage) +
+                        "\n                        "
+                    ),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "button small float-right margin-bottom-1",
+                        on: {
+                          click: function($event) {
+                            _vm.hideAlert()
+                          }
+                        }
+                      },
+                      [_vm._v("OK")]
+                    )
+                  ])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("transition", { attrs: { name: "fade" } }, [
+              _vm.infoMessage
+                ? _c("div", { staticClass: "callout success" }, [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(_vm.infoMessage) +
+                        "\n                        "
+                    ),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "button small float-right margin-bottom-1",
+                        on: {
+                          click: function($event) {
+                            _vm.hideInfo()
+                          }
+                        }
+                      },
+                      [_vm._v("OK")]
+                    )
+                  ])
+                : _vm._e()
+            ])
+          ],
+          1
+        )
+      ])
+    ]),
+    _vm._v(" "),
     _c(
       "div",
-      { staticClass: "margin-left-2 margin-right-2" },
+      { staticClass: "margin-left-1 margin-right-1" },
       [_c("router-view")],
       1
     ),
@@ -61205,21 +61030,29 @@ var render = function() {
                   })
                 ]),
                 _vm._v(" "),
-                _vm._m(0),
-                _vm._v(" "),
-                _c("p", { staticClass: "text-center" }, [
-                  _vm._v(
-                    "\n                            " +
-                      _vm._s(_vm.message) +
-                      "\n                        "
-                  )
-                ])
+                _vm._m(0)
               ]
             )
           ])
         ])
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _vm.message
+      ? _c("div", { staticClass: "grid-container margin-top-2" }, [
+          _c("div", { staticClass: "grid-x grid-padding-x align-center" }, [
+            _c("div", { staticClass: "cell small-10 medium-6 large-4" }, [
+              _c("p", { staticClass: "text-center callout warning" }, [
+                _vm._v(
+                  "\n                            " +
+                    _vm._s(_vm.message) +
+                    "\n                        "
+                )
+              ])
+            ])
+          ])
+        ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = [
@@ -79196,6 +79029,265 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/components/mixins/crud-forms-mixin.ts":
+/*!***************************************************!*\
+  !*** ./src/components/mixins/crud-forms-mixin.ts ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-property-decorator */ "./node_modules/vue-property-decorator/lib/vue-property-decorator.js");
+/* harmony import */ var moment_mini__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment-mini */ "./node_modules/moment-mini/moment.min.js");
+/* harmony import */ var moment_mini__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment_mini__WEBPACK_IMPORTED_MODULE_1__);
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+let Users = class Users extends vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__["Vue"] {
+    constructor() {
+        super(...arguments);
+        this.dataRecords = [];
+        this.apiURL = '/api/crud-mixin-dummy';
+        this.infoMessage = '';
+        this.alertMessage = '';
+        this.updateStamp = '';
+        this.formData = {
+            id: 0,
+            name: ''
+        };
+        this.formState = {
+            create: false,
+            update: false,
+            drop: false
+        };
+        //mounted() {
+        //    this.fetchData()
+        //}
+    }
+    resetFormData() {
+        this.formData = {
+            id: 0,
+            name: ''
+        };
+    }
+    hideForms() {
+        this.hideUpdate();
+        this.hideDrop();
+        this.hideCreate();
+        this.resetFormData();
+    }
+    hideInfo() {
+        this.infoMessage = '';
+    }
+    hideAlert() {
+        this.alertMessage = '';
+    }
+    hideCreate() {
+        this.formState.create = false;
+        this.resetFormData();
+    }
+    hideUpdate() {
+        this.formState.update = false;
+        this.resetFormData();
+    }
+    hideDrop() {
+        this.formState.drop = false;
+        this.resetFormData();
+    }
+    showCreateForm() {
+        this.hideInfo();
+        this.hideUpdate();
+        this.hideDrop();
+        this.resetFormData();
+        this.formState.create = !this.formState.create;
+    }
+    showUpdateForm(item) {
+        this.hideInfo();
+        this.hideDrop();
+        this.hideCreate();
+        if (this.formData.id == item.id) {
+            this.hideUpdate();
+            this.resetFormData();
+        }
+        else {
+            this.formData = this.$lodash.clone(item);
+            this.formState.update = true;
+        }
+    }
+    showDropForm(item) {
+        this.hideInfo();
+        this.hideUpdate();
+        this.hideCreate();
+        if (this.formData.id == item.id) {
+            this.hideDrop();
+            this.resetFormData();
+        }
+        else {
+            this.formData = this.$lodash.clone(item);
+            this.formState.drop = true;
+        }
+    }
+    //handleCreate(item : DataRecord) {
+    //    this.hideCreate()
+    //    this.hideUpdate()
+    //    console.log('#Dummy handleCreate')
+    //}
+    //handleUpdate(item : DataRecord) {
+    //    this.hideUpdate()
+    //    console.log('#Dummy handleDrop')
+    //}
+    //handleDrop(item : DataRecord) {
+    //    this.hideDrop()
+    //    this.hideUpdate()
+    //    console.log('#Dummy handleDrop')
+    //
+    //}
+    fetchData() {
+        this.$client(this.apiURL, 'list', {})
+            .then((res) => {
+            this.dataRecords = res.data.result;
+            this.updateStamp = moment_mini__WEBPACK_IMPORTED_MODULE_1__().format('h:mm:ss a');
+        })
+            .catch((err) => {
+            this.alertMessage = 'Communication problem';
+        });
+    }
+    handleCreate(item) {
+        const dataRecord = this.$lodash.clone(this.formData);
+        this.hideCreate();
+        this.$client(this.apiURL, 'create', item)
+            .then((res) => {
+            this.infoMessage = 'Record ' + dataRecord.name + ' created';
+            this.fetchData();
+        })
+            .catch((err) => {
+            this.alertMessage = 'Communication problem';
+        });
+    }
+    handleUpdate(item) {
+        const dataRecord = this.$lodash.clone(this.formData);
+        this.hideUpdate();
+        this.$client(this.apiURL, 'update', dataRecord)
+            .then((res) => {
+            this.infoMessage = 'Record ' + dataRecord.name + ' updated';
+            this.fetchData();
+        })
+            .catch((err) => {
+            this.alertMessage = 'Communication problem';
+        });
+    }
+    handleDrop(item) {
+        const dataRecord = this.$lodash.clone(this.formData);
+        this.hideDrop();
+        this.$client(this.apiURL, 'drop', item)
+            .then((res) => {
+            this.infoMessage = 'Record ' + dataRecord.name + ' deleted';
+            this.fetchData();
+        })
+            .catch((err) => {
+            this.alertMessage = 'Communication problem';
+        });
+    }
+};
+Users = __decorate([
+    vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__["Component"]
+], Users);
+/* harmony default export */ __webpack_exports__["default"] = (Users);
+
+
+/***/ }),
+
+/***/ "./src/components/mixins/page-nav-mixin.ts":
+/*!*************************************************!*\
+  !*** ./src/components/mixins/page-nav-mixin.ts ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-property-decorator */ "./node_modules/vue-property-decorator/lib/vue-property-decorator.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+let PageNavMixin = class PageNavMixin extends vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__["Vue"] {
+    constructor() {
+        super(...arguments);
+        this.recordStep = 5;
+        this.firstRecord = 0;
+    }
+    onPageNumberChanged(firstRecord) {
+        this.firstRecord = firstRecord;
+    }
+};
+PageNavMixin = __decorate([
+    vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__["Component"]
+], PageNavMixin);
+/* harmony default export */ __webpack_exports__["default"] = (PageNavMixin);
+
+
+/***/ }),
+
+/***/ "./src/components/mixins/sort-records-mixin.ts":
+/*!*****************************************************!*\
+  !*** ./src/components/mixins/sort-records-mixin.ts ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-property-decorator */ "./node_modules/vue-property-decorator/lib/vue-property-decorator.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+let SortRecordsMixin = class SortRecordsMixin extends vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__["Vue"] {
+    constructor() {
+        super(...arguments);
+        // very unsafe decition
+        this.dataRecords = [];
+    }
+    sortData(prop, dir) {
+        this.dataRecords = this.dataRecords.sort(function (itemA, itemB) {
+            if (dir === 'up') {
+                if (itemA[prop] < itemB[prop])
+                    return 1;
+                if (itemA[prop] > itemB[prop])
+                    return -1;
+                return 0;
+            }
+            else {
+                if (itemA[prop] > itemB[prop])
+                    return 1;
+                if (itemA[prop] < itemB[prop])
+                    return -1;
+                return 0;
+            }
+        });
+    }
+};
+SortRecordsMixin = __decorate([
+    vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__["Component"]
+], SortRecordsMixin);
+/* harmony default export */ __webpack_exports__["default"] = (SortRecordsMixin);
+
+
+/***/ }),
+
 /***/ "./src/components/not-found.vue":
 /*!**************************************!*\
   !*** ./src/components/not-found.vue ***!
@@ -79261,41 +79353,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_not_found_vue_vue_type_template_id_28119fb0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
-
-
-/***/ }),
-
-/***/ "./src/components/page-nav-mixin.ts":
-/*!******************************************!*\
-  !*** ./src/components/page-nav-mixin.ts ***!
-  \******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-property-decorator */ "./node_modules/vue-property-decorator/lib/vue-property-decorator.js");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-let PageNavMixin = class PageNavMixin extends vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__["Vue"] {
-    constructor() {
-        super(...arguments);
-        this.recordStep = 5;
-        this.firstRecord = 0;
-    }
-    onPageNumberChanged(firstRecord) {
-        this.firstRecord = firstRecord;
-    }
-};
-PageNavMixin = __decorate([
-    vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__["Component"]
-], PageNavMixin);
-/* harmony default export */ __webpack_exports__["default"] = (PageNavMixin);
 
 
 /***/ }),

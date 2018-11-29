@@ -68,7 +68,7 @@ module.exports = function(knex) {
     }
 
     return {
-        model: "users",
+        modelName: "users",
         list: list,
         find: find,
         create: create,
