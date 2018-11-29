@@ -11,8 +11,7 @@ import foundation from '../foundation'
 interface DataRecord {
     id: number,
     name: string,
-    gecos?: string,
-    password?: string
+    password: string
 }
 
 interface FormState {
@@ -38,7 +37,7 @@ export default class SuperUsers extends Mixins(PageNavMixin) {
     formData : DataRecord = {
         id: 0,
         name: '',
-        password: ''
+        password: '',
     }
 
     formState : FormState = {
@@ -147,7 +146,7 @@ export default class SuperUsers extends Mixins(PageNavMixin) {
         this.formState.update = false
         this.$client('/api/superusers', 'create', item)
             .then((res : any) => {
-                this.infoMessage = 'User ' + this.$lodash.clone(this.formData.name) + ' created'
+                this.infoMessage = 'Record ' + this.$lodash.clone(this.formData.name) + ' created'
                 this.fetchData()
             })
             .catch((err : any) => {
@@ -159,7 +158,7 @@ export default class SuperUsers extends Mixins(PageNavMixin) {
         this.formState.update = false
         this.$client('/api/superusers', 'update', item)
             .then((res : any) => {
-                this.infoMessage = 'User ' + this.$lodash.clone(this.formData.name) + ' updated'
+                this.infoMessage = 'Record ' + this.$lodash.clone(this.formData.name) + ' updated'
                 this.fetchData()
             })
             .catch((err : any) => {
@@ -172,7 +171,7 @@ export default class SuperUsers extends Mixins(PageNavMixin) {
         this.formState.update = false
         this.$client('/api/superusers', 'drop', item)
             .then((res : any) => {
-                this.infoMessage = 'User ' + this.$lodash.clone(this.formData.name) + ' deleted'
+                this.infoMessage = 'Record ' + this.$lodash.clone(this.formData.name) + ' deleted'
                 this.fetchData()
             })
             .catch((err : any) => {

@@ -10,8 +10,7 @@ import foundation from '../foundation'
 
 interface DataRecord {
     id: number,
-    name: string,
-    gecos?: string
+    name: string
 }
 
 interface FormState {
@@ -128,12 +127,12 @@ export default class Domains extends Mixins(PageNavMixin) {
         }
     }
 
-    handleCreate(item :  DataRecord) {
+    handleCreate(item : DataRecord) {
         this.formState.create = false
         this.formState.update = false
         this.$client('/api/domains', 'create', item)
             .then((res : any) => {
-                this.infoMessage = 'Domain ' + this.$lodash.clone(this.formData.name) + ' created'
+                this.infoMessage = 'Record ' + this.$lodash.clone(this.formData.name) + ' created'
                 this.fetchData()
             })
             .catch((err : any) => {
@@ -145,7 +144,7 @@ export default class Domains extends Mixins(PageNavMixin) {
         this.formState.update = false
         this.$client('/api/domains', 'update', item)
             .then((res : any) => {
-                this.infoMessage = 'Domain ' + this.$lodash.clone(this.formData.name) + ' updated'
+                this.infoMessage = 'Record ' + this.$lodash.clone(this.formData.name) + ' updated'
                 this.fetchData()
             })
             .catch((err : any) => {
@@ -158,7 +157,7 @@ export default class Domains extends Mixins(PageNavMixin) {
         this.formState.update = false
         this.$client('/api/domains', 'drop', item)
             .then((res : any) => {
-                this.infoMessage = 'Domain ' + this.$lodash.clone(this.formData.name) + ' deleted'
+                this.infoMessage = 'Record ' + this.$lodash.clone(this.formData.name) + ' deleted'
                 this.fetchData()
             })
             .catch((err : any) => {
