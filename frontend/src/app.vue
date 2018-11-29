@@ -6,6 +6,8 @@
 import { Vue, Component, Prop } from "vue-property-decorator"
 import { State, Action, Getter, Mutation, namespace } from 'vuex-class'
 
+import * as esCookies from 'es-cookie'
+
 import Domains from './components/domains.vue'
 import Users from './components/users.vue'
 import SuperUsers from './components/super-users.vue'
@@ -22,14 +24,31 @@ export default class App extends Vue {
     @Action setLogout: () => void
 
     cookie : string = ''
-    debug : string = ''
+    debug : any = ''
+    alertMessage : string = ''
+    infoMessage : string = ''
+
+    hideInfo() {
+        this.infoMessage = ''
+    }
+
+    hideAlert() {
+        this.alertMessage = ''
+    }
 
     logout() {
         this.setLogout()
+        esCookies.remove('session')
         this.$router.push('/login')
     }
 
     mounted() {
+        setInterval(() => {
+                if (typeof(esCookies.get('session')) === 'undefined' && this.isAuth ) {
+                    this.alertMessage = 'Session expired'
+                    this.logout()
+                }
+        }, 1000)
     }
 }
 </script>

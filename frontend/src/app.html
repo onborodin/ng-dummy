@@ -42,6 +42,30 @@
         </div>
     </div>
 
+    <pre>{{ debug }}</pre>
+
+    <div class="grid-container">
+        <div class="grid-x grid-margin-x align-center">
+            <div class="cell medium-8">
+
+                <transition name="fade">
+                    <div v-if="alertMessage" class="callout alert">
+                        {{ alertMessage }}
+                        <button class="button small float-right margin-bottom-1" v-on:click="hideAlert()">OK</button>
+                    </div>
+                </transition>
+
+                <transition name="fade">
+                    <div v-if="infoMessage" class="callout success">
+                        {{ infoMessage }}
+                        <button class="button small float-right margin-bottom-1" v-on:click="hideInfo()">OK</button>
+                    </div>
+                </transition>
+            </div>
+        </div>
+    </div>
+
+
     <div class="margin-left-2 margin-right-2">
         <router-view />
     </div>

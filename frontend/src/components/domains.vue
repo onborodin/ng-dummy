@@ -10,7 +10,8 @@ import foundation from '../foundation'
 
 interface DataRecord {
     id: number,
-    name: string
+    name: string,
+    desc: string
 }
 
 import PageNav from "./page-nav"
@@ -29,13 +30,15 @@ export default class Domains extends Mixins(PageNavMixin, CRUDFormsMixin, SortRe
 
     formData: DataRecord = {
         id: 0,
-        name: ''
+        name: '',
+        desc: ''
     }
 
     resetFormData() {
         this.formData = {
             id: 0,
             name: '',
+            desc: ''
         }
     }
 
