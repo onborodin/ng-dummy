@@ -1,6 +1,6 @@
 */**/*.vue linguist-language=Vue
-*/**/*.js linguist-language=Typescript
-*/**/*.ts linguist-language=Typescript
+*/**/*.js linguist-language=Vue
+*/**/*.ts linguist-language=Vue
 */**/*.html linguist-vendored
 */**/*.css linguist-vendored
 */**/Makefile* linguist-vendored
