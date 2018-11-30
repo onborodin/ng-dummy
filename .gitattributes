@@ -1,0 +1,5 @@
+*/**/*.vue linguist-language=Vue
+*/**/*.js linguist-language=Javascript
+*/**/*.html linguist-vendored
+*/**/*.css linguist-vendored
+backend/public/* linguist-vendored
