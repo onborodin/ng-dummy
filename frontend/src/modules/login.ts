@@ -4,6 +4,10 @@ import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 @Module
 export default class login extends VuexModule {
 
+    init() {
+        let a = 1
+    }
+
     auth : boolean = false
 
     @Mutation

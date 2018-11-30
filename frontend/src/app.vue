@@ -20,8 +20,8 @@ const login = namespace('./modules')
 })
 export default class App extends Vue {
 
-    @Getter isAuth: boolean
-    @Action setLogout: () => void
+    @Getter('isAuth') isAuth : boolean
+    @Action('setLogout') setLogout : () => void
 
     cookieName : string = 'session'
     debug : any = ''
