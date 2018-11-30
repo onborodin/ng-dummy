@@ -2,3 +2,5 @@
 */**/*.js linguist-language=Javascript
 */**/*.html linguist-vendored
 */**/*.css linguist-vendored
+*/**/Makefile* linguist-vendored
+Makefile* linguist-vendored
