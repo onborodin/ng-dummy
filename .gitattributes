@@ -1,6 +1,9 @@
-*/**/*.vue linguist-language=Javascipt
+*/**/*.vue linguist-language=Vue
 */**/*.js linguist-language=Javascript
+*/**/*.ts linguist-language=Typesctipt
 */**/*.html linguist-vendored
 */**/*.css linguist-vendored
 */**/Makefile* linguist-vendored
+backend/public/* linguist-vendored
 Makefile* linguist-vendored
+config* linguist-vendored
