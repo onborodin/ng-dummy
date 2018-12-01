@@ -66,7 +66,7 @@ app.use(session({
     saveUninitialized: true,
     cookie: { 
             secure: false,
-            maxAge: 600 * 10000,
+            maxAge: 20 * 60 * 1000,
             httpOnly: false
     }
 }))
@@ -120,7 +120,7 @@ exsig(exconfig.pidFile)
 // *** listen socket ***
 const cluster = require('cluster')
 if (cluster.isMaster) {
-    var cpuCount = require('os').cpus().length + 3
+    var cpuCount = require('os').cpus().length + 1
     for (var i = 0; i < cpuCount; i += 1) {
         cluster.fork();
     }
