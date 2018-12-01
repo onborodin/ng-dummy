@@ -1,8 +1,10 @@
-<div id="page">
+<div id="app">
 
     <div class="top-bar-container" data-sticky-container>
         <div class="sticky sticky-topbar" data-sticky data-options="anchor: page; marginTop: 0; stickyOn: small;">
 
+
+            <span  id="top-bar">
             <div v-if="!isAuth" class="top-bar">
                 <div class="top-bar-left">
                     <ul class="menu">
@@ -14,9 +16,18 @@
 
             <div v-if="isAuth" class="top-bar">
                 <div class="top-bar-left">
-                    <ul class="menu">
+
+                    <ul class="dropdown menu" data-dropdown-menu>
                         <li><a href="/"><i class="my-menu-icon"></i></a></li>
                         <li class="menu-text">VuT</li>
+                        <li>
+                            <a href="#">Item 1</a>
+                            <ul class="menu">
+                                <li><a href="#">Item 1A</a></li>
+                                <li><a href="#">Item 1B</a></li>
+                            </ul>
+                        </li>
+
                         <li>
                             <router-link to="/domains">Domains</router-link>
                         </li>
@@ -26,18 +37,11 @@
                         <li>
                             <router-link to="/superusers">SUsers</router-link>
                         </li>
-                    </ul>
-                </div>
-
-                <div class="top-bar-right margin-right-1">
-                    <ul class="menu">
                         <li><a v-on:click="logout()"><i class="fi-power"></i></a></li>
                     </ul>
                 </div>
-
-
             </div>
-
+            </span>
         </div>
     </div>
 

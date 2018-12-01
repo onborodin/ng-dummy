@@ -34,8 +34,6 @@ BUILD_SRC = \
 	components/users.css \
 	components/users.html \
 	components/users.vue \
-	foundation.d.ts \
-	foundation.js \
 	index.html \
 	main.scss \
 	main.ts \
@@ -47,6 +45,11 @@ BUILD_SRC = \
 	scss/_my.scss \
 	store.ts \
 	vue.d.ts
+
+
+#	foundation.d.ts
+#	foundation.js
+
 
 EXTRA_DIST = \
 	$(BUILD_SRC)

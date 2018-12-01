@@ -6,7 +6,6 @@
 import { Vue, Component, Mixins } from "vue-property-decorator"
 
 import * as moment from 'moment-mini'
-import foundation from '../foundation'
 
 interface DataRecord {
     id: number,
@@ -43,6 +42,7 @@ export default class Users extends Mixins(PageNavMixin, CRUDFormsMixin, SortReco
     }
 
     mounted() {
+        this.$foundation(document)
         this.fetchData()
     }
 

@@ -1,6 +1,8 @@
 'use strict'
 
-import * as lodash from 'lodash-es'
+import { clone } from 'lodash-es'
+
+const lodash = { clone: clone }
 
 export default {
   install: function(Vue : any) {

@@ -12,17 +12,23 @@ Vue.use(client)
 import lodash from './plugins/lodash'
 Vue.use(lodash)
 
-import foundation from './foundation'
+import foundation from './plugins/foundation'
+Vue.use(foundation)
+
+//import foundation from './foundation'
 
 const app = new Vue({
-    el: '#app',
+    el: '#main',
     router: router,
     store: store,
     render: function(h) {
                 return h(App)
     },
     components: { App },
-    mounted: function() {
-        foundation(document)
-    }
+//    mounted: function() {
+//        foundation(document)
+//    }
 })
+
+//foundation(document)
+

@@ -13,6 +13,8 @@ import Users from './components/users.vue'
 import SuperUsers from './components/super-users.vue'
 import NotFound from './components/not-found.vue'
 
+//import foundation from './foundation'
+
 const login = namespace('./modules')
 
 @Component({
@@ -43,6 +45,8 @@ export default class App extends Vue {
     }
 
     mounted() {
+//        foundation('#top-bar')
+        this.$foundation(document)
         setInterval(() => {
                 if (typeof(esCookies.get(this.cookieName)) === 'undefined' && this.isAuth == true ) {
                     this.alertMessage = 'Session expired'
