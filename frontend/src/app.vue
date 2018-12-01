@@ -4,26 +4,27 @@
 <script lang="ts">
 
 import { Vue, Component, Prop } from "vue-property-decorator"
-import { State, Action, Getter, Mutation, namespace } from 'vuex-class'
+import { State, Action, Getter, Mutation } from 'vuex-class'
 
 import * as esCookies from 'es-cookie'
 
-import Domains from './components/domains.vue'
-import Users from './components/users.vue'
-import SuperUsers from './components/super-users.vue'
-import NotFound from './components/not-found.vue'
+import AppHeader from './components/app-header'
+import AppFooter from './components/app-footer'
 
-//import foundation from './foundation'
+import Domains from './components/domains'
+import Users from './components/users'
+import SuperUsers from './components/super-users'
+import NotFound from './components/not-found'
 
-const login = namespace('./modules')
 
 @Component({
-    components: { Domains, Users, SuperUsers, NotFound }
+    components: { AppHeader, AppFooter, Domains, Users, SuperUsers, NotFound }
 })
 export default class App extends Vue {
 
     @Getter('isAuth') isAuth : boolean
     @Action('setLogout') setLogout : () => void
+    @Action('setLogin') setLogin : () => void
 
     cookieName : string = 'session'
     debug : any = ''
@@ -39,20 +40,26 @@ export default class App extends Vue {
     }
 
     logout() {
+        esCookies.remove(this.cookieName)
         this.setLogout()
-        esCookies.remove('session')
         this.$router.push('/login')
     }
 
     mounted() {
-//        foundation('#top-bar')
-        this.$foundation(document)
+
+        if (typeof(esCookies.get(this.cookieName)) !== 'undefined') {
+            this.setLogin()
+        }
+
         setInterval(() => {
                 if (typeof(esCookies.get(this.cookieName)) === 'undefined' && this.isAuth == true ) {
                     this.alertMessage = 'Session expired'
                     this.logout()
                 }
         }, 1000)
+
+        this.$foundation(document)
+
     }
 }
 </script>

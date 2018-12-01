@@ -1,51 +1,7 @@
 <div id="app">
 
-    <div class="top-bar-container" data-sticky-container>
-        <div class="sticky sticky-topbar" data-sticky data-options="anchor: page; marginTop: 0; stickyOn: small;">
 
-
-            <span  id="top-bar">
-            <div v-if="!isAuth" class="top-bar">
-                <div class="top-bar-left">
-                    <ul class="menu">
-                        <li><a href="/"><i class="my-menu-icon"></i></a></li>
-                        <li class="menu-text">VuT</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div v-if="isAuth" class="top-bar">
-                <div class="top-bar-left">
-
-                    <ul class="dropdown menu" data-dropdown-menu>
-                        <li><a href="/"><i class="my-menu-icon"></i></a></li>
-                        <li class="menu-text">VuT</li>
-                        <li>
-                            <a href="#">Item 1</a>
-                            <ul class="menu">
-                                <li><a href="#">Item 1A</a></li>
-                                <li><a href="#">Item 1B</a></li>
-                            </ul>
-                        </li>
-
-                        <li>
-                            <router-link to="/domains">Domains</router-link>
-                        </li>
-                        <li>
-                            <router-link to="/users">Users</router-link>
-                        </li>
-                        <li>
-                            <router-link to="/superusers">SUsers</router-link>
-                        </li>
-                        <li><a v-on:click="logout()"><i class="fi-power"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-            </span>
-        </div>
-    </div>
-
-    <pre>{{ debug }}</pre>
+    <app-header/>
 
     <div class="grid-container">
         <div class="grid-x grid-margin-x align-center">
@@ -73,15 +29,6 @@
         <router-view />
     </div>
 
-    <div class="grid-container">
-        <div class="grid-x grid-margin-x align-center">
-            <div class="cell medium-8">
-                <hr />
-                <p class="text-center">
-                    <small>Made by <a href="http://wiki.unix7.org">Borodin Oleg</a></small>
-                </p>
-            </div>
-        </div>
-    </div>
+    <app-footer/>
 
 </div>
