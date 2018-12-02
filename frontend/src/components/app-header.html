@@ -1,24 +1,13 @@
 <div id="app-header">
 
     <div class="top-bar-container" data-sticky-container>
-        <div class="sticky sticky-topbar" data-sticky data-options="anchor: app-header; marginTop: 0; stickyOn: small;">
+        <div class="sticky sticky-topbar" data-sticky data-options="anchor: app; marginTop: 0; stickyOn: small;">
 
-
-            <span id="top-bar">
-                <div v-if="!isAuth" class="top-bar">
-                    <div class="top-bar-left">
-                        <ul class="menu">
-                            <li><a href="/"><i class="my-menu-icon"></i></a></li>
-                            <li class="menu-text">VuT</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div v-if="isAuth" class="top-bar">
+                <div class="top-bar" id="top-bar">
                     <div class="top-bar-left">
 
                         <ul class="dropdown menu" data-dropdown-menu>
-                            <li><a href="/"><i class="my-menu-icon"></i></a></li>
+                            <li><a href="#"><i class="my-menu-icon"></i></a></li>
                             <li class="menu-text">ExII</li>
                             <li>
                                 <a href="#">Units</a>
@@ -39,7 +28,7 @@
                         </ul>
                     </div>
                 </div>
-            </span>
+
         </div>
     </div>
 

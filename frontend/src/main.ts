@@ -1,3 +1,5 @@
+import "@babel/polyfill"
+
 import './main.scss'
 
 import Vue from 'vue'
@@ -12,10 +14,8 @@ Vue.use(client)
 import lodash from './plugins/lodash'
 Vue.use(lodash)
 
-import foundation from './plugins/foundation'
+import foundation from './plugins/foundation-sites'
 Vue.use(foundation)
-
-//import foundation from './foundation'
 
 const app = new Vue({
     el: '#main',
@@ -25,10 +25,5 @@ const app = new Vue({
                 return h(App)
     },
     components: { App },
-//    mounted: function() {
-//        foundation(document)
-//    }
 })
-
-//foundation(document)
 

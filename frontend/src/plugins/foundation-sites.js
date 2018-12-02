@@ -29,7 +29,7 @@ import { DropdownMenu } from 'foundation-sites/js/foundation.dropdownMenu'
 //import { Reveal } from 'foundation-sites/js/foundation.reveal'
 //import { Slider } from 'foundation-sites/js/foundation.slider'
 //import { SmoothScroll } from 'foundation-sites/js/foundation.smoothScroll'
-import { Sticky } from 'foundation-sites/js/foundation.sticky'
+//import { Sticky } from 'foundation-sites/js/foundation.sticky'
 //import { Tabs } from 'foundation-sites/js/foundation.tabs'
 //import { Toggler } from 'foundation-sites/js/foundation.toggler'
 //import { Tooltip } from 'foundation-sites/js/foundation.tooltip'
@@ -60,7 +60,7 @@ Touch.init($)
 Triggers.init($, Foundation)
 MediaQuery._init()
 
-//Foundation.plugin(Abide, 'Abide')
+Foundation.plugin(Abide, 'Abide')
 //Foundation.plugin(Accordion, 'Accordion')
 //Foundation.plugin(AccordionMenu, 'AccordionMenu')
 //Foundation.plugin(Drilldown, 'Drilldown')
@@ -76,7 +76,7 @@ Foundation.plugin(DropdownMenu, 'DropdownMenu')
 //Foundation.plugin(Reveal, 'Reveal')
 //Foundation.plugin(Slider, 'Slider')
 //Foundation.plugin(SmoothScroll, 'SmoothScroll')
-Foundation.plugin(Sticky, 'Sticky')
+//Foundation.plugin(Sticky, 'Sticky')
 //Foundation.plugin(Tabs, 'Tabs')
 //Foundation.plugin(Toggler, 'Toggler')
 //Foundation.plugin(Tooltip, 'Tooltip')
@@ -87,7 +87,7 @@ function foundation(item) {
 }
 
 export default {
-  install: function(Vue : any) {
+  install: function(Vue) {
     Object.defineProperty(Vue.prototype, '$foundation', { value: foundation })
   }
 }

@@ -18,10 +18,17 @@
 
 <script lang="ts">
 
-import { Vue, Component, Prop } from "vue-property-decorator"
+import { Vue, Component, Prop, Mixins } from "vue-property-decorator"
 
-@Component
-export default class NotFound extends Vue {
+import CheckLoginMixin from './mixins//check-login-mixin'
+
+@Component({
+})
+export default class Domains extends Mixins(CheckLoginMixin) {
+
+    created() {
+        this.checkLogin()
+    }
 
 }
 </script>

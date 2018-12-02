@@ -16,7 +16,7 @@ var router = new Router({
     routes: [
         {
             path: '/',
-            redirect: '/login'
+            redirect: '/domains'
         },
         {
             path: '/domains',

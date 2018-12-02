@@ -3,10 +3,8 @@
 
 <script lang="ts">
 
-import { Vue, Component, Prop } from "vue-property-decorator"
-import { State, Action, Getter, Mutation } from 'vuex-class'
 
-import * as esCookies from 'es-cookie'
+import LoginHeader from './components/login-header'
 
 import AppHeader from './components/app-header'
 import AppFooter from './components/app-footer'
@@ -16,20 +14,30 @@ import Users from './components/users'
 import SuperUsers from './components/super-users'
 import NotFound from './components/not-found'
 
+import * as Cookies from 'es-cookie'
+
+import { Vue, Component, Prop } from "vue-property-decorator"
+import { State, Action, Getter } from 'vuex-class'
+
 
 @Component({
-    components: { AppHeader, AppFooter, Domains, Users, SuperUsers, NotFound }
+    components: { LoginHeader, AppHeader, AppFooter, Domains, Users, SuperUsers, NotFound }
 })
 export default class App extends Vue {
 
-    @Getter('isAuth') isAuth : boolean
-    @Action('setLogout') setLogout : () => void
-    @Action('setLogin') setLogin : () => void
+    @Getter isAuth : boolean
+    @Action setLogout : () => void
+    @Action setLogin : () => void
 
-    cookieName : string = 'session'
     debug : any = ''
     alertMessage : string = ''
     infoMessage : string = ''
+
+    cookieName : string = 'session'
+
+    checkLogin() {
+        return this.isAuth
+    }
 
     hideInfo() {
         this.infoMessage = ''
@@ -39,27 +47,30 @@ export default class App extends Vue {
         this.alertMessage = ''
     }
 
+
     logout() {
-        esCookies.remove(this.cookieName)
+        console.log('#received logout')
+        Cookies.remove(this.cookieName)
         this.setLogout()
         this.$router.push('/login')
     }
 
     mounted() {
 
-        if (typeof(esCookies.get(this.cookieName)) !== 'undefined') {
-            this.setLogin()
-        }
+        //if (typeof(Cookies.get(this.cookieName)) !== 'undefined') {
+        //    this.setLogin()
+        //}
 
         setInterval(() => {
-                if (typeof(esCookies.get(this.cookieName)) === 'undefined' && this.isAuth == true ) {
+                if (typeof(Cookies.get(this.cookieName)) === 'undefined' && this.isAuth == true ) {
                     this.alertMessage = 'Session expired'
-                    this.logout()
+                    Cookies.remove(this.cookieName)
+                    this.setLogout()
+                    this.$router.push('/login')
                 }
         }, 1000)
-
         this.$foundation(document)
-
     }
+
 }
 </script>

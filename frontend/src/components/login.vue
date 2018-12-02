@@ -4,7 +4,7 @@
 <script lang="ts">
 
 import { Vue, Component, Prop, Watch } from "vue-property-decorator"
-import { State, Action, Getter, Mutation, namespace } from 'vuex-class'
+import { State, Action, Getter } from 'vuex-class'
 
 @Component
 export default class Login extends Vue {
@@ -28,7 +28,7 @@ export default class Login extends Vue {
                 if (res.data.result[0].id > 0) {
                     this.message = 'Login OK'
                     this.setLogin()
-                    this.$router.push('/users')
+                    this.$router.push('/domains')
                 } else {
                     this.message = 'Login incorrect'
                 }
@@ -41,6 +41,5 @@ export default class Login extends Vue {
             this.message = 'Communication problem'
         })
     }
-
 }
 </script>

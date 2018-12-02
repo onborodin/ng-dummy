@@ -18,11 +18,12 @@ import PageNav from "./page-nav"
 import PageNavMixin from "./mixins/page-nav-mixin"
 import SortRecordsMixin from "./mixins/sort-records-mixin"
 import CRUDFormsMixin from './mixins/crud-forms-mixin'
+import CheckLoginMixin from './mixins/check-login-mixin'
 
 @Component({
    components: { PageNav },
 })
-export default class Domains extends Mixins(PageNavMixin, CRUDFormsMixin, SortRecordsMixin) {
+export default class Domains extends Mixins(PageNavMixin, CRUDFormsMixin, SortRecordsMixin, CheckLoginMixin) {
 
     dataRecords : DataRecord[] = []
     apiURL : string = '/api/domains'
@@ -43,6 +44,11 @@ export default class Domains extends Mixins(PageNavMixin, CRUDFormsMixin, SortRe
 
     mounted() {
         this.fetchData()
+    }
+
+    created() {
+        this.checkLogin()
+
     }
 
 }
