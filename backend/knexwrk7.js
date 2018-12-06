@@ -9,18 +9,27 @@ const knex = require('knex')(
     knexfile.development
 )
 
-const users = require('./models/users')(knex)
+//const users = require('./models/users')(knex)
 
+//users
+//    .list({})
+//    .then((res) => {
+//        console.log({ res: res })
+//    })
+//    .finally(function() {
+//        knex.destroy();
+//    })
 
-var callback = function(err, res) {
-    console.log(res)
-}
-
-users
-    .drop({ id: 9 }, callback)
+knex
+    .select(knex.raw('select *'))
+    .from('superusers')
+    .then((res) => {
+        console.log({ res: res })
+    })
     .finally(function() {
         knex.destroy();
     })
+
 
 
 

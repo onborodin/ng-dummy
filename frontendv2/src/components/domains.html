@@ -1,0 +1,36 @@
+<div>
+
+    <app-header/>
+
+    <div class="grid-container">
+        <div class="grid-x grid-padding-x align-center">
+            <div class="cell medium-8">
+
+                <h5>Domains</h5>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th width="3em">#</th>
+                            <th width="20em">name</th>
+                            <th width="4em"><i class="fi-pencil"></i></th>
+                            <th width="4em"><i class="fi-trash"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(item, index) in currentDataList()">
+                            <td>{{ shiftIndex(index) }}</td>
+                            <td>{{ item.name }}</td>
+                            <td><i class="fi-pencil"></i></td>
+                            <td><i class="fi-trash"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+    <app-footer/>
+
+</div>

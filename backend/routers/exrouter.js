@@ -1,5 +1,8 @@
 'use strict'
 
+
+const lodash = require('lodash')
+
 const error = {
     invalidRequest: {
         jsonrpc: "2.0",
@@ -42,12 +45,27 @@ module.exports = function(model) {
 
     function responder(req, res) {
 
-        if (typeof req.body.method !== 'string') {
+        if(!lodash.has(req, 'body.method')) {
             res.send(error.invalidRequest)
             return
         }
 
-        if (typeof(req.body.id) !== 'string' && typeof(req.body.id) !== 'number') {
+        if(!lodash.has(req, 'body.id')) {
+            res.send(error.invalidRequest)
+            return
+        }
+
+        if(!lodash.has(req, 'body.params')) {
+            res.send(error.invalidRequest)
+            return
+        }
+
+        if (!lodash.isString(req.body.method)) {
+            res.send(error.invalidRequest)
+            return
+        }
+
+        if (!lodash.isString(req.body.id) && !lodash.isNumber(req.body.id)) {
             res.send(error.invalidRequest)
             return
         }
@@ -63,27 +81,39 @@ module.exports = function(model) {
         }
 
         const method = req.body.method
-        const params = req.body.params
+        var params = req.body.params
         const id = req.body.id
 
-        model[method](params)
-            .then(function(data) {
+        if (method === 'check') {
+            if (lodash.has(req, 'session.userId')) {
+                params = { id: req.session.userId }
+            } else {
+                params = { id: -1 }
+            }
+        }
 
-                if (method === 'login') {
-                    if (typeof(data[0]) === 'object') {
-                        if (typeof(data[0].id) === 'number') {
-                            console.log('#login correct with id = ' + data[0].id)
-                            req.session.userId = data[0].id
-                            req.session.userProfile = data[0]
-                        }
+        var modelPromise = model[method](params)
+
+        modelPromise
+            .then(function(result) {
+
+                if (method === 'login' && lodash.has(result, '[0].id')) {
+                        req.session.userId = result[0].id
+                        req.session.userProfile = result[0]
+                }
+
+                if (method === 'check') {
+                    console.log({ checkResult: result })
+                    if (lodash.has(req, "session.userId") && lodash.has(result, "[0].id")) {
+                        result = true
                     } else {
-                        console.log('#login attempt with login ' + JSON.stringify(req.body.params.loginName))
+                        result = false
                     }
                 }
 
                 res.send({
                     jsonrpc: "2.0",
-                    result: data,
+                    result: result,
                     id: id
                 })
             })

@@ -26,7 +26,7 @@ import CheckLoginMixin from './mixins//check-login-mixin'
 })
 export default class Domains extends Mixins(CheckLoginMixin) {
 
-    created() {
+    mounted() {
         this.checkLogin()
     }
 

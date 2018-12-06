@@ -2,18 +2,6 @@
 
 module.exports = function(knex) {
 
-    var login = function(params) {
-        return knex
-            .select([
-                'superusers.id',
-            ])
-            .from('superusers')
-            .where({
-                'superusers.name': params.loginName,
-                'superusers.password': params.password,
-            })
-    }
-
     var list = function(params) {
         return knex
             .select([
@@ -81,7 +69,6 @@ module.exports = function(knex) {
 
     return {
         modelName: "superusers",
-        login: login,
         list: list,
         find: find,
         create: create,

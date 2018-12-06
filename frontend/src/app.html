@@ -1,7 +1,7 @@
 <div id="app">
 
-    <app-header v-if="isAuth"  v-on:logout="logout()"></app-header>
-    <login-header v-if="!isAuth"></login-header>
+    <app-header v-if="isAuth"  v-on:logout="logout()" />
+    <login-header v-if="!isAuth" />
 
     <div class="grid-container">
         <div class="grid-x grid-margin-x align-center">
@@ -28,6 +28,6 @@
         <router-view v-on:logout="logout()" />
     </div>
 
-    <app-footer/>
+    <app-footer v-if="isAuth" />
 
 </div>

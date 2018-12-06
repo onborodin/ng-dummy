@@ -18,6 +18,8 @@ const srcDir = currentDir + '/src'
 
 const entryFile = srcDir + '/main.ts'
 const outputDir = currentDir + '/../backend/public'
+//const outputDir = currentDir + '/dist'
+
 
 const jsDir = outputDir
 const cssDir = outputDir
@@ -68,6 +70,7 @@ module.exports = {
         alias: {
             'vue$': 'vue/dist/vue.esm.js',
             'jquery': 'jquery/dist/jquery.slim.js',
+            '@': srcDir + '/'
         }
     },
     module: {
@@ -107,7 +110,7 @@ module.exports = {
                     {
                         loader: 'ts-loader',
                         options: {
-                            transpileOnly: true,
+                            //transpileOnly: true,
                             appendTsSuffixTo: [
                                 '\\.vue$'
                             ],
@@ -153,12 +156,12 @@ module.exports = {
     },
     devServer: {
         historyApiFallback: true,
-        contentBase: [outputDir],
+        contentBase: [ outputDir ],
         index: 'index.html',
         compress: true,
         port: 8100,
         open: true,
-        inline: true,
+        //inline: true,
         //watch: true,
         watchOptions: {
             ignored: /node_modules/
