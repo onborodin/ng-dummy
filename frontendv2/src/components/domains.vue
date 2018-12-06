@@ -8,7 +8,7 @@ import { State, Action, Getter } from 'vuex-class'
 import AppHeader from '../components/app-header.vue'
 import AppFooter from '../components/app-footer.vue'
 
-import DomainModel from '../models/domain'
+import DataModel from '../models/domain'
 
 @Component({
     components: { AppHeader, AppFooter }
@@ -16,7 +16,7 @@ import DomainModel from '../models/domain'
 export default class Domains extends Vue {
 
     apiURL: string = '/api/domains' 
-    dataList: DomainModel[] = []
+    dataList: DataModel[] = []
 
     firstItem: number = 0
     itemStep: number = 5
@@ -27,8 +27,7 @@ export default class Domains extends Vue {
 
     @Action setInfo: (message: string) => void
 
-
-    currentDataList() : DomainModel[] {
+    currentDataList() : DataModel[] {
         return this.dataList.slice(
             this.firstItem,
             this.firstItem + this.itemStep
