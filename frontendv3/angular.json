@@ -1,0 +1,132 @@
+{
+    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "version": 1,
+    "newProjectRoot": "projects",
+    "projects": {
+        "lorem": {
+            "root": "",
+            "sourceRoot": "src",
+            "projectType": "application",
+            "prefix": "app",
+            "schematics": {},
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "../backend/public/",
+                        "index": "src/index.html",
+                        "main": "src/main.ts",
+                        "polyfills": "src/polyfills.ts",
+                        "tsConfig": "src/tsconfig.app.json",
+                        "assets": [{
+                                "glob": "favicon.ico",
+                                "input": "src/assets",
+                                "output": "/"
+                            },
+                            {
+                                "glob": "fou*",
+                                "input": "src/assets",
+                                "output": "/"
+                            }
+                        ],
+                        "styles": [{
+                            "input": "src/styles.scss",
+                            "bundleName": "styles"
+                        }],
+                        "stylePreprocessorOptions": {
+                            "includePaths": [
+                                "src/scss",
+                                "node_modules/foundation-sites/scss"
+                            ]
+                        },
+                        "scripts": [
+                            "node_modules/jquery/dist/jquery.js",
+                            "node_modules/what-input/dist/what-input.js",
+                            "node_modules/foundation-sites/dist/js/foundation.js"
+                        ]
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.prod.ts"
+                            }],
+                            "optimization": true,
+                            "outputHashing": "none",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            //"aot": true,
+                            //"buildOptimizer": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "budgets": [{
+                                "type": "initial",
+                                "maximumWarning": "2mb",
+                                "maximumError": "5mb"
+                            }]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "lorem:build"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "lorem:build:production"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "lorem:build"
+                    }
+                }
+            }
+        },
+        "rcpclient": {
+            "root": "projects/rcpclient",
+            "sourceRoot": "projects/rcpclient/src",
+            "projectType": "library",
+            "prefix": "lib",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-ng-packagr:build",
+                    "options": {
+                        "tsConfig": "projects/rcpclient/tsconfig.lib.json",
+                        "project": "projects/rcpclient/ng-package.json"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "projects/rcpclient/src/test.ts",
+                        "tsConfig": "projects/rcpclient/tsconfig.spec.json",
+                        "karmaConfig": "projects/rcpclient/karma.conf.js"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "projects/rcpclient/tsconfig.lib.json",
+                            "projects/rcpclient/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
+        }
+    },
+    "defaultProject": "lorem",
+    "schematics": {
+        "@schematics/angular:component": {
+            "styleext": "scss"
+        }
+    }
+}

@@ -1,0 +1,30 @@
+<div id="app-header" class="margin-bottom-2">
+
+    <div class="top-bar" id="top-bar">
+        <div class="top-bar-left">
+
+            <ul class="dropdown menu" data-dropdown-menu>
+                <li><a href="#"><i class="my-menu-icon"></i></a></li>
+                <li class="menu-text">NgII</li>
+                <li>
+                    <a href="#">Units</a>
+                    <ul class="menu hover">
+                        <li>
+                            <a routerLink="/domains" routerLinkActive="active">Domains</a>
+                        </li>
+                        <li>
+                            <a routerLink="/login" routerLinkActive="active">Login</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a (click)="loginService.logout()">
+                        <i class="fi-power" style="font-size: 1.3em;"></i>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+</div>

@@ -5,23 +5,26 @@ module.exports = function(knex) {
     var login = function(params) {
         return knex
             .select([
-                'superusers.id'
+                'users.name',
+                'users.gecos',
+                'users.id',
+                'users.superuser'
             ])
-            .from('superusers')
+            .from('users')
             .where({
-                'superusers.name': params.name,
-                'superusers.password': params.password,
+                'users.name': params.name,
+                'users.password': params.password,
             })
     }
 
     var check = function(params) {
         return knex
             .select([
-                'superusers.id',
+                'users.id',
             ])
-            .from('superusers')
+            .from('users')
             .where({
-                'superusers.id': params.id
+                'users.id': params.id
             })
     }
 

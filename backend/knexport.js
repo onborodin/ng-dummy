@@ -23,7 +23,7 @@ var footer = function() {
 }
 
 //var tables = ['users','domains', 'roles']
-var tables = ['users','superusers']
+var tables = ['users']
 
 
 tables.forEach(function(item) {
