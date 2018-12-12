@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
 
+import { v4 as uuid } from 'uuid'
+
 export interface RPCRequest<TParam> {
     jsonrpc: string
     method: string
-    params: TParam | TParam[]
-    id: string | number
+    params: TParam
+    id: string
 }
 
 export interface RPCError {
@@ -17,8 +19,8 @@ export interface RPCError {
 export interface RPCResponce<TResult> {
     jsonrpc: string
     error?: RPCError
-    result?: TResult | TResult[]
-    id: string | number
+    result?: TResult
+    id: string
 }
 
 @Injectable({
@@ -36,7 +38,7 @@ export class RPCService {
             jsonrpc: '2.0',
             method: method,
             params: params,
-            id: '0x123'
+            id: uuid()
         }
         return this.httpClient.post<RPCResponce<TResult>>(url, rpcRequest)
     }

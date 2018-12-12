@@ -10,6 +10,8 @@ export interface UserLogin {
     password: string
 }
 
+//export enum AccessLevel { Superuser = 'superuser', User = 'user' }
+
 @Injectable({
   providedIn: 'root'
 })
@@ -35,7 +37,7 @@ export class LoginService {
             id: -1
         }
 
-        this.rpc.request<User, User>('/api/login', 'login', params)
+        this.rpc.request<User, User[]>('/api/login', 'login', params)
             .subscribe((res) => {
                 if (res.result[0].id >= 0) {
                     this.loginState = true
@@ -55,21 +57,9 @@ export class LoginService {
         this.router.navigate(['/login'])
     }
 
-    check() {
+    checkLogin() {
         if (!this.loginState) {
             this.router.navigate(['/login'])
         }
     }
-
-    checkSuperuser() {
-        if (!this.loginState || !this.user.superuser) {
-            this.router.navigate(['/login'])
-        }
-    }
-
-
-    superuser() : boolean {
-        return this.user.superuser
-    }
-
 }

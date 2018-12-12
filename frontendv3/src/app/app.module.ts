@@ -13,12 +13,17 @@ import { AppHeaderComponent } from './app-header/app-header.component'
 import { AppFooterComponent } from './app-footer/app-footer.component'
 
 import { DomainsComponent } from './domains/domains.component'
+import { UsersComponent } from './users/users.component'
+import { UsersListComponent } from './users-list/users-list.component'
+
 import { LoginComponent } from './login/login.component'
 import { NotFoundComponent } from './not-found/not-found.component'
 
 import { RPCService } from './rpc.service'
 import { LoginService } from './login.service'
+import { UsersService } from './users.service'
 
+import { LoginGuard }   from './login.guard'
 
 @NgModule({
     declarations: [
@@ -26,6 +31,8 @@ import { LoginService } from './login.service'
         AppFooterComponent,
         AppComponent,
         DomainsComponent,
+        UsersComponent,
+        UsersListComponent,
         LoginComponent,
         NotFoundComponent
     ],
@@ -36,7 +43,7 @@ import { LoginService } from './login.service'
         RoutingModule,
         HttpClientModule
     ],
-    providers: [ LoginService, RPCService ],
+    providers: [ LoginService, RPCService, UsersService, LoginGuard ],
     bootstrap: [ AppComponent ]
 })
 export class AppModule {

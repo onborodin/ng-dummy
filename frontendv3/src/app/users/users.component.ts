@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { AppHeaderComponent } from '../app-header/app-header.component'
 import { AppFooterComponent } from '../app-footer/app-footer.component'
 
-import { LoginService } from '../login.service'
+import { UsersListComponent } from '../users-list/users-list.component'
 
 @Component({
   selector: 'users',
@@ -13,13 +12,7 @@ import { LoginService } from '../login.service'
 })
 export class UsersComponent implements OnInit {
 
-    constructor(
-        private router: Router,
-        private loginService: LoginService
-    ) {}
-
     ngOnInit() {
-        this.loginService.checkSuperuser()
     }
 }
 

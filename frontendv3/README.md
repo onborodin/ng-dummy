@@ -1,2 +1,3 @@
-### State machine sample in Angular II (7)
+### Angular2 sample frontend
+
 
