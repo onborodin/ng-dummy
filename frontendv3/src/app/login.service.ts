@@ -54,7 +54,7 @@ export class LoginService {
 
     logout() {
         this.loginState = false
-        this.router.navigate(['/login'])
+        this.router.navigate(['/'])
     }
 
     checkLogin() {

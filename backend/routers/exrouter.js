@@ -45,6 +45,8 @@ module.exports = function(model) {
 
     function responder(req, res) {
 
+        console.log({ body: req.body })
+
         if(!lodash.has(req, 'body.method')) {
             res.send(error.invalidRequest)
             return

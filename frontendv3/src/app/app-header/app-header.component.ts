@@ -14,7 +14,10 @@ export class AppHeaderComponent implements OnInit {
         public loginService: LoginService
     ) {}
 
-     ngOnInit() {
+    ngOnInit() {
+    }
+
+    ngAfterViewInit() {
         $('#app-header').foundation()
     }
 }

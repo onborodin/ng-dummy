@@ -12,6 +12,7 @@ import { AppComponent } from './app.component'
 import { AppHeaderComponent } from './app-header/app-header.component'
 import { AppFooterComponent } from './app-footer/app-footer.component'
 
+import { HomeComponent } from './home/home.component'
 import { DomainsComponent } from './domains/domains.component'
 import { UsersComponent } from './users/users.component'
 import { UsersListComponent } from './users-list/users-list.component'
@@ -30,6 +31,7 @@ import { LoginGuard }   from './login.guard'
         AppHeaderComponent,
         AppFooterComponent,
         AppComponent,
+        HomeComponent,
         DomainsComponent,
         UsersComponent,
         UsersListComponent,

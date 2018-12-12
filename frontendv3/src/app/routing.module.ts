@@ -1,7 +1,7 @@
-
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 
+import { HomeComponent } from './home/home.component'
 import { LoginComponent } from './login/login.component'
 import { DomainsComponent } from './domains/domains.component'
 import { UsersComponent } from './users/users.component'
@@ -26,8 +26,10 @@ const routes: Routes = [
     },
     {
         path: '',
-        redirectTo: 'domains',
-        pathMatch: 'full'
+        //redirectTo: 'domains',
+        //pathMatch: 'full'
+        component: HomeComponent,
+        //canActivate: [ LoginGuard ]
     },
     {
         path: '**', 
