@@ -1,0 +1,30 @@
+<div *ngIf="show">
+
+    <form accept-charset="UTF-8" class="callout" [formGroup]="userForm" (ngSubmit)="create(userForm)"  >
+
+        <h5 class="text-center">Do create user?</h5>
+
+        <label>Login
+            <input type="text" formControlName="name" />
+        </label>
+
+        <label>Password
+            <input type="text" formControlName="password" />
+        </label>
+
+        <label>Name
+            <input type="text" formControlName="gecos" />
+        </label>
+
+        <fieldset class="cell margin-bottom-1">
+            <input id="checkbox-user-as" type="checkbox" formControlName="superuser">
+            <label for="checkbox-user-as">as Superuser</label>
+        </fieldset>
+
+        <div class="text-center">
+            <button class="button small margin-left-2 margin-right-2" type="submit">Accept</button>
+            <div class="button small margin-left-2 margin-right-2" (click)="escape()">Escape</div>
+        </div>
+    </form>
+
+</div>

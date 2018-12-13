@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Router } from '@angular/router'
+import * as Cookies from 'es-cookie'
 
 import { RPCService } from './rpc.service'
 
@@ -16,6 +17,8 @@ export interface UserLogin {
   providedIn: 'root'
 })
 export class LoginService {
+
+    cookieName = 'session'
 
     loginState: boolean = false
     user: User = { 
@@ -45,7 +48,7 @@ export class LoginService {
                     this.user.id = res.result[0].id
                     this.user.superuser = res.result[0].superuser
                     this.user.gecos = res.result[0].gecos
-                    this.router.navigate(['/domains'])
+                    this.router.navigate(['/customers'])
                 }
             })
         if (this.user.id >= 0) return true
@@ -54,6 +57,7 @@ export class LoginService {
 
     logout() {
         this.loginState = false
+        Cookies.remove(this.cookieName)
         this.router.navigate(['/'])
     }
 

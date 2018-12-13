@@ -25,8 +25,11 @@ export class LoginComponent implements OnInit {
             this.message = `Wow! Login successful`
             return
         }
-        this.attemptCount++
-        this.message = `Login incorrect. Attempt ${this.attemptCount}`
+        setTimeout(() => {
+            this.attemptCount++
+            this.message = `Login incorrect. Attempt ${this.attemptCount}`
+        }, 1000 )
+
     }
 
     ngOnInit() {

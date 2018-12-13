@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router'
 
 import { HomeComponent } from './home/home.component'
 import { LoginComponent } from './login/login.component'
-import { DomainsComponent } from './domains/domains.component'
+import { CustomersComponent } from './customers/customers.component'
 import { UsersComponent } from './users/users.component'
 import { NotFoundComponent } from './not-found/not-found.component'
 
@@ -15,8 +15,13 @@ const routes: Routes = [
         component: LoginComponent
     },
     {
-        path: 'domains',
-        component: DomainsComponent,
+        path: 'customers',
+        component: CustomersComponent,
+        canActivate: [ LoginGuard ]
+    },
+    {
+        path: 'customers/:phone',
+        component: CustomersComponent,
         canActivate: [ LoginGuard ]
     },
     {
@@ -26,7 +31,7 @@ const routes: Routes = [
     },
     {
         path: '',
-        //redirectTo: 'domains',
+        //redirectTo: 'customers',
         //pathMatch: 'full'
         component: HomeComponent,
         //canActivate: [ LoginGuard ]
@@ -34,7 +39,7 @@ const routes: Routes = [
     {
         path: '**', 
         component: NotFoundComponent,
-        canActivate: [ LoginGuard ]
+        //canActivate: [ LoginGuard ]
     }
 ]
 
