@@ -13,8 +13,6 @@
 # PARTICULAR PURPOSE.
 
 @SET_MAKE@
-
-
 VPATH = @srcdir@
 am__is_gnu_make = { \
   if test -z '$(MAKELEVEL)'; then \
@@ -89,46 +87,15 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-subdir = backend
+subdir = frontend
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
-DIST_COMMON = $(srcdir)/Makefile.am $(nobase_dist_pkgdata_DATA) \
-	$(am__DIST_COMMON)
+DIST_COMMON = $(srcdir)/Makefile.am $(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
-CONFIG_CLEAN_FILES = expresso exconfig.js
+CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
-am__vpath_adj = case $$p in \
-    $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
-    *) f=$$p;; \
-  esac;
-am__strip_dir = f=`echo $$p | sed -e 's|^.*/||'`;
-am__install_max = 40
-am__nobase_strip_setup = \
-  srcdirstrip=`echo "$(srcdir)" | sed 's/[].[^$$\\*|]/\\\\&/g'`
-am__nobase_strip = \
-  for p in $$list; do echo "$$p"; done | sed -e "s|$$srcdirstrip/||"
-am__nobase_list = $(am__nobase_strip_setup); \
-  for p in $$list; do echo "$$p $$p"; done | \
-  sed "s| $$srcdirstrip/| |;"' / .*\//!s/ .*/ ./; s,\( .*\)/[^/]*$$,\1,' | \
-  $(AWK) 'BEGIN { files["."] = "" } { files[$$2] = files[$$2] " " $$1; \
-    if (++n[$$2] == $(am__install_max)) \
-      { print $$2, files[$$2]; n[$$2] = 0; files[$$2] = "" } } \
-    END { for (dir in files) print dir, files[dir] }'
-am__base_list = \
-  sed '$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;s/\n/ /g' | \
-  sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
-am__uninstall_files_from_dir = { \
-  test -z "$$files" \
-    || { test ! -d "$$dir" && test ! -f "$$dir" && test ! -r "$$dir"; } \
-    || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
-         $(am__cd) "$$dir" && rm -f $$files; }; \
-  }
-am__installdirs = "$(DESTDIR)$(sbindir)" "$(DESTDIR)$(confdir)" \
-	"$(DESTDIR)$(pkgdatadir)"
-SCRIPTS = $(sbin_SCRIPTS)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -150,10 +117,8 @@ am__can_run_installinfo = \
     n|no|NO) false;; \
     *) (install-info --version) >/dev/null 2>&1;; \
   esac
-DATA = $(conf_DATA) $(nobase_dist_pkgdata_DATA)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
-am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/exconfig.js.in \
-	$(srcdir)/expresso.in
+am__DIST_COMMON = $(srcdir)/Makefile.in
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
@@ -264,62 +229,97 @@ top_srcdir = @top_srcdir@
 # $Id: Makefile.am 633 2017-04-15 13:51:07Z ziggi $
 #
 AUTOMAKE_OPTIONS = foreign no-dependencies no-installinfo
-sbin_SCRIPTS = expresso
-KNEX = ./node_modules/.bin/knex
-confdir = $(DESTDIR)$(APP_CONFDIR)
-conf_DATA = \
-	knexfile.js \
-	exconfig.js
+NG = ./node_modules/.bin/ng
+DEST = ../backend/public/index.html
+BUILD_SRC = \
+	src/app/app-footer/app-footer.component.html \
+	src/app/app-footer/app-footer.component.scss \
+	src/app/app-footer/app-footer.component.ts \
+	 \
+	src/app/app-header/app-header.component.html \
+	src/app/app-header/app-header.component.scss \
+	src/app/app-header/app-header.component.ts \
+	 \
+	src/app/app.component.html \
+	src/app/app.component.scss \
+	src/app/app.component.ts \
+	 \
+	src/app/app.module.ts \
+	 \
+	src/app/customers/customers.component.html \
+	src/app/customers/customers.component.scss \
+	src/app/customers/customers.component.ts \
+	 \
+	 \
+	src/app/home/home.component.html \
+	src/app/home/home.component.scss \
+	src/app/home/home.component.ts \
+	 \
+	src/app/login/login.component.html \
+	src/app/login/login.component.scss \
+	src/app/login/login.component.ts \
+	 \
+	src/app/models/customer.model.ts \
+	src/app/models/user.model.ts \
+	 \
+	src/app/not-found/not-found.component.html \
+	src/app/not-found/not-found.component.scss \
+	src/app/not-found/not-found.component.ts \
+	 \
+	 \
+	src/app/user-create/user-create.component.html \
+	src/app/user-create/user-create.component.scss \
+	src/app/user-create/user-create.component.ts \
+	 \
+	src/app/user-drop/user-drop.component.html \
+	src/app/user-drop/user-drop.component.scss \
+	src/app/user-drop/user-drop.component.ts \
+	 \
+	src/app/user-update/user-update.component.html \
+	src/app/user-update/user-update.component.scss \
+	src/app/user-update/user-update.component.ts \
+	 \
+	src/app/users/users.component.html \
+	src/app/users/users.component.scss \
+	src/app/users/users.component.ts \
+	 \
+	src/app/login.service.ts \
+	src/app/users.service.ts \
+	src/app/customers.service.ts \
+	 \
+	src/app/routing.module.ts \
+	src/app/rpc.service.ts \
+	 \
+	src/app/guards/login.guard.ts \
+	src/app/guards/superlogin.guard.ts \
+	 \
+	src/environments/environment.prod.ts \
+	src/environments/environment.ts \
+	 \
+	src/index.html \
+	src/main.ts \
+	src/polyfills.ts \
+	src/scss/_fs.scss \
+	src/scss/_my.scss \
+	src/styles.scss \
+	src/typings.d.ts
 
 EXTRA_DIST = \
+	$(BUILD_SRC) \
+	angular.json \
 	package-lock.json \
 	package.json \
-	knexfile.js \
-	node_modules \
-        public
-
-nobase_dist_pkgdata_DATA = \
-	exserv.js \
-	knexport.js \
-	 \
-	models/customers.js \
-	models/login.js \
-	models/users.js \
-	 \
-	plugins/excors.js \
-	 \
-	routers/customers.js \
-	routers/exrouter.js \
-	routers/login.js \
-	routers/users.js \
-	 \
-	utils/exdaemon.js \
-	utils/exlog.js \
-	utils/exmkdir.js \
-	utils/expid.js \
-	utils/exsig.js \
-	 \
-	migrations/20181214085626_stable.js \
-	 \
-	seeds/20181214085527_customers.js \
-	seeds/20181214085527_users.js \
-	 \
-	public/3rdpartylicenses.txt \
-	public/favicon.ico \
-	public/foundation-icons.css \
-	public/foundation-icons.eot \
-	public/foundation-icons.html \
-	public/foundation-icons.svg \
-	public/foundation-icons.ttf \
-	public/foundation-icons.woff \
-	public/index.html \
-	 \
-	public/main.js \
-	public/polyfills.js \
-	public/runtime.js \
-	public/scripts.js \
-	public/styles.css \
-	public/vendor.js
+	src/tsconfig.app.json \
+	src/tslint.json \
+	tsconfig.json \
+	src/assets/.gitkeep \
+	src/assets/favicon.ico \
+	src/assets/foundation-icons.css \
+	src/assets/foundation-icons.eot \
+	src/assets/foundation-icons.html \
+	src/assets/foundation-icons.svg \
+	src/assets/foundation-icons.ttf \
+	src/assets/foundation-icons.woff
 
 all: all-am
 
@@ -333,9 +333,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign backend/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign frontend/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign backend/Makefile
+	  $(AUTOMAKE) --foreign frontend/Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
 	  *config.status*) \
@@ -353,90 +353,6 @@ $(top_srcdir)/configure:  $(am__configure_deps)
 $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
-expresso: $(top_builddir)/config.status $(srcdir)/expresso.in
-	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-exconfig.js: $(top_builddir)/config.status $(srcdir)/exconfig.js.in
-	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-install-sbinSCRIPTS: $(sbin_SCRIPTS)
-	@$(NORMAL_INSTALL)
-	@list='$(sbin_SCRIPTS)'; test -n "$(sbindir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(sbindir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(sbindir)" || exit 1; \
-	fi; \
-	for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  if test -f "$$d$$p"; then echo "$$d$$p"; echo "$$p"; else :; fi; \
-	done | \
-	sed -e 'p;s,.*/,,;n' \
-	    -e 'h;s|.*|.|' \
-	    -e 'p;x;s,.*/,,;$(transform)' | sed 'N;N;N;s,\n, ,g' | \
-	$(AWK) 'BEGIN { files["."] = ""; dirs["."] = 1; } \
-	  { d=$$3; if (dirs[d] != 1) { print "d", d; dirs[d] = 1 } \
-	    if ($$2 == $$4) { files[d] = files[d] " " $$1; \
-	      if (++n[d] == $(am__install_max)) { \
-		print "f", d, files[d]; n[d] = 0; files[d] = "" } } \
-	    else { print "f", d "/" $$4, $$1 } } \
-	  END { for (d in files) print "f", d, files[d] }' | \
-	while read type dir files; do \
-	     if test "$$dir" = .; then dir=; else dir=/$$dir; fi; \
-	     test -z "$$files" || { \
-	       echo " $(INSTALL_SCRIPT) $$files '$(DESTDIR)$(sbindir)$$dir'"; \
-	       $(INSTALL_SCRIPT) $$files "$(DESTDIR)$(sbindir)$$dir" || exit $$?; \
-	     } \
-	; done
-
-uninstall-sbinSCRIPTS:
-	@$(NORMAL_UNINSTALL)
-	@list='$(sbin_SCRIPTS)'; test -n "$(sbindir)" || exit 0; \
-	files=`for p in $$list; do echo "$$p"; done | \
-	       sed -e 's,.*/,,;$(transform)'`; \
-	dir='$(DESTDIR)$(sbindir)'; $(am__uninstall_files_from_dir)
-install-confDATA: $(conf_DATA)
-	@$(NORMAL_INSTALL)
-	@list='$(conf_DATA)'; test -n "$(confdir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(confdir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(confdir)" || exit 1; \
-	fi; \
-	for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  echo "$$d$$p"; \
-	done | $(am__base_list) | \
-	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(confdir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(confdir)" || exit $$?; \
-	done
-
-uninstall-confDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(conf_DATA)'; test -n "$(confdir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(confdir)'; $(am__uninstall_files_from_dir)
-install-nobase_dist_pkgdataDATA: $(nobase_dist_pkgdata_DATA)
-	@$(NORMAL_INSTALL)
-	@list='$(nobase_dist_pkgdata_DATA)'; test -n "$(pkgdatadir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(pkgdatadir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(pkgdatadir)" || exit 1; \
-	fi; \
-	$(am__nobase_list) | while read dir files; do \
-	  xfiles=; for file in $$files; do \
-	    if test -f "$$file"; then xfiles="$$xfiles $$file"; \
-	    else xfiles="$$xfiles $(srcdir)/$$file"; fi; done; \
-	  test -z "$$xfiles" || { \
-	    test "x$$dir" = x. || { \
-	      echo " $(MKDIR_P) '$(DESTDIR)$(pkgdatadir)/$$dir'"; \
-	      $(MKDIR_P) "$(DESTDIR)$(pkgdatadir)/$$dir"; }; \
-	    echo " $(INSTALL_DATA) $$xfiles '$(DESTDIR)$(pkgdatadir)/$$dir'"; \
-	    $(INSTALL_DATA) $$xfiles "$(DESTDIR)$(pkgdatadir)/$$dir" || exit $$?; }; \
-	done
-
-uninstall-nobase_dist_pkgdataDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(nobase_dist_pkgdata_DATA)'; test -n "$(pkgdatadir)" || list=; \
-	$(am__nobase_strip_setup); files=`$(am__nobase_strip)`; \
-	dir='$(DESTDIR)$(pkgdatadir)'; $(am__uninstall_files_from_dir)
 tags TAGS:
 
 ctags CTAGS:
@@ -476,11 +392,8 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(SCRIPTS) $(DATA)
+all-am: Makefile
 installdirs:
-	for dir in "$(DESTDIR)$(sbindir)" "$(DESTDIR)$(confdir)" "$(DESTDIR)$(pkgdatadir)"; do \
-	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
-	done
 install: install-am
 install-exec: install-exec-am
 install-data: install-data-am
@@ -531,14 +444,13 @@ info: info-am
 
 info-am:
 
-install-data-am: install-confDATA install-nobase_dist_pkgdataDATA
-	@$(NORMAL_INSTALL)
-	$(MAKE) $(AM_MAKEFLAGS) install-data-hook
+install-data-am:
+
 install-dvi: install-dvi-am
 
 install-dvi-am:
 
-install-exec-am: install-sbinSCRIPTS
+install-exec-am:
 
 install-html: install-html-am
 
@@ -576,45 +488,36 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-confDATA uninstall-nobase_dist_pkgdataDATA \
-	uninstall-sbinSCRIPTS
+uninstall-am:
 
-.MAKE: install-am install-data-am install-strip
+.MAKE: install-am install-strip
 
 .PHONY: all all-am check check-am clean clean-generic clean-local \
 	cscopelist-am ctags-am distclean distclean-generic distdir dvi \
 	dvi-am html html-am info info-am install install-am \
-	install-confDATA install-data install-data-am \
-	install-data-hook install-dvi install-dvi-am install-exec \
-	install-exec-am install-html install-html-am install-info \
-	install-info-am install-man install-nobase_dist_pkgdataDATA \
-	install-pdf install-pdf-am install-ps install-ps-am \
-	install-sbinSCRIPTS install-strip installcheck installcheck-am \
-	installdirs maintainer-clean maintainer-clean-generic \
-	mostlyclean mostlyclean-generic pdf pdf-am ps ps-am tags-am \
-	uninstall uninstall-am uninstall-confDATA \
-	uninstall-nobase_dist_pkgdataDATA uninstall-sbinSCRIPTS
+	install-data install-data-am install-dvi install-dvi-am \
+	install-exec install-exec-am install-html install-html-am \
+	install-info install-info-am install-man install-pdf \
+	install-pdf-am install-ps install-ps-am install-strip \
+	installcheck installcheck-am installdirs maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-generic pdf \
+	pdf-am ps ps-am tags-am uninstall uninstall-am
 
 .PRECIOUS: Makefile
 
 
 pre-build:
-	CFLAGS="$(CFLAGS)" $(NPM) install
+	$(NPM) install
 
-all: $(KNEX)
+all: $(DEST)
 
-$(KNEX): pre-build
+$(DEST): $(BUILD_SRC)
+	$(NG) build --prod
 
-install-data-hook:
-	$(INSTALL) -d -m 750 -o $(APP_USER) -g $(APP_GROUP) $(DESTDIR)$(APP_CONFDIR)
-	$(INSTALL) -d -m 750 -o $(APP_USER) -g $(APP_GROUP) $(DESTDIR)$(APP_LOGDIR)
-	$(INSTALL) -d -m 750 -o $(APP_USER) -g $(APP_GROUP) $(DESTDIR)$(APP_RUNDIR)
-	$(INSTALL) -d -m 755 -o $(APP_USER) -g $(APP_GROUP) $(DESTDIR)$(APP_LIBDIR)
-	$(CP) -R node_modules $(DESTDIR)$(APP_LIBDIR)
+$(NG): pre-build
 
 clean-local:
-	rm -f *~ */*~ logs/*.log run/pid
-
+	rm -f *~ */*~ */*/*~ */*/*/*~
 #EOF
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.

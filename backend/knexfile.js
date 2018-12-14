@@ -12,7 +12,12 @@ module.exports = {
         },
         seeds: {
             directory: __dirname + '/seeds'
-        }
+        },
+        //pool: { 
+        //    min: 0,
+        //    max: 10
+        //},
+        //acquireConnectionTimeout: 10000
     },
     staging: {
         client: 'pg',

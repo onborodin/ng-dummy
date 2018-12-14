@@ -3221,7 +3221,7 @@ app_datadir="$APP_DATADIR"
 ac_config_commands="$ac_config_commands default-1"
 
 
-ac_config_files="$ac_config_files Makefile frontend/Makefile frontend/src/Makefile backend/Makefile backend/expresso backend/exconfig.js"
+ac_config_files="$ac_config_files Makefile frontend/Makefile backend/Makefile backend/expresso backend/exconfig.js"
 
 ac_config_commands="$ac_config_commands default"
 
@@ -3978,7 +3978,6 @@ do
     "default-1") CONFIG_COMMANDS="$CONFIG_COMMANDS default-1" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "frontend/Makefile") CONFIG_FILES="$CONFIG_FILES frontend/Makefile" ;;
-    "frontend/src/Makefile") CONFIG_FILES="$CONFIG_FILES frontend/src/Makefile" ;;
     "backend/Makefile") CONFIG_FILES="$CONFIG_FILES backend/Makefile" ;;
     "backend/expresso") CONFIG_FILES="$CONFIG_FILES backend/expresso" ;;
     "backend/exconfig.js") CONFIG_FILES="$CONFIG_FILES backend/exconfig.js" ;;
@@ -4451,9 +4450,6 @@ if test -n "$ac_unrecognized_opts" && test "$enable_option_checking" != no; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: unrecognized options: $ac_unrecognized_opts" >&5
 $as_echo "$as_me: WARNING: unrecognized options: $ac_unrecognized_opts" >&2;}
 fi
-
-
-
 
 
 

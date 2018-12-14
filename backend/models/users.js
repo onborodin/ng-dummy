@@ -41,6 +41,7 @@ module.exports = function(knex) {
                 gecos: params.gecos,
                 name: params.name,
                 password: params.password,
+                superuser: params.superuser,
             })
             .into('users')
     }
@@ -51,6 +52,7 @@ module.exports = function(knex) {
                 gecos: params.gecos,
                 name: params.name,
                 password: params.password,
+                superuser: params.superuser,
             })
             .from('users')
             .where({

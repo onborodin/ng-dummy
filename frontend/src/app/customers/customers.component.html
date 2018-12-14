@@ -1,0 +1,45 @@
+<div>
+    <app-header></app-header>
+
+    <div class="margin-left-2 margin-right-2">
+        <div class="grid-container">
+            <div class="grid-x grid-margin-x align-center">
+                <div class="cell medium-8">
+
+                    <h5>Customers {{ phone }}</h5>
+
+
+                    <div *ngIf="phone && !(customer.id > 0) ">
+                        <p>Not found.</p>
+                    </div>
+                    <div *ngIf="customer.id > 0">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>Id</td>
+                                    <td>{{ customer.id }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>{{ customer.name }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Location</td>
+                                    <td>{{ customer.city }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Agreement</td>
+                                    <td>{{ customer.agreement }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <app-footer></app-footer>
+</div>

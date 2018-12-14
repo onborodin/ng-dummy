@@ -66,7 +66,7 @@ app.use(session({
     saveUninitialized: true,
     cookie: { 
             secure: false,
-            maxAge: 5 * 60 * 1000,
+            maxAge: 3600 * 60 * 1000,
             httpOnly: false
     }
 }))
@@ -92,8 +92,8 @@ app.use(function(req, res, next) {
 var users = require('./routers/users')(knex)
 app.use('/api/users', users)
 
-var domains = require('./routers/domains')(knex)
-app.use('/api/domains', domains)
+var customers = require('./routers/customers')(knex)
+app.use('/api/customers', customers)
 
 app.get('/*', function(req, res) {
      res.sendFile(path.join(exconfig.appDir, '/public/index.html'))

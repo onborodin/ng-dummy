@@ -1,0 +1,68 @@
+<div id="app-header" class="margin-bottom-2">
+
+    <div class="top-bar" id="top-bar">
+
+        <div class="top-bar-left" *ngIf="loginService.isSuperuser()">
+
+            <ul class="dropdown menu" data-dropdown-menu>
+                <li><a href="#"><i class="my-menu-icon"></i></a></li>
+                <li class="menu-text">NgII <i class="fi-sheriff-badge" style="font-size: 1.2em;"></i></li>
+                <li>
+                    <a href="#">Units</a>
+                    <ul class="menu hover">
+
+                        <li><a routerLink="/customers">Customers</a></li>
+                        <li><a routerLink="/users">Users</a></li>
+                        <li><a routerLink="/">Home</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a (click)="loginService.logout()">
+                        <i class="fi-power" style="font-size: 1.3em;"></i>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+
+        <div class="top-bar-left" *ngIf="loginService.isUser() && !loginService.isSuperuser()">
+
+            <ul class="dropdown menu" data-dropdown-menu>
+                <li><a href="#"><i class="my-menu-icon"></i></a></li>
+                <li class="menu-text">NgII</li>
+                <li>
+                    <a href="#">Units</a>
+                    <ul class="menu hover">
+
+                        <li><a routerLink="/customers">Customers</a></li>
+                        <li><a routerLink="/">Home</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a (click)="loginService.logout()">
+                        <i class="fi-power" style="font-size: 1.3em;"></i>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+
+
+        <div class="top-bar-left"  *ngIf="!loginService.isLogin()">
+            <ul class="dropdown menu" data-dropdown-menu>
+                <li><a href="#"><i class="my-menu-icon"></i></a></li>
+                <li class="menu-text">NgII</li>
+                <li>
+                    <a href="#">Units</a>
+                    <ul class="menu hover">
+                        <li><a routerLink="/">Home</a></li>
+                    </ul>
+                </li>
+
+                <li><a routerLink="/login">Login</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+</div>

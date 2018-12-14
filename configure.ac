@@ -314,14 +314,10 @@ AC_OUTPUT_COMMANDS([chmod a+x backend/expresso])
 AC_OUTPUT([
 Makefile
 frontend/Makefile
-frontend/src/Makefile
 backend/Makefile
 backend/expresso
 backend/exconfig.js
 ],[chmod a+x backend/expresso])
-
-
-
 dnl EOF
 
 
