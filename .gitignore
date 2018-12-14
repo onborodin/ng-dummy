@@ -12,3 +12,4 @@ uploads/
 run/
 logs/
 backend/public/
+Makefile
