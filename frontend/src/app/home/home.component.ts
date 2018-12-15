@@ -13,7 +13,6 @@ export class HomeComponent implements OnInit {
         '7118221699',
         '6315369258',
         '18549937810',
-        '16192',
     ]
 
     partialSamples: string[] = [
