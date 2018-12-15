@@ -4,35 +4,65 @@
     <div class="margin-left-2 margin-right-2">
         <div class="grid-container">
             <div class="grid-x grid-margin-x align-center">
-                <div class="cell medium-8">
+                <div class="cell medium-6">
 
-                    <h5>Customers {{ phone }}</h5>
+                    <div>
+                        <form accept-charset="UTF-8"  [formGroup]="phoneForm" (ngSubmit)="searchByPhone(phoneForm)">
 
+                            <div class="input-group">
+                                <span class="input-group-label">Search</span>
+                                <input class="input-group-field" type="text" formControlName="phone">
+                                <div class="input-group-button">
+                                    <input type="submit" class="button" value="Submit">
+                                </div>
+                            </div>
 
-                    <div *ngIf="phone && !(customer.id > 0) ">
-                        <p>Not found.</p>
+                        </form>
+
                     </div>
-                    <div *ngIf="customer.id > 0">
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <td>Id</td>
-                                    <td>{{ customer.id }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>{{ customer.name }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Location</td>
-                                    <td>{{ customer.city }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Agreement</td>
-                                    <td>{{ customer.agreement }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+
+                    <div *ngIf="phone && !(customerList.length > 0) ">
+                        <p>Yet not found.</p>
+                    </div>
+
+                    <div *ngIf="customerList.length > 0">
+
+                        <h6>{{ timestamp() }}, total <b>{{ customerList.length }}</b></h6>
+
+                        <div *ngFor="let item of customerList; let i = index">
+                            <hr />
+                            <h6>{{ i + 1 }}. <b>{{ item.name }}</b></h6>
+
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td width="14em">Location</td>
+                                        <td><b>{{ item.city }}</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Order</td>
+                                        <td>{{ item.agreement }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Phone 1</td>
+                                        <td><a (click)="search(item.phone1)">{{ item.phone1 }}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Phone 2</td>
+                                        <td><a (click)="search(item.phone2)">{{ item.phone2 }}</a></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+
+
+                        <p>
+                            <a (click)="router.navigate([ '/' ])">
+                                <i class="fi-arrow-left"></i> Back to home
+                            </a>
+                        </p>
 
                     </div>
                 </div>

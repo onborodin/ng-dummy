@@ -25,6 +25,7 @@
     "foundation-sites": "^6.5.1",
     "jquery": "^3.3.1",
     "lodash-es": "^4.17.11",
+    "moment-mini": "^2.22.1",
     "rxjs": "^6.3.3",
     "uuid": "^3.3.2",
     "what-input": "^5.1.3",

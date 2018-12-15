@@ -8,7 +8,22 @@
             <div class="grid-x grid-margin-x align-center">
                 <div class="cell medium-8">
 
-                    <h5>Home</h5>
+                    <h5>Sample call from:</h5>
+
+                    <ul class="list-square">
+                        <li *ngFor="let item of samplePhoneList; let i = index">
+                            <a target="_blank" rel="noopener noreferrer" href='#/customers/{{ item }}'>{{ item }}</a>
+                        </li>
+                    </ul>
+
+                    <h5>Sample search from parial string:</h5>
+
+                    <ul class="list-square">
+                        <li *ngFor="let item of partialSamples; let i = index">
+                            <a target="_blank" rel="noopener noreferrer" href='#/customers/{{ item }}'>{{ item }}</a>
+                        </li>
+                    </ul>
+
 
                 </div>
             </div>
@@ -19,5 +34,3 @@
     <app-footer></app-footer>
 
 </div>
-
-

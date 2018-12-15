@@ -9,7 +9,7 @@ declare var $ : any
     templateUrl: './app-header.component.html',
     styleUrls: ['./app-header.component.scss']
 })
-export class AppHeaderComponent implements OnInit {
+export class AppHeaderComponent implements OnInit, OnChanges {
 
     constructor(
         public loginService: LoginService
@@ -26,4 +26,9 @@ export class AppHeaderComponent implements OnInit {
     ngOnChanges(changes: SimpleChanges) {
         $('#app-header').foundation()
     }
+
+    ngAfterContentChecked() {
+        $('#app-header').foundation()
+    }
+
 }
