@@ -8,12 +8,16 @@ module.exports = function(knex) {
                 'customers.*',
             ])
             .from('customers')
-            .where({
-                'customers.phone1': params.phone1,
-            })
-            .orWhere({
-                'customers.phone2': params.phone2,
-            })
+            .where(
+                'customers.phone1', '~', params.phone1
+            )
+            .orWhere(
+                'customers.phone2', '~', params.phone2
+            )
+            .orWhere(
+                'customers.name', '~', params.name
+            )
+            .limit(50)
 
     }
 
