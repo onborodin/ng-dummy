@@ -2377,7 +2377,7 @@ fi
 
 
 
-PACKAGE=expresso
+PACKAGE=wcm
 
 # Extract the first word of "node", so it can be a program name with args.
 set dummy node; ac_word=$2
@@ -3221,7 +3221,7 @@ app_datadir="$APP_DATADIR"
 ac_config_commands="$ac_config_commands default-1"
 
 
-ac_config_files="$ac_config_files Makefile frontend/Makefile backend/Makefile backend/expresso backend/exconfig.js"
+ac_config_files="$ac_config_files Makefile frontend/Makefile backend/Makefile backend/wcm backend/wcmconf.js backend/rc.d/wcm"
 
 ac_config_commands="$ac_config_commands default"
 
@@ -3979,8 +3979,9 @@ do
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "frontend/Makefile") CONFIG_FILES="$CONFIG_FILES frontend/Makefile" ;;
     "backend/Makefile") CONFIG_FILES="$CONFIG_FILES backend/Makefile" ;;
-    "backend/expresso") CONFIG_FILES="$CONFIG_FILES backend/expresso" ;;
-    "backend/exconfig.js") CONFIG_FILES="$CONFIG_FILES backend/exconfig.js" ;;
+    "backend/wcm") CONFIG_FILES="$CONFIG_FILES backend/wcm" ;;
+    "backend/wcmconf.js") CONFIG_FILES="$CONFIG_FILES backend/wcmconf.js" ;;
+    "backend/rc.d/wcm") CONFIG_FILES="$CONFIG_FILES backend/rc.d/wcm" ;;
     "default") CONFIG_COMMANDS="$CONFIG_COMMANDS default" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
@@ -4411,8 +4412,8 @@ $as_echo "$as_me: executing $ac_file commands" >&6;}
 
 
   case $ac_file$ac_mode in
-    "default-1":C) chmod a+x backend/expresso ;;
-    "default":C) chmod a+x backend/expresso ;;
+    "default-1":C) chmod a+x backend/wcm ;;
+    "default":C) chmod a+x backend/wcm ;;
 
   esac
 done # for ac_tag

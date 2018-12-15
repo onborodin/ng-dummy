@@ -6,9 +6,50 @@
 
         <div id="lorem" class="grid-container">
             <div class="grid-x grid-margin-x align-center">
-                <div class="cell medium-8">
+                <div class="cell medium-6">
 
-                    <h5>Sample call from:</h5>
+                    <h6><b>Overview</b></h6>
+
+                    <p>
+                    It is demo version of corporate program integrated
+                    with contact centre VoIP phone station for
+                    indentificate incoming call. And, if need, search in
+                    customer base.
+                    </p>
+
+                    <p>Short say, it is mini web full-stack application 
+                    for medium-corporate contact-centre.
+
+                    <i>(Uff... I wrote it looooong definition, and you readed.)</i>
+                    </p>
+
+                    <p>
+                    Program writed with Angular2 and ExpressoJS
+                    frameworks with using my implementation JSON remote
+                    procedure calls.
+                    Deep into the program work splendid PostgreSQL under KnexJS.
+                    </p>
+
+                    <p>
+                    Scope of program around 40 page of source code, 
+                    with lot of alone code brackets on string.
+                    I am joking about brackets, nevertheless it
+                    is very important to have a readable code.
+                    </p>
+
+                    <p>
+                    Program also include simple component
+                    for user autentification and user management.
+                    </p>
+
+                    <p>
+                    Demo version include fake customer database with 100.000 records.
+                    Into real use-case the customer base include over 700.000 records.
+                    And into real use-case the program have some addition into code
+                    for safe work and data verification.
+                    </p>
+
+                    <h6><b>Sample search</b></h6>
 
                     <ul class="list-square">
                         <li *ngFor="let item of samplePhoneList; let i = index">
@@ -16,7 +57,7 @@
                         </li>
                     </ul>
 
-                    <h5>Sample search from parial string:</h5>
+                    <h6><b>Sample search for substring</b></h6>
 
                     <ul class="list-square">
                         <li *ngFor="let item of partialSamples; let i = index">

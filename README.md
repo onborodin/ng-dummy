@@ -1,17 +1,24 @@
+### Who-Call-Me
 
-### Sample Vue + Express fullstack application
+It is public demo version of corporate program integrated with contact centre
+VoIP phone station for indentificate incoming call. And, if need, search
+in customer base.
 
-This is a ready "meta-framework" for an application deployed
-on a unix-based system.
+Short say, it is mini web full-stack application for medium-corporate
+contact-centre. (Uff... I wrote it looooong definition, and you readed.)
 
-* Json RPC over HTTPs between frontend and backend
-* Frontend wrote on Typescript with router, store, @component, mixins
-* As CSS used Foundation sites
+Program writed with Angular2 and ExpressoJS frameworks with using my
+implementation JSON remote procedure calls. Deep into the program work
+splendid PostgreSQL under KnexJS.
 
+Scope of program around 40 page of source code, with lot of alone code
+brackets on string. I am joking about brackets, nevertheless it is very
+important to have a readable code.
 
+Program also include simple component for user autentification and user
+management.
 
-
-
-
-
-
+Demo version include fake customer database with 100.000 records. Into
+real use-case the customer base include over 700.000 records. And into
+real use-case the program have some addition into code for safe work and
+data verification. 

@@ -3,7 +3,7 @@
 #
 AUTOMAKE_OPTIONS = foreign no-dependencies no-installinfo
 
-sbin_SCRIPTS = expresso
+sbin_SCRIPTS = wcm
 
 pre-build:
 	CFLAGS="$(CFLAGS)" $(NPM) install
@@ -20,11 +20,20 @@ install-data-hook:
 	$(INSTALL) -d -m 750 -o $(APP_USER) -g $(APP_GROUP) $(DESTDIR)$(APP_RUNDIR)
 	$(INSTALL) -d -m 755 -o $(APP_USER) -g $(APP_GROUP) $(DESTDIR)$(APP_LIBDIR)
 	$(CP) -R node_modules $(DESTDIR)$(APP_LIBDIR)
+if FREEBSD_OS
+	chmod a+x $(DESTDIR)/${etcdir}/rc.d/wcm
+endif
+
+if FREEBSD_OS
+etcdir = @prefix@/etc
+nobase_etc_SCRIPTS = rc.d/wcm
+endif
+
 
 confdir= $(DESTDIR)$(APP_CONFDIR)
 conf_DATA = \
 	knexfile.js \
-	exconfig.js
+	wcmconf.js
 
 EXTRA_DIST = \
 	package-lock.json \

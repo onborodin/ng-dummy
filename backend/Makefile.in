@@ -97,7 +97,7 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 DIST_COMMON = $(srcdir)/Makefile.am $(nobase_dist_pkgdata_DATA) \
 	$(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
-CONFIG_CLEAN_FILES = expresso exconfig.js
+CONFIG_CLEAN_FILES = wcm wcmconf.js
 CONFIG_CLEAN_VPATH_FILES =
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
@@ -126,9 +126,9 @@ am__uninstall_files_from_dir = { \
     || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
-am__installdirs = "$(DESTDIR)$(sbindir)" "$(DESTDIR)$(confdir)" \
-	"$(DESTDIR)$(pkgdatadir)"
-SCRIPTS = $(sbin_SCRIPTS)
+am__installdirs = "$(DESTDIR)$(etcdir)" "$(DESTDIR)$(sbindir)" \
+	"$(DESTDIR)$(confdir)" "$(DESTDIR)$(pkgdatadir)"
+SCRIPTS = $(nobase_etc_SCRIPTS) $(sbin_SCRIPTS)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -152,8 +152,8 @@ am__can_run_installinfo = \
   esac
 DATA = $(conf_DATA) $(nobase_dist_pkgdata_DATA)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
-am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/exconfig.js.in \
-	$(srcdir)/expresso.in
+am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/wcm.in \
+	$(srcdir)/wcmconf.js.in
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
@@ -264,12 +264,14 @@ top_srcdir = @top_srcdir@
 # $Id: Makefile.am 633 2017-04-15 13:51:07Z ziggi $
 #
 AUTOMAKE_OPTIONS = foreign no-dependencies no-installinfo
-sbin_SCRIPTS = expresso
+sbin_SCRIPTS = wcm
 KNEX = ./node_modules/.bin/knex
+@FREEBSD_OS_TRUE@etcdir = @prefix@/etc
+@FREEBSD_OS_TRUE@nobase_etc_SCRIPTS = rc.d/wcm
 confdir = $(DESTDIR)$(APP_CONFDIR)
 conf_DATA = \
 	knexfile.js \
-	exconfig.js
+	wcmconf.js
 
 EXTRA_DIST = \
 	package-lock.json \
@@ -353,10 +355,52 @@ $(top_srcdir)/configure:  $(am__configure_deps)
 $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
-expresso: $(top_builddir)/config.status $(srcdir)/expresso.in
+wcm: $(top_builddir)/config.status $(srcdir)/wcm.in
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-exconfig.js: $(top_builddir)/config.status $(srcdir)/exconfig.js.in
+wcmconf.js: $(top_builddir)/config.status $(srcdir)/wcmconf.js.in
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+install-nobase_etcSCRIPTS: $(nobase_etc_SCRIPTS)
+	@$(NORMAL_INSTALL)
+	@list='$(nobase_etc_SCRIPTS)'; test -n "$(etcdir)" || list=; \
+	if test -n "$$list"; then \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(etcdir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(etcdir)" || exit 1; \
+	fi; \
+	$(am__nobase_strip_setup); \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  if test -f "$$d$$p"; then echo "$$d$$p"; echo "$$p"; else :; fi; \
+	done | \
+	sed -e 'p;s,.*/,,;n' \
+	    -e "s|$$srcdirstrip/||" -e 'h;s|[^/]*$$||; s|^$$|.|' \
+	    -e 'p;x;s,.*/,,;$(transform)' | sed 'N;N;N;s,\n, ,g' | \
+	$(AWK) 'BEGIN { files["."] = ""; dirs["."] = 1; } \
+	  { d=$$3; if (dirs[d] != 1) { print "d", d; dirs[d] = 1 } \
+	    if ($$2 == $$4) { files[d] = files[d] " " $$1; \
+	      if (++n[d] == $(am__install_max)) { \
+		print "f", d, files[d]; n[d] = 0; files[d] = "" } } \
+	    else { print "f", d "/" $$4, $$1 } } \
+	  END { for (d in files) print "f", d, files[d] }' | \
+	while read type dir files; do \
+	  case $$type in \
+	  d) echo " $(MKDIR_P) '$(DESTDIR)$(etcdir)/$$dir'"; \
+	     $(MKDIR_P) "$(DESTDIR)$(etcdir)/$$dir" || exit $$?;; \
+	  f) \
+	     if test "$$dir" = .; then dir=; else dir=/$$dir; fi; \
+	     test -z "$$files" || { \
+	       echo " $(INSTALL_SCRIPT) $$files '$(DESTDIR)$(etcdir)$$dir'"; \
+	       $(INSTALL_SCRIPT) $$files "$(DESTDIR)$(etcdir)$$dir" || exit $$?; \
+	     } \
+	  ;; esac \
+	; done
+
+uninstall-nobase_etcSCRIPTS:
+	@$(NORMAL_UNINSTALL)
+	@list='$(nobase_etc_SCRIPTS)'; test -n "$(etcdir)" || exit 0; \
+	$(am__nobase_strip_setup); \
+	files=`$(am__nobase_strip) \
+	       -e 'h;s,.*/,,;$(transform);x;s|[^/]*$$||;G;s,\n,,'`; \
+	dir='$(DESTDIR)$(etcdir)'; $(am__uninstall_files_from_dir)
 install-sbinSCRIPTS: $(sbin_SCRIPTS)
 	@$(NORMAL_INSTALL)
 	@list='$(sbin_SCRIPTS)'; test -n "$(sbindir)" || list=; \
@@ -478,7 +522,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(SCRIPTS) $(DATA)
 installdirs:
-	for dir in "$(DESTDIR)$(sbindir)" "$(DESTDIR)$(confdir)" "$(DESTDIR)$(pkgdatadir)"; do \
+	for dir in "$(DESTDIR)$(etcdir)" "$(DESTDIR)$(sbindir)" "$(DESTDIR)$(confdir)" "$(DESTDIR)$(pkgdatadir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -531,7 +575,8 @@ info: info-am
 
 info-am:
 
-install-data-am: install-confDATA install-nobase_dist_pkgdataDATA
+install-data-am: install-confDATA install-nobase_dist_pkgdataDATA \
+	install-nobase_etcSCRIPTS
 	@$(NORMAL_INSTALL)
 	$(MAKE) $(AM_MAKEFLAGS) install-data-hook
 install-dvi: install-dvi-am
@@ -577,7 +622,7 @@ ps: ps-am
 ps-am:
 
 uninstall-am: uninstall-confDATA uninstall-nobase_dist_pkgdataDATA \
-	uninstall-sbinSCRIPTS
+	uninstall-nobase_etcSCRIPTS uninstall-sbinSCRIPTS
 
 .MAKE: install-am install-data-am install-strip
 
@@ -588,12 +633,13 @@ uninstall-am: uninstall-confDATA uninstall-nobase_dist_pkgdataDATA \
 	install-data-hook install-dvi install-dvi-am install-exec \
 	install-exec-am install-html install-html-am install-info \
 	install-info-am install-man install-nobase_dist_pkgdataDATA \
-	install-pdf install-pdf-am install-ps install-ps-am \
-	install-sbinSCRIPTS install-strip installcheck installcheck-am \
-	installdirs maintainer-clean maintainer-clean-generic \
-	mostlyclean mostlyclean-generic pdf pdf-am ps ps-am tags-am \
-	uninstall uninstall-am uninstall-confDATA \
-	uninstall-nobase_dist_pkgdataDATA uninstall-sbinSCRIPTS
+	install-nobase_etcSCRIPTS install-pdf install-pdf-am \
+	install-ps install-ps-am install-sbinSCRIPTS install-strip \
+	installcheck installcheck-am installdirs maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-generic pdf \
+	pdf-am ps ps-am tags-am uninstall uninstall-am \
+	uninstall-confDATA uninstall-nobase_dist_pkgdataDATA \
+	uninstall-nobase_etcSCRIPTS uninstall-sbinSCRIPTS
 
 .PRECIOUS: Makefile
 
@@ -611,6 +657,7 @@ install-data-hook:
 	$(INSTALL) -d -m 750 -o $(APP_USER) -g $(APP_GROUP) $(DESTDIR)$(APP_RUNDIR)
 	$(INSTALL) -d -m 755 -o $(APP_USER) -g $(APP_GROUP) $(DESTDIR)$(APP_LIBDIR)
 	$(CP) -R node_modules $(DESTDIR)$(APP_LIBDIR)
+@FREEBSD_OS_TRUE@	chmod a+x $(DESTDIR)/${etcdir}/rc.d/wcm
 
 clean-local:
 	rm -f *~ */*~ logs/*.log run/pid

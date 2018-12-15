@@ -1,8 +1,8 @@
 {
-  "name": "expresso",
+  "name": "wcm",
   "version": "0.0.1",
   "description": "Service sample",
-  "main": "noserver.js",
+  "main": "exserv.js",
   "scripts": {},
   "keywords": [],
   "author": "",

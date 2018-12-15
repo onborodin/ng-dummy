@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+# $Id$
+#
+# PROVIDE: wcm
+# REQUIRE: LOGIN
+
+. /etc/rc.subr
+
+name="wcm"
+rcvar="wcm_enable"
+
+pidfile="/var/run/wcm"/wcm.pid
+command="/usr/local/wcm/sbin/${name}"
+command_args="--daemon"
+procname="/usr/local/wcm/sbin/${name}"
+command_interpreter="/usr/local/bin/node"
+
+load_rc_config ${name}
+
+: ${wcm_enable:="NO"}
+
+run_rc_command "$1"
+#EOF

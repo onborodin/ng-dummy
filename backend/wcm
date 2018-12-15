@@ -1,0 +1,18 @@
+#!/bin/sh
+
+NODE_PATH="/usr/local/wcm/etc/wcm"
+NODE_PATH="$NODE_PATH:/usr/local/wcm/share/wcm"
+NODE_PATH="$NODE_PATH:/usr/local/wcm/share/wcm/models"
+NODE_PATH="$NODE_PATH:/usr/local/wcm/share/wcm/controllers"
+NODE_PATH="$NODE_PATH:/usr/local/wcm/share/wcm/utils"
+NODE_PATH="$NODE_PATH:/usr/local/wcm/share/wcm/plugins"
+NODE_PATH="$NODE_PATH:/usr/local/wcm/share/wcm/routers"
+export NODE_PATH
+
+NODE_ENV=production
+export NODE_ENV
+
+cd /usr/local/wcm/share/wcm && /usr/local/bin/node /usr/local/wcm/share/wcm/exserv.js $@
+#EOF
+
+

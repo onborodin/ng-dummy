@@ -20,6 +20,7 @@ export class LoginService {
 
     cookieName = 'session'
     returnUrl: string = '/'
+    cookieController: any
 
     loginState: boolean = false
     user: User = { 
@@ -68,6 +69,13 @@ export class LoginService {
                     this.user.id = res.result[0].id
                     this.user.superuser = res.result[0].superuser
                     this.user.gecos = res.result[0].gecos
+
+                    this.cookieController = setInterval(() => {
+                        if (this.isLogin() && !Cookies.get(this.cookieName)) {
+                            this.logout()
+                        }
+                    }, 1000)
+
                     this.router.navigate([ this.returnUrl ])
                 }
             })

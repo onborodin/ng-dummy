@@ -1,7 +1,7 @@
 
 'use strict'
 
-const exconfig = require('exconfig')
+const wcmconf = require('wcmconf')
 
 const path = require('path')
 const fs = require('fs')
@@ -19,7 +19,7 @@ if (argv.help) {
 }
 
 //*** make log ***=
-var exlog = require('exlog')(exconfig.logDir)
+var exlog = require('exlog')(wcmconf.logDir)
 console.log = exlog
 console.error = exlog
 
@@ -40,7 +40,7 @@ const excors = require('excors')
 const app = express()
 
 var formatStr = ':date[iso] :remote-addr :method :url :status :res[content-length] :res[content-type] :response-time ms'
-var accessLog = fs.createWriteStream(exconfig.logDir + '/access.log', { flags: 'a' })
+var accessLog = fs.createWriteStream(wcmconf.logDir + '/access.log', { flags: 'a' })
 app.use(morgan(formatStr, { stream: accessLog }))
 app.use(morgan(formatStr))
 
@@ -48,7 +48,7 @@ app.use(excors())
 app.use(compression())
 app.use(lowercasePaths())
 app.use(helmet())
-app.use(express.static(exconfig.publicDir))
+app.use(express.static(wcmconf.publicDir))
 app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(responseTime())
@@ -58,7 +58,7 @@ const session = require('express-session')
 
 const FileStore = require('session-file-store')(session)
 app.use(session({
-    store: new FileStore({ path: exconfig.runDir }),
+    store: new FileStore({ path: wcmconf.runDir }),
     name: 'session',
     secret: 'efwe987ysdf9fsd69f9ds',
     resave: false,
@@ -66,7 +66,7 @@ app.use(session({
     saveUninitialized: true,
     cookie: { 
             secure: false,
-            maxAge: 3600 * 60 * 1000,
+            maxAge: 40 * 60 * 1000,
             httpOnly: false
     }
 }))
@@ -85,7 +85,7 @@ app.use(function(req, res, next) {
         req.session.touch()
         next()
     } else {
-         res.sendFile(path.join(exconfig.appDir, '/public/index.html'))
+         res.sendFile(path.join(wcmconf.appDir, '/public/index.html'))
     }
 })
 
@@ -96,7 +96,7 @@ var customers = require('./routers/customers')(knex)
 app.use('/api/customers', customers)
 
 app.get('/*', function(req, res) {
-     res.sendFile(path.join(exconfig.appDir, '/public/index.html'))
+     res.sendFile(path.join(wcmconf.appDir, '/public/index.html'))
 })
 
 // *** daemonize process *** 
@@ -107,11 +107,11 @@ if(argv.daemon) {
 
 // *** write pid file *** 
 const expid = require('expid')
-expid.create(exconfig.pidFile)
+expid.create(wcmconf.pidFile)
 
 // *** signal ans exeption handling ***
 const exsig = require('exsig')
-exsig(exconfig.pidFile)
+exsig(wcmconf.pidFile)
 
 // *** listen socket ***
 const cluster = require('cluster')
@@ -121,10 +121,10 @@ if (cluster.isMaster) {
         cluster.fork();
     }
 } else {
-    app.listen(exconfig.port, exconfig.address, null, function() {
+    app.listen(wcmconf.port, wcmconf.address, null, function() {
         try {
-            process.setgid(exconfig.runGroup)
-            process.setuid(exconfig.runUser)
+            process.setgid(wcmconf.runGroup)
+            process.setuid(wcmconf.runUser)
         } catch (err) {
         console.log('Cannot change process user and group')
             process.exit(1)
