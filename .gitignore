@@ -1,0 +1,6 @@
+*~
+vendor/
+phalcon
+.phalcon/
+node_modules/
+*.map
