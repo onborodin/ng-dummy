@@ -7,6 +7,7 @@ class ApiUsersController extends JsonRPCController {
     public function list($params) {
         $model = new User;
         $result = User::find();
+        $this->logger->info("#user data list session.username=" . $this->sessionData->name);
         return $result;
     }
 
@@ -21,6 +22,7 @@ class ApiUsersController extends JsonRPCController {
         $model->password = $params->password;
         $model->superuser = $params->superuser;
         $result = $model->create();
+        $this->logger->info("#user data create username=".$params->name." session.username=" . $this->sessionData->name);
         return $result;
     }
 
@@ -31,6 +33,7 @@ class ApiUsersController extends JsonRPCController {
         $model->gecos = $params->gecos;
         $model->password = $params->password;
         $result = $model->update();
+        $this->logger->info("#user data update username=".$params->name." session.username=" . $this->sessionData->name);
         return $result;
     }
 
@@ -39,6 +42,7 @@ class ApiUsersController extends JsonRPCController {
         $elem = $model->findFirst($params->$id);
         if ($elem->name) {
             $result = $elem->delete();
+            $this->logger->info("#user data drop username=".$params->name." session.username=" . $this->sessionData->name);
             return $result;
         }
         return false;

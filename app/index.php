@@ -38,6 +38,7 @@ use Phalcon\Events\Manager as EventsManager;
 
 use Phalcon\Logger;
 use Phalcon\Logger\Adapter\File as LogFileAdapter;
+use Phalcon\Logger\Formatter\Line as logFormatter;
 
 class MyApplication extends Application {
 
@@ -54,6 +55,9 @@ class MyApplication extends Application {
                 foreach ($config->application as $key => $value) {
                     $config->application[$key] = realpath(dirname(__FILE__)) . '/../' . $value;
                 }
+                foreach ($config->application as $key => $value) {
+                    $config->application[$key] = realpath($value);
+                }
                 return $config;
             }
         );
@@ -63,6 +67,10 @@ class MyApplication extends Application {
         $this->di->set('logger',
             function () use ($_config){
                 $logger = new LogFileAdapter($_config->application->logPath);
+                $logFormatter = new LogFormatter;
+                $logFormatter->setFormat('%date% %type% %message%');
+                $logFormatter->setDateFormat('Y:m:d H:i:sT');
+                $logger->setFormatter($logFormatter);
                 return $logger;
         });
 

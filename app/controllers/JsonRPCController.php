@@ -4,6 +4,8 @@ use Phalcon\Mvc\Controller;
 
 class JsonRPCController extends Controller {
 
+    public $sessionData;
+
     public $invalidRequest = [
         jsonrpc => "2.0",
         error => [
@@ -58,6 +60,8 @@ class JsonRPCController extends Controller {
         $params = $req->params;
         $id = $req->id;
 
+        $this->sessionData = $this->session->get('user');
+
         if (!$method) {
             return $this->sendJson($this->invalidRequest);
         }
@@ -70,16 +74,11 @@ class JsonRPCController extends Controller {
             return $this->sendJson($this->invalidRequest);
         }
 
-        //$this->logger->debug(var_export($req, true));
-
         if (method_exists($this, $method)) {
             $result = $this->$method($params);
         } else {
             return $this->sendJson($this->methodNotFound);
         }
-
-        //$this->logger->debug(var_export([ result => $result ], true));
-
 
         return $this->sendJson([
             id => $id,

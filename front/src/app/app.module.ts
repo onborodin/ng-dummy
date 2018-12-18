@@ -53,7 +53,7 @@ import { UserDropComponent } from './user-drop/user-drop.component'
         HttpClientModule
     ],
     providers: [
-        {provide: LocationStrategy, useClass: HashLocationStrategy},
+        //{provide: LocationStrategy, useClass: HashLocationStrategy},
         LoginService,
         RPCService,
         UsersService,

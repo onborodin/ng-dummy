@@ -12,9 +12,11 @@ class ApiLoginController extends JsonRPCController {
         ]);
 
         if ($elem->name) {
+            $this->logger->info("#login successeful userName=$params->name");
             $this->session->set('user', $elem);
             return [ $elem ];
         }
+        $this->logger->info("#login incorrect userName=$params->name");
         return [];
     }
 

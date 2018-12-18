@@ -1,4 +1,5 @@
 *~
+*.log
 vendor/
 phalcon
 .phalcon/
