@@ -18,4 +18,7 @@ class ApiLoginController extends JsonRPCController {
         return [];
     }
 
+    public function logout($params) {
+        $this->session->destroy();
+    }
 }

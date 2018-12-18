@@ -48980,3 +48980,89 @@
      '_keepSnapshots' => false,
   )),
 )
+[Tue, 18 Dec 18 10:21:16 +0200][DEBUG] controller=index action=index
+[Tue, 18 Dec 18 10:21:57 +0200][DEBUG] controller=api-login action=index
+[Tue, 18 Dec 18 10:21:57 +0200][DEBUG] stdClass::__set_state(array(
+   'jsonrpc' => '2.0',
+   'method' => 'login',
+   'params' => 
+  stdClass::__set_state(array(
+     'name' => 'qwerty',
+     'password' => '12345',
+     'id' => -1,
+  )),
+   'id' => '447bf267-73c5-4e4e-8051-c8a3144c0ef8',
+))
+[Tue, 18 Dec 18 10:21:57 +0200][DEBUG] array (
+  'result' => 
+  array (
+    0 => 
+    Phalcon\Mvc\Model\Row::__set_state(array(
+       'id' => 3,
+       'name' => 'qwerty',
+       'gecos' => 'Luppolo Kuppolo',
+       'superuser' => true,
+    )),
+  ),
+)
+[Tue, 18 Dec 18 10:22:54 +0200][DEBUG] controller=api-users action=index
+[Tue, 18 Dec 18 10:24:42 +0200][DEBUG] prev-controller= prev-action=
+[Tue, 18 Dec 18 10:24:42 +0200][DEBUG] controller=api-login action=index
+[Tue, 18 Dec 18 10:25:03 +0200][DEBUG] prev-controller= prev-action=
+[Tue, 18 Dec 18 10:25:03 +0200][DEBUG] controller=api-users action=index
+[Tue, 18 Dec 18 10:29:31 +0200][DEBUG] prev-controller= prev-action=
+[Tue, 18 Dec 18 10:29:31 +0200][DEBUG] controller=api-login action=index
+[Tue, 18 Dec 18 10:29:46 +0200][DEBUG] prev-controller= prev-action=
+[Tue, 18 Dec 18 10:29:46 +0200][DEBUG] controller=api-login action=index
+[Tue, 18 Dec 18 10:29:47 +0200][DEBUG] prev-controller= prev-action=
+[Tue, 18 Dec 18 10:29:47 +0200][DEBUG] controller=api-users action=index
+[Tue, 18 Dec 18 10:30:19 +0200][DEBUG] prev-controller= prev-action=
+[Tue, 18 Dec 18 10:30:19 +0200][DEBUG] controller=api-users action=index
+[Tue, 18 Dec 18 10:30:37 +0200][DEBUG] prev-controller= prev-action=
+[Tue, 18 Dec 18 10:30:37 +0200][DEBUG] controller=api-users action=index
+[Tue, 18 Dec 18 10:31:12 +0200][DEBUG] prev-controller= prev-action=
+[Tue, 18 Dec 18 10:31:12 +0200][DEBUG] controller=api-users action=index
+[Tue, 18 Dec 18 10:31:26 +0200][DEBUG] prev-controller= prev-action=
+[Tue, 18 Dec 18 10:31:26 +0200][DEBUG] controller=api-users action=index
+[Tue, 18 Dec 18 10:31:28 +0200][DEBUG] prev-controller= prev-action=
+[Tue, 18 Dec 18 10:31:28 +0200][DEBUG] controller=api-users action=index
+[Tue, 18 Dec 18 10:31:47 +0200][DEBUG] prev-controller= prev-action=
+[Tue, 18 Dec 18 10:31:47 +0200][DEBUG] controller=api-users action=index
+[Tue, 18 Dec 18 10:34:39 +0200][DEBUG] prev-controller= prev-action=
+[Tue, 18 Dec 18 10:34:39 +0200][DEBUG] controller=api-login action=index
+[Tue, 18 Dec 18 10:34:39 +0200][DEBUG] sessionData=$
+[Tue, 18 Dec 18 10:34:40 +0200][DEBUG] prev-controller= prev-action=
+[Tue, 18 Dec 18 10:34:40 +0200][DEBUG] controller=api-users action=index
+[Tue, 18 Dec 18 10:34:40 +0200][DEBUG] sessionData=$1
+[Tue, 18 Dec 18 10:34:53 +0200][DEBUG] prev-controller= prev-action=
+[Tue, 18 Dec 18 10:34:53 +0200][DEBUG] controller=index action=index
+[Tue, 18 Dec 18 10:34:53 +0200][DEBUG] sessionData=$1
+[Tue, 18 Dec 18 10:35:09 +0200][DEBUG] prev-controller= prev-action=
+[Tue, 18 Dec 18 10:35:09 +0200][DEBUG] controller=api-login action=index
+[Tue, 18 Dec 18 10:35:09 +0200][DEBUG] sessionData=1
+[Tue, 18 Dec 18 10:35:10 +0200][DEBUG] prev-controller= prev-action=
+[Tue, 18 Dec 18 10:35:10 +0200][DEBUG] controller=api-users action=index
+[Tue, 18 Dec 18 10:35:10 +0200][DEBUG] sessionData=1
+[Tue, 18 Dec 18 10:35:23 +0200][DEBUG] prev-controller= prev-action=
+[Tue, 18 Dec 18 10:35:23 +0200][DEBUG] controller=api-users action=index
+[Tue, 18 Dec 18 10:35:23 +0200][DEBUG] sessionData=1
+[Tue, 18 Dec 18 10:35:33 +0200][DEBUG] prev-controller= prev-action=
+[Tue, 18 Dec 18 10:35:33 +0200][DEBUG] controller=api-users action=index
+[Tue, 18 Dec 18 10:35:33 +0200][DEBUG] sessionData=
+[Tue, 18 Dec 18 10:35:36 +0200][DEBUG] prev-controller= prev-action=
+[Tue, 18 Dec 18 10:35:36 +0200][DEBUG] controller=api-users action=index
+[Tue, 18 Dec 18 10:35:36 +0200][DEBUG] sessionData=
+[Tue, 18 Dec 18 10:38:27 +0200][DEBUG] controller=api-users action=index
+[Tue, 18 Dec 18 10:38:27 +0200][DEBUG] sessionData=
+[Tue, 18 Dec 18 10:44:38 +0200][DEBUG] controller=api-users action=index
+[Tue, 18 Dec 18 10:44:38 +0200][DEBUG] sessionData=
+[Tue, 18 Dec 18 10:44:38 +0200][DEBUG] controller=api-dummy action=index
+[Tue, 18 Dec 18 10:44:38 +0200][DEBUG] sessionData=
+[Tue, 18 Dec 18 10:44:46 +0200][DEBUG] controller=api-users action=index
+[Tue, 18 Dec 18 10:44:46 +0200][DEBUG] sessionData=
+[Tue, 18 Dec 18 10:44:46 +0200][DEBUG] controller=api-dummy action=index
+[Tue, 18 Dec 18 10:44:46 +0200][DEBUG] sessionData=
+[Tue, 18 Dec 18 10:45:12 +0200][DEBUG] controller=api-login action=index
+[Tue, 18 Dec 18 10:45:12 +0200][DEBUG] sessionData=
+[Tue, 18 Dec 18 10:45:13 +0200][DEBUG] controller=api-users action=index
+[Tue, 18 Dec 18 10:45:13 +0200][DEBUG] sessionData=1

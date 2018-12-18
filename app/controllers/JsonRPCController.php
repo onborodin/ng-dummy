@@ -70,7 +70,7 @@ class JsonRPCController extends Controller {
             return $this->sendJson($this->invalidRequest);
         }
 
-        $this->logger->debug(var_export($req, true));
+        //$this->logger->debug(var_export($req, true));
 
         if (method_exists($this, $method)) {
             $result = $this->$method($params);
@@ -78,7 +78,7 @@ class JsonRPCController extends Controller {
             return $this->sendJson($this->methodNotFound);
         }
 
-        $this->logger->debug(var_export([ result => $result ], true));
+        //$this->logger->debug(var_export([ result => $result ], true));
 
 
         return $this->sendJson([
