@@ -1,9 +1,9 @@
 
 module.exports = {
     nodeBin: '/usr/local/bin/node',
-    appDir: '/usr/local/wcm/share/wcm',
-    publicDir: '/usr/local/wcm/share/wcm/public',
-    uploadDir: '/usr/local/wcm/share/wcm/uploads',
+    appDir: '/usr/local/share/wcm',
+    publicDir: '/usr/local/share/wcm/public',
+    uploadDir: '/usr/local/share/wcm/uploads',
     port: 3100,
     address: '127.0.0.1',
     runUser: 'www',

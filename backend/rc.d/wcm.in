@@ -10,11 +10,11 @@
 name="wcm"
 rcvar="wcm_enable"
 
-pidfile="@APP_RUNDIR@"/wcm.pid
+pidfile="@APP_RUNDIR@/pid"
 command="@prefix@/sbin/${name}"
 command_args="--daemon"
-procname="@prefix@/sbin/${name}"
-command_interpreter="@node@"
+procname="@node@"
+#command_interpreter="@node@"
 
 load_rc_config ${name}
 

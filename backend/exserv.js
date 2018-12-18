@@ -105,9 +105,6 @@ if(argv.daemon) {
     exdaemon()
 }
 
-// *** write pid file *** 
-const expid = require('expid')
-expid.create(wcmconf.pidFile)
 
 // *** signal ans exeption handling ***
 const exsig = require('exsig')
@@ -116,6 +113,11 @@ exsig(wcmconf.pidFile)
 // *** listen socket ***
 const cluster = require('cluster')
 if (cluster.isMaster) {
+
+    // *** write pid file *** 
+    const expid = require('expid')
+    expid.create(wcmconf.pidFile)
+
     var cpuCount = require('os').cpus().length + 1
     for (var i = 0; i < cpuCount; i += 1) {
         cluster.fork();

@@ -10,11 +10,11 @@
 name="wcm"
 rcvar="wcm_enable"
 
-pidfile="/var/run/wcm"/wcm.pid
-command="/usr/local/wcm/sbin/${name}"
+pidfile="/var/run/wcm/pid"
+command="/usr/local/sbin/${name}"
 command_args="--daemon"
-procname="/usr/local/wcm/sbin/${name}"
-command_interpreter="/usr/local/bin/node"
+procname="/usr/local/bin/node"
+#command_interpreter="/usr/local/bin/node"
 
 load_rc_config ${name}
 
