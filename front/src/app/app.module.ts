@@ -1,4 +1,3 @@
-
 import { NgModule } from '@angular/core'
 import { LocationStrategy, HashLocationStrategy } from '@angular/common'
 import { FormsModule } from '@angular/forms'
@@ -22,6 +21,7 @@ import { NotFoundComponent } from './not-found/not-found.component'
 import { RPCService } from './rpc.service'
 import { LoginService } from './login.service'
 import { UsersService } from './users.service'
+import { UploadService } from './upload.service'
 
 import { LoginGuard } from './guards/login.guard'
 import { SuperloginGuard } from './guards/superlogin.guard'
@@ -29,7 +29,7 @@ import { SuperloginGuard } from './guards/superlogin.guard'
 import { UsersComponent } from './users/users.component'
 import { UserCreateComponent } from './user-create/user-create.component'
 import { UserUpdateComponent } from './user-update/user-update.component'
-import { UserDropComponent } from './user-drop/user-drop.component'
+import { UserDropComponent } from './user-drop/user-drop.component';
 
 @NgModule({
     declarations: [
@@ -42,7 +42,7 @@ import { UserDropComponent } from './user-drop/user-drop.component'
         NotFoundComponent,
         UserCreateComponent,
         UserUpdateComponent,
-        UserDropComponent
+        UserDropComponent,
     ],
     imports: [
         ReactiveFormsModule,
@@ -57,6 +57,7 @@ import { UserDropComponent } from './user-drop/user-drop.component'
         LoginService,
         RPCService,
         UsersService,
+        UploadService,
         LoginGuard,
         SuperloginGuard
     ],

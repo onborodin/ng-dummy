@@ -47,7 +47,7 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>#</th>
+                                <th>id</th>
                                 <th>name</th>
                                 <th>login</th>
                                 <th>right</th>
@@ -57,7 +57,7 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let item of list; let i = index">
-                                <td>{{ i + 1 }}</td>
+                                <td>{{ item.id }}</td>
                                 <td>{{ item.gecos  }}</td>
                                 <td>{{ item.name  }}</td>
                                 <td><span *ngIf="item.superuser"><i class="fi-sheriff-badge" style="font-size: 1.2em;"></i></span></td>
