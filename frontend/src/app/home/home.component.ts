@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
     partialSamples: string[] = [
         '16192',
         '7911',
-        'Lake',
+        'Amelie',
         'Princess',
     ]
 
