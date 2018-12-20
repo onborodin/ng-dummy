@@ -113,7 +113,7 @@ module.exports = function(model) {
                     }
                 }
 
-                console.log({ method: method, result: result })
+                //console.log({ method: method, result: result })
 
                 res.send({
                     jsonrpc: "2.0",
