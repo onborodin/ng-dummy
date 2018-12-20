@@ -44,6 +44,11 @@ module.exports = function(knex) {
                 superuser: params.superuser,
             })
             .into('users')
+            .then(function(res) {
+                if (res.rowCount) return res.rowCount
+                return 0
+            })
+
     }
 
     var update = function(params) {
@@ -57,6 +62,10 @@ module.exports = function(knex) {
             .from('users')
             .where({
                 id: params.id
+            })
+            .then(function(res) {
+                if (res.rowCount) return res.rowCount
+                return 0
             })
     }
 
@@ -73,6 +82,7 @@ module.exports = function(knex) {
         modelName: "users",
         list: list,
         find: find,
+        get: get,
         create: create,
         update: update,
         drop: drop

@@ -10,7 +10,7 @@
 name="wcm"
 rcvar="wcm_enable"
 
-pidfile="/var/run/wcm/pid"
+pidfile="/home/ziggi/PMM/projects/wcm/backend/run/pid"
 command="/usr/local/sbin/${name}"
 command_args="--daemon"
 procname="/usr/local/bin/node"

@@ -80,14 +80,14 @@ const knex = require('knex')(knexfile.development)
 var login = require('./routers/login')(knex)
 app.use('/api/login', login)
 
-app.use(function(req, res, next) {
-    if (typeof(req.session.userId) != 'undefined') {
-        req.session.touch()
-        next()
-    } else {
-         res.sendFile(path.join(wcmconf.appDir, '/public/index.html'))
-    }
-})
+//app.use(function(req, res, next) {
+//    if (typeof(req.session.userId) != 'undefined') {
+//        req.session.touch()
+//        next()
+//    } else {
+//         res.sendFile(path.join(wcmconf.appDir, '/public/index.html'))
+//    }
+//})
 
 var users = require('./routers/users')(knex)
 app.use('/api/users', users)
