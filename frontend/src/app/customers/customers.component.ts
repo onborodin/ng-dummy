@@ -53,9 +53,13 @@ export class CustomersComponent implements OnInit {
     }
 
     searchByPhone(form) {
-        this.customerList = []
         let phone = form.value.phone
-        this.router.navigate([ '/customers/' + phone ])
+        if (this.phone !== phone) {
+            this.customerList = []
+            this.router.navigate([ '/customers/' + phone ])
+        } else {
+            this.theTimestamp = this.timestamp()
+        }
     }
 
     search(some) {
