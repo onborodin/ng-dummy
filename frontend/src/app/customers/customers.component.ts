@@ -9,13 +9,16 @@ import { AppFooterComponent } from '../app-footer/app-footer.component'
 import { RPCService, RPCResponce, RPCError } from '../rpc.service'
 import { CustomersService } from '../customers.service'
 import { Customer } from '../models/customer.model'
+import { fadeAnimation } from '../app.animations'
+
 
 import * as moment from 'moment-mini'
 
 @Component({
-  selector: 'domain',
-  templateUrl: './customers.component.html',
-  styleUrls: ['./customers.component.scss']
+    selector: 'domain',
+    templateUrl: './customers.component.html',
+    styleUrls: ['./customers.component.scss'],
+    animations: [ fadeAnimation ]
 })
 export class CustomersComponent implements OnInit {
 

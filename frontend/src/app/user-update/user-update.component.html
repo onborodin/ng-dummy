@@ -1,25 +1,25 @@
-<div *ngIf="show">
+<div *ngIf="show" [@fade]>
 
     <form accept-charset="UTF-8" class="shadow callout" [formGroup]="modelForm" (ngSubmit)="updateModel(modelForm)"  >
 
         <h5 class="text-center">Do user user?</h5>
 
         <label>Name
-            <input type="text" formControlName="gecos" required minlength="6" />
+            <input type="text" formControlName="gecos" required minlength="5" />
         </label>
 
         <p class="help-text"  *ngIf="(gecos.touched || gecos.dirty) && gecos.errors">
             <span *ngIf="gecos.errors.required">Required.</span>
-            <span *ngIf="gecos.errors.minlength">Minimal length is 6 chars.</span>
+            <span *ngIf="gecos.errors.minlength">Minimal length is 5 chars.</span>
         </p>
 
         <label>Login
-            <input type="text" formControlName="name"  required minlength="4" pattern="^[a-z0-9_-]{1,64}$" />
+            <input type="text" formControlName="name"  required minlength="5" pattern="^[a-z0-9_-]{5,64}$" />
         </label>
 
         <p class="help-text" *ngIf="(name.touched || name.dirty) && name.errors">
             <span *ngIf="name.errors.required">Required.</span>
-            <span *ngIf="name.errors.minlength">Minimal length is 4 chars.</span>
+            <span *ngIf="name.errors.minlength">Minimal length is 5 chars.</span>
             <span *ngIf="name.errors.pattern">Must include only lower latin char or number</span>
         </p>
 

@@ -6,13 +6,13 @@ import { RPCService, RPCResponce, RPCError } from '../rpc.service'
 import { UsersService } from '../users.service'
 import { User } from '../models/user.model'
 
+import { fadeAnimation } from '../app.animations'
 
 @Component({
     selector: 'user-create',
     templateUrl: './user-create.component.html',
     styleUrls: ['./user-create.component.scss'],
-    animations: [
-    ]
+    animations: [ fadeAnimation ]
 })
 export class UserCreateComponent implements OnInit {
 
@@ -20,7 +20,6 @@ export class UserCreateComponent implements OnInit {
     user: User
     alertMessage: string = ''
     message: string = ''
-
 
     @Input() show: boolean = false
     @Output() escapeEvent = new EventEmitter<boolean>();

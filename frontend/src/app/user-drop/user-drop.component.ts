@@ -1,15 +1,19 @@
 import { Component, OnInit, OnDestroy, OnChanges, SimpleChanges, Input, Output, EventEmitter } from '@angular/core'
 import { FormGroup, FormControl, FormBuilder, Validators, ValidationErrors } from '@angular/forms'
 
-
 import { RPCService, RPCResponce, RPCError } from '../rpc.service'
 import { UsersService } from '../users.service'
 import { User } from '../models/user.model'
 
+import { fadeAnimation } from '../app.animations'
+
+
 @Component({
-  selector: 'user-drop',
-  templateUrl: './user-drop.component.html',
-  styleUrls: ['./user-drop.component.scss']
+    selector: 'user-drop',
+    templateUrl: './user-drop.component.html',
+    styleUrls: ['./user-drop.component.scss'],
+    animations: [ fadeAnimation ]
+
 })
 export class UserDropComponent implements OnInit {
 

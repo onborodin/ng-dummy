@@ -6,7 +6,7 @@
 
         <div class="grid-container">
             <div class="grid-x grid-margin-x">
-                    <div class="cell medium-6 margin-left-3">
+                    <div class="cell medium-6 margin-left-3" [@fade]>
 
                         <h5><b>Overview</b></h5>
 
@@ -52,7 +52,7 @@
                     </div>
 
 
-                    <div class="cell medium-3 margin-left-1">
+                    <div class="cell medium-3 margin-left-1" [@rotate]>
 
 
                         <h5><b>Sample search</b></h5>
@@ -61,7 +61,8 @@
 
                         <ul class="list-square">
                             <li *ngFor="let item of samplePhoneList; let i = index">
-                                <a target="_blank" rel="noopener noreferrer" href='#/customers/{{ item }}'>{{ item }}</a>
+                                <!-- <a target="_blank" rel="noopener noreferrer" href='#/customers/{{ item }}'>{{ item }}</a> -->
+                                <a href='#/customers/{{ item }}'>{{ item }}</a>
                             </li>
                         </ul>
 
@@ -69,7 +70,8 @@
 
                         <ul class="list-square">
                             <li *ngFor="let item of partialSamples; let i = index">
-                                <a target="_blank" rel="noopener noreferrer" href='#/customers/{{ item }}'>{{ item }}</a>
+                                <!-- <a target="_blank" rel="noopener noreferrer" href='#/customers/{{ item }}'>{{ item }}</a> -->
+                                <a href='#/customers/{{ item }}'>{{ item }}</a>
                             </li>
                         </ul>
 

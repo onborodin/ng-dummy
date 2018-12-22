@@ -4,16 +4,22 @@ import { HttpClient } from '@angular/common/http'
 
 import { LoginService } from '../login.service'
 
+import { rotateAnimation } from '../app.animations'
+
+
 @Component({
     selector: 'login',
     templateUrl: './login.component.html',
-    styleUrls: [ './login.component.scss' ]
+    styleUrls: [ './login.component.scss' ],
+    animations: [ rotateAnimation ]
+
 })
 export class LoginComponent implements OnInit {
 
     loginForm: FormGroup
     message: string = ''
     attemptCount: number = 0
+    debug: string = ''
 
     constructor(
         private formBuilder: FormBuilder,

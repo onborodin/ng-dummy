@@ -12,10 +12,13 @@ import { RPCService, RPCResponce, RPCError } from '../rpc.service'
 import { UsersService } from '../users.service'
 import { User } from '../models/user.model'
 
+import { fadeAnimation } from '../app.animations'
+
 @Component({
     selector: 'users',
     templateUrl: './users.component.html',
     styleUrls: ['./users.component.scss'],
+    animations: [ fadeAnimation ]
 })
 export class UsersComponent implements OnInit {
 

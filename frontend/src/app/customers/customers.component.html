@@ -25,7 +25,7 @@
                         <p>Not found.</p>
                     </div>
 
-                    <div *ngIf="customerList.length > 0">
+                    <div *ngIf="customerList.length > 0" [@fade]>
 
                         <h6>{{ theTimestamp }}, total <b>{{ customerList.length }}</b></h6>
 
@@ -33,7 +33,7 @@
                             <hr />
                             <h6>{{ i + 1 }}. <b>{{ item.name }}</b></h6>
 
-                            <table class="shadow">
+                            <table class="shadow" [@fade]>
                                 <tbody>
                                     <tr>
                                         <td width="14em">Location</td>
