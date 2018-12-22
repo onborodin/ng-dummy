@@ -2,31 +2,28 @@ import { Component, OnInit, OnDestroy, OnChanges, SimpleChanges, Input, Output, 
 import { FormGroup, FormControl, FormBuilder, Validators, ValidationErrors } from '@angular/forms'
 
 import { RPCService, RPCResponce, RPCError } from '../rpc.service'
-import { UsersService } from '../users.service'
-import { User } from '../models/user.model'
+import { ThingsService } from '../things.service'
+import { Thing } from '../models/thing.model'
 
 import { fadeAnimation } from '../app.animations'
 
 
 @Component({
-    selector: 'user-drop',
-    templateUrl: './user-drop.component.html',
-    styleUrls: ['./user-drop.component.scss'],
+  selector: 'thing-drop',
+  templateUrl: './thing-drop.component.html',
+  styleUrls: ['./thing-drop.component.scss'],
     animations: [ fadeAnimation ]
-
 })
-export class UserDropComponent implements OnInit {
+export class ThingDropComponent implements OnInit {
 
     modelForm: FormGroup
     alertMessage: string = ''
     message: string = ''
 
     @Input() show: boolean = false
-    @Input() user: User = {
+    @Input() thing: Thing = {
         id: -1,
         name: '',
-        password: '',
-        gecos: ''
     }
 
     @Output() escapeEvent = new EventEmitter<boolean>();
@@ -34,13 +31,9 @@ export class UserDropComponent implements OnInit {
 
     constructor(
         private formBuilder: FormBuilder,
-        private usersService: UsersService
+        private thingsService: ThingsService
 
     ) {}
-
-    //create(item) {
-    //    this.user = item.value
-    //}
 
     escape() {
         this.show = false
@@ -55,9 +48,9 @@ export class UserDropComponent implements OnInit {
 
         if (this.formValidator(form)) return
 
-        this.user = form.value
-        this.usersService
-            .drop(this.user)
+        this.thing = form.value
+        this.thingsService
+            .drop(this.thing)
             .subscribe((res: RPCResponce<any>) => {
                 if (res.result > 0) {
                     this.show = false
@@ -80,7 +73,7 @@ export class UserDropComponent implements OnInit {
 
     createForm() {
             this.modelForm = new FormGroup({
-                id: new FormControl(this.user.id),
+                id: new FormControl(this.thing.id),
                 confirm: new FormControl(false),
             },  { validators: this.formValidator });
     }
@@ -88,7 +81,7 @@ export class UserDropComponent implements OnInit {
 
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['user']) {
+        if (changes['thing']) {
             this.createForm()
         }
     }

@@ -2,11 +2,11 @@
 
     <form accept-charset="UTF-8" class="shadow callout" [formGroup]="modelForm" (ngSubmit)="dropModel(modelForm)"  >
 
-        <h5 class="text-center">Do drop user #{{ user.name }}?</h5>
+        <h5 class="text-center">Do drop thing #{{ thing.name }}?</h5>
 
         <fieldset class="cell margin-bottom-1 text-center">
-            <input id="checkbox-user-as" type="checkbox" formControlName="confirm" required>
-            <label for="checkbox-user-as"> I confirm the action. </label>
+            <input id="checkbox-thing-as" type="checkbox" formControlName="confirm" required>
+            <label for="checkbox-thing-as"> I confirm the action. </label>
         </fieldset>
 
         <p class="text-center" *ngIf="confirm.errors">

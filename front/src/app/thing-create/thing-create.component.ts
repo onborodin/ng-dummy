@@ -3,21 +3,30 @@ import { FormGroup, FormControl, FormBuilder, Validators,  ValidationErrors } fr
 import { state, query, useAnimation, transition, style, trigger, animate, animateChild } from '@angular/animations';
 
 import { RPCService, RPCResponce, RPCError } from '../rpc.service'
-import { UsersService } from '../users.service'
-import { User } from '../models/user.model'
+import { ThingsService } from '../things.service'
+import { Thing } from '../models/thing.model'
 
 import { fadeAnimation } from '../app.animations'
 
 @Component({
-    selector: 'user-create',
-    templateUrl: './user-create.component.html',
-    styleUrls: ['./user-create.component.scss'],
-    animations: [ fadeAnimation ]
+    selector: 'thing-create',
+    templateUrl: './thing-create.component.html',
+    styleUrls: ['./thing-create.component.scss'],
+    animations: [
+        fadeAnimation
+//        trigger('fade', [
+//            state('void', style({
+//                opacity: 0
+//            })),
+//            transition('void <=> *', animate('0.5s')),
+//        ])
+    ]
+
 })
-export class UserCreateComponent implements OnInit {
+export class ThingCreateComponent implements OnInit {
 
     modelForm: FormGroup
-    user: User
+    thing: Thing
     alertMessage: string = ''
     message: string = ''
 
@@ -27,15 +36,13 @@ export class UserCreateComponent implements OnInit {
 
     constructor(
         private formBuilder: FormBuilder,
-        private usersService: UsersService
+        private thingsService: ThingsService
     ) {}
 
 
     formValidator(form: FormGroup) : ValidationErrors | null {
         const name = form.get('name')
-        const password = form.get('password')
-        const gecos = form.get('gecos')
-        if (name.errors || password.errors || gecos.errors) { 
+        if (name.errors) { 
             return { formValidator: true }
         }
         return null
@@ -44,9 +51,6 @@ export class UserCreateComponent implements OnInit {
     createForm() {
         this.modelForm = new FormGroup({
             name: new FormControl(),
-            password: new FormControl(),
-            gecos: new FormControl(),
-            superuser: new FormControl(),
         },  { validators: this.formValidator });
     }
 
@@ -54,9 +58,9 @@ export class UserCreateComponent implements OnInit {
     createModel(form) {
         if (this.formValidator(form)) return
 
-        this.user = form.value
-        this.usersService
-            .create(this.user)
+        this.thing = form.value
+        this.thingsService
+            .create(this.thing)
             .subscribe((res: RPCResponce<any>) => {
                 if (res.result.rowCount > 0) {
                     this.show = false
@@ -70,14 +74,6 @@ export class UserCreateComponent implements OnInit {
 
     get name() {
         return this.modelForm.get('name')
-    }
-
-    get password() {
-        return this.modelForm.get('password')
-    }
-
-    get gecos() {
-        return this.modelForm.get('gecos')
     }
 
     escape() {

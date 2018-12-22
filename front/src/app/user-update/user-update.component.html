@@ -1,6 +1,6 @@
-<div *ngIf="show">
+<div *ngIf="show" [@fade]>
 
-    <form accept-charset="UTF-8" class="callout" [formGroup]="modelForm" (ngSubmit)="updateModel(modelForm)"  >
+    <form accept-charset="UTF-8" class="shadow callout" [formGroup]="modelForm" (ngSubmit)="updateModel(modelForm)"  >
 
         <h5 class="text-center">Do user user?</h5>
 

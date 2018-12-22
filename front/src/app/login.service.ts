@@ -69,10 +69,11 @@ export class LoginService {
                     this.user.id = res.result[0].id
                     this.user.superuser = res.result[0].superuser
                     this.user.gecos = res.result[0].gecos
-
-                    this.cookieController = setInterval(() => {
-                        if (this.isLogin() && !Cookies.get(this.cookieName)) {
-                            this.logout()
+                    var theThis = this
+                    this.cookieController = setInterval(function() {
+                        //console.log('#check cookie ' + theThis.cookieName)
+                        if (theThis.isLogin() && !Cookies.get(theThis.cookieName)) {
+                            theThis.logout()
                         }
                     }, 1000)
 

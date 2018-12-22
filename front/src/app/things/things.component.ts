@@ -1,59 +1,67 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 import { Router } from '@angular/router'
+
 
 import { AppHeaderComponent } from '../app-header/app-header.component'
 import { AppFooterComponent } from '../app-footer/app-footer.component'
 
-import { UserCreateComponent } from '../user-create/user-create.component'
-import { UserUpdateComponent } from '../user-update/user-update.component'
-import { UserDropComponent } from '../user-drop/user-drop.component'
+import { ThingCreateComponent } from '../thing-create/thing-create.component'
+import { ThingUpdateComponent } from '../thing-update/thing-update.component'
+import { ThingDropComponent } from '../thing-drop/thing-drop.component'
+import { ThingCardComponent } from '../thing-card/thing-card.component'
 
 import { RPCService, RPCResponce, RPCError } from '../rpc.service'
-import { UsersService } from '../users.service'
-import { User } from '../models/user.model'
+import { ThingsService } from '../things.service'
+import { Thing } from '../models/thing.model'
 
 import { fadeAnimation } from '../app.animations'
 
 @Component({
-    selector: 'users',
-    templateUrl: './users.component.html',
-    styleUrls: ['./users.component.scss'],
+    selector: 'things',
+    templateUrl: './things.component.html',
+    styleUrls: ['./things.component.scss'],
     animations: [ fadeAnimation ]
 })
-export class UsersComponent implements OnInit {
+export class ThingsComponent implements OnInit {
 
     showCreateForm: boolean = false
     showUpdateForm: boolean = false
     showDropForm: boolean = false
     showListRecords: boolean = true
+    showItemCard: boolean = false
 
-    list: User[] = []
+    list: Thing[] = []
 
-    currentUser : User = {
+    currentThing : Thing = {
         id: -1,
         name: '',
-        password: '',
-        gecos: ''
     }
 
     constructor(
-        private usersService: UsersService,
+        private thingsService: ThingsService,
     ) {}
 
-    dropItem(item: User) {
-        this.currentUser = item
+    dropItem(item: Thing) {
+        this.currentThing = item
         this.showDrop()
     }
 
-    updateItem(item: User) {
-        this.currentUser = item
+    updateItem(item: Thing) {
+        this.currentThing = item
         this.showUpdate()
     }
 
+    showItem(item: Thing) {
+        this.currentThing = item
+        this.showCard()
+    }
+
+
     getList() {
-        this.usersService
+        this.thingsService
             .list()
-            .subscribe((res: RPCResponce<User[]>) => {
+            .subscribe((res: RPCResponce<Thing[]>) => {
                 this.list = res.result
             })
     }
@@ -76,6 +84,7 @@ export class UsersComponent implements OnInit {
         this.showUpdateForm = false
         this.showDropForm = false
         this.showListRecords = false
+        this.showItemCard = false
     }
 
     showUpdate() {
@@ -83,6 +92,7 @@ export class UsersComponent implements OnInit {
         this.showUpdateForm = true
         this.showDropForm = false
         this.showListRecords = false
+        this.showItemCard = false
     }
 
     showDrop() {
@@ -90,6 +100,7 @@ export class UsersComponent implements OnInit {
         this.showUpdateForm = false
         this.showDropForm = true
         this.showListRecords = false
+        this.showItemCard = false
     }
 
     showList() {
@@ -97,5 +108,16 @@ export class UsersComponent implements OnInit {
         this.showUpdateForm = false
         this.showDropForm = false
         this.showListRecords = true
+        this.showItemCard = false
     }
+
+
+    showCard() {
+        this.showCreateForm = false
+        this.showUpdateForm = false
+        this.showDropForm = false
+        this.showListRecords = true
+        this.showItemCard = true
+    }
+
 }

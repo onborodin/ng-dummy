@@ -16,19 +16,34 @@ export class AppHeaderComponent implements OnInit, OnChanges {
     ) {}
 
     ngOnInit() {
+        //this.foundation()
+    }
+
+    ngDoCheck() {
+        //this.foundation()
+    }
+
+    foundation() {
         $('#app-header').foundation()
+    }
+
+    ngAfterViewChecked() {
+        this.foundation()
     }
 
     ngAfterViewInit() {
-        $('#app-header').foundation()
+        //this.foundation()
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        $('#app-header').foundation()
+        //this.foundation()
     }
 
     ngAfterContentChecked() {
-        $('#app-header').foundation()
+        //this.foundation()
     }
 
+    ngAfterContentInit() { // not called
+        //this.foundation()
+    }
 }

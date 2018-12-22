@@ -4,10 +4,15 @@ import { HttpClient } from '@angular/common/http'
 
 import { LoginService } from '../login.service'
 
+import { fadeAnimation } from '../app.animations'
+
+
 @Component({
     selector: 'login',
     templateUrl: './login.component.html',
-    styleUrls: [ './login.component.scss' ]
+    styleUrls: [ './login.component.scss' ],
+    animations: [ fadeAnimation ]
+
 })
 export class LoginComponent implements OnInit {
 
