@@ -32,6 +32,8 @@ export class CustomersComponent implements OnInit {
         agreement: ''
     }
 
+    theTimestamp: string = ''
+
     customerList: Customer[] = []
 
     constructor(
@@ -41,16 +43,20 @@ export class CustomersComponent implements OnInit {
         private customersService: CustomersService
     ) {}
 
-    timestamp() {
-        return moment().format('hh:mm:ss a')
+
+    timestamp() : string {
+        var now = moment()
+        return now.format('hh:mm:ss a')
     }
 
     searchByPhone(form) {
+        this.customerList = []
         let phone = form.value.phone
         this.router.navigate([ '/customers/' + phone ])
     }
 
     search(some) {
+        this.customerList = []
         this.router.navigate([ '/customers/' + some ])
     }
 
@@ -80,6 +86,7 @@ export class CustomersComponent implements OnInit {
                 this.customersService
                     .find(customer)
                     .subscribe((res: RPCResponce<Customer[]>) => {
+                        this.theTimestamp = this.timestamp()
                         if (res.result.length > 0) {
                             this.customerList = res.result
                         }

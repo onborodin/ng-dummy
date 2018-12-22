@@ -9,7 +9,7 @@
                     <div>
                         <form accept-charset="UTF-8"  [formGroup]="phoneForm" (ngSubmit)="searchByPhone(phoneForm)">
 
-                            <div class="input-group">
+                            <div class="input-group radius shadow">
                                 <span class="input-group-label">Search</span>
                                 <input class="input-group-field" type="text" formControlName="phone">
                                 <div class="input-group-button">
@@ -22,18 +22,18 @@
                     </div>
 
                     <div *ngIf="phone && !(customerList.length > 0) ">
-                        <p>Yet not found.</p>
+                        <p>Not found.</p>
                     </div>
 
                     <div *ngIf="customerList.length > 0">
 
-                        <h6>{{ timestamp() }}, total <b>{{ customerList.length }}</b></h6>
+                        <h6>{{ theTimestamp }}, total <b>{{ customerList.length }}</b></h6>
 
                         <div *ngFor="let item of customerList; let i = index">
                             <hr />
                             <h6>{{ i + 1 }}. <b>{{ item.name }}</b></h6>
 
-                            <table>
+                            <table class="shadow">
                                 <tbody>
                                     <tr>
                                         <td width="14em">Location</td>

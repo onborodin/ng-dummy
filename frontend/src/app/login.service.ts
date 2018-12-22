@@ -70,11 +70,13 @@ export class LoginService {
                     this.user.superuser = res.result[0].superuser
                     this.user.gecos = res.result[0].gecos
 
-                    this.cookieController = setInterval(() => {
-                        if (this.isLogin() && !Cookies.get(this.cookieName)) {
-                            this.logout()
-                        }
-                    }, 1000)
+                    // bug: strange loop, related with angular setInterval() modification
+                    //var theThis = this
+                    //this.cookieController = setInterval(function() {
+                    //    if (theThis.isLogin() && !Cookies.get(theThis.cookieName)) {
+                    //        theThis.logout()
+                    //    }
+                    //}, 1000)
 
                     this.router.navigate([ this.returnUrl ])
                 }
