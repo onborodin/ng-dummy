@@ -1,0 +1,6 @@
+#!/bin/sh
+
+psql -U pgsql postgres -c 'drop database phalcon;'
+psql -U pgsql postgres -c 'create database phalcon;'
+rm .phalcon/migration-version
+./phalcon migration run --verbose

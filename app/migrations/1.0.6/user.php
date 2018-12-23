@@ -6,9 +6,9 @@ use Phalcon\Db\Reference;
 use Phalcon\Mvc\Model\Migration;
 
 /**
- * Class UserMigration_104
+ * Class UserMigration_106
  */
-class UserMigration_104 extends Migration
+class UserMigration_106 extends Migration
 {
     /**
      * Define the table structure
@@ -25,7 +25,8 @@ class UserMigration_104 extends Migration
                             'type' => Column::TYPE_INTEGER,
                             'notNull' => true,
                             'autoIncrement' => true,
-                            'first' => true
+                            'first' => true,
+                            'primary' => true
                         ]
                     ),
                     new Column(
@@ -64,8 +65,9 @@ class UserMigration_104 extends Migration
                     )
                 ],
                 'indexes' => [
-                    new Index('PRIMARY', ['id'], null)
+                    new Index('user_name', ['name'])
                 ],
+
             ]
         );
     }

@@ -4,15 +4,15 @@ use Phalcon\Mvc\Controller;
 
 class ApiUsersController extends JsonRPCController {
 
-    public function list($params) {
+    public function rpcList($params) {
         $model = new User;
-        $result = User::find();
-        $this->logger->info("#user data list session.username=" . $this->sessionData->name);
+        $result = $model->find([ 'order' => 'name' ]);
         return $result;
     }
 
-    public function create($params) {
+    public function rpcCreate($params) {
         $model = new User;
+
         $elem = $model->findFirst("name = '$params->name'");
         if ($elem->name) {
             return $elem;
@@ -21,30 +21,40 @@ class ApiUsersController extends JsonRPCController {
         $model->gecos = $params->gecos;
         $model->password = $params->password;
         $model->superuser = $params->superuser;
-        $result = $model->create();
-        $this->logger->info("#user data create username=".$params->name." session.username=" . $this->sessionData->name);
+
+        $result = $model->save();
         return $result;
     }
 
-    public function update($params) {
+    public function rpcUpdate($params) {
         $model = new User;
-        $model = $model->findFirst($params->$id);
-        $model->name = $params->name;
-        $model->gecos = $params->gecos;
-        $model->password = $params->password;
-        $result = $model->update();
-        $this->logger->info("#user data update username=".$params->name." session.username=" . $this->sessionData->name);
+
+        $elem = $model->findFirst("id = '$params->id'");
+
+        if ($elem->name !== $params->name) {
+            $alter = $model->findFirst("name = '$params->name'");
+            if ($alter->name) {
+                return 0;
+            }
+        }
+
+        $elem->name = $params->name;
+        $elem->gecos = $params->gecos;
+        $elem->password = $params->password;
+        $elem->superuser = $params->superuser;
+
+        $result = $elem->update();
+
         return $result;
     }
 
-    public function drop($params) {
+    public function rpcDrop($params) {
         $model = new User;
-        $elem = $model->findFirst($params->$id);
+        $elem = $model->findFirst("id = '$params->id'");
         if ($elem->name) {
             $result = $elem->delete();
-            $this->logger->info("#user data drop username=".$params->name." session.username=" . $this->sessionData->name);
             return $result;
         }
-        return false;
+        return 0;
     }
 }

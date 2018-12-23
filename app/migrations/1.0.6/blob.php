@@ -6,9 +6,9 @@ use Phalcon\Db\Reference;
 use Phalcon\Mvc\Model\Migration;
 
 /**
- * Class UserMigration_102
+ * Class BlobMigration_106
  */
-class UserMigration_102 extends Migration
+class BlobMigration_106 extends Migration
 {
     /**
      * Define the table structure
@@ -17,7 +17,7 @@ class UserMigration_102 extends Migration
      */
     public function morph()
     {
-        $this->morphTable('user', [
+        $this->morphTable('blob', [
                 'columns' => [
                     new Column(
                         'id',
@@ -25,8 +25,17 @@ class UserMigration_102 extends Migration
                             'type' => Column::TYPE_INTEGER,
                             'notNull' => true,
                             'autoIncrement' => true,
-                            'size' => 1,
-                            'first' => true
+                            'first' => true,
+                            'primary' => true
+
+                        ]
+                    ),
+                    new Column(
+                        'thing_id',
+                        [
+                            'type' => Column::TYPE_INTEGER,
+                            'notNull' => true,
+                            'after' => 'id'
                         ]
                     ),
                     new Column(
@@ -35,45 +44,13 @@ class UserMigration_102 extends Migration
                             'type' => Column::TYPE_TEXT,
                             'notNull' => true,
                             'size' => 1,
-                            'after' => 'id'
-                        ]
-                    ),
-                    new Column(
-                        'gecos',
-                        [
-                            'type' => Column::TYPE_TEXT,
-                            'notNull' => true,
-                            'size' => 1,
-                            'after' => 'name'
-                        ]
-                    ),
-                    new Column(
-                        'password',
-                        [
-                            'type' => Column::TYPE_TEXT,
-                            'notNull' => true,
-                            'size' => 1,
-                            'after' => 'gecos'
-                        ]
-                    ),
-                    new Column(
-                        'superuser',
-                        [
-                            'type' => Column::TYPE_BOOLEAN,
-                            'size' => 1,
-                            'after' => 'password'
+                            'after' => 'thing_id'
                         ]
                     )
                 ],
-               'indexes' => [
-                    new Index(
-                        'PRIMARY',
-                        [
-                            'id',
-                        ]
-                    ),
+                'indexes' => [
+                    new Index('blob_name', ['name'], null)
                 ],
-
             ]
         );
     }
@@ -97,4 +74,19 @@ class UserMigration_102 extends Migration
     {
 
     }
+
+    /**
+     * This method is called after the table was created
+     *
+     * @return void
+     */
+     public function afterCreateTable()
+     {
+        $this->batchInsert('blob', [
+                'id',
+                'thing_id',
+                'name'
+            ]
+        );
+     }
 }

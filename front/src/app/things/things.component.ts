@@ -31,7 +31,9 @@ export class ThingsComponent implements OnInit {
     showListRecords: boolean = true
     showItemCard: boolean = false
 
+    firstElem: number = 0
     pageSize: number = 5
+    elemNumList: number[] = []
 
     list: Thing[] = []
 
@@ -43,6 +45,19 @@ export class ThingsComponent implements OnInit {
     constructor(
         private thingsService: ThingsService,
     ) {}
+
+    changePage(eventData) {
+        this.setFirstElem(eventData)
+    }
+
+    setFirstElem(num: number) {
+        var list: number[] = []
+        this.firstElem = num
+        for (var i: number = this.firstElem; i < (this.firstElem + this.pageSize) && i < this.list.length; i += 1) {
+            list.push(i)
+        }
+        this.elemNumList = list
+    }
 
     dropItem(item: Thing) {
         this.currentThing = item
@@ -65,11 +80,13 @@ export class ThingsComponent implements OnInit {
             .list()
             .subscribe((res: RPCResponce<Thing[]>) => {
                 this.list = res.result
+                this.setFirstElem(0)
             })
     }
 
     ngOnInit() {
         this.getList()
+        this.setFirstElem(0)
     }
 
     escapeForm() {
@@ -113,7 +130,6 @@ export class ThingsComponent implements OnInit {
         this.showItemCard = false
     }
 
-
     showCard() {
         this.showCreateForm = false
         this.showUpdateForm = false
@@ -121,5 +137,4 @@ export class ThingsComponent implements OnInit {
         this.showListRecords = true
         this.showItemCard = true
     }
-
 }

@@ -15,18 +15,18 @@ class SecurityPlugin extends Plugin {
         $controller = $dispatcher->getControllerName();
         $action = $dispatcher->getActionName();
 
-        $this->logger->debug("#call controller=$controller action=$action");
+        //$this->logger->debug("#call controller=$controller action=$action");
 
         $sessionData = $this->session->get('user');
         //$this->logger->debug("sessionData=$sessionData->superuser");
 
-        if ($controller == 'api-users' && !$sessionData->superuser ) {
-            $dispatcher->forward([
-                'controller' => 'api-dummy',
-                'action'     => $action
-            ]);
-            return false;
-        }
+        //if ($controller == 'api-users' && !$sessionData->superuser ) {
+        //    $dispatcher->forward([
+        //        'controller' => 'api-dummy',
+        //        'action'     => $action
+        //    ]);
+        //    return false;
+        //}
         return true;
     }
 }

@@ -4,7 +4,7 @@ use Phalcon\Mvc\Controller;
 
 class ApiLoginController extends JsonRPCController {
 
-    public function login($params) {
+    public function rpcLogin($params) {
         $model = new User;
         $elem = $model->findFirst([
             "name = '$params->name' and password = '$params->password'",
@@ -12,15 +12,13 @@ class ApiLoginController extends JsonRPCController {
         ]);
 
         if ($elem->name) {
-            $this->logger->info("#login successeful userName=$params->name");
             $this->session->set('user', $elem);
             return [ $elem ];
         }
-        $this->logger->info("#login incorrect userName=$params->name");
         return [];
     }
 
-    public function logout($params) {
+    public function rpcLogout($params) {
         $this->session->destroy();
     }
 }

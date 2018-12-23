@@ -4,7 +4,6 @@ use Phalcon\DI;
 use Phalcon\Loader;
 use Phalcon\Di\FactoryDefault;
 
-
 use Phalcon\Mvc\Url as UrlProvider;
 
 use Phalcon\Mvc\Router;
@@ -55,9 +54,9 @@ class MyApplication extends Application {
                 foreach ($config->application as $key => $value) {
                     $config->application[$key] = realpath(dirname(__FILE__)) . '/../' . $value;
                 }
-                foreach ($config->application as $key => $value) {
-                    $config->application[$key] = realpath($value);
-                }
+                //foreach ($config->application as $key => $value) {
+                //    $config->application[$key] = realpath($value);
+                //}
                 return $config;
             }
         );
@@ -69,7 +68,7 @@ class MyApplication extends Application {
                 $logger = new LogFileAdapter($_config->application->logPath);
                 $logFormatter = new LogFormatter;
                 $logFormatter->setFormat('%date% %type% %message%');
-                $logFormatter->setDateFormat('Y:m:d H:i:sT');
+                $logFormatter->setDateFormat('Y:m:d H:i:s T');
                 $logger->setFormatter($logFormatter);
                 return $logger;
         });
@@ -134,30 +133,7 @@ class MyApplication extends Application {
                 $router = new Router(false);
                 $router->removeExtraSlashes(true);
 
-                $router->setDefaults([
-                        'controller' => 'index',
-                        'action'     => 'index'
-                ]);
-
-                $router->add('/', [ 
-                        'controller' => 'index', 
-                        'action' => 'index'
-                ]);
-
-                $router->add('/api/login', [
-                        'controller' => 'api-login',
-                        'action' => 'index'
-                ]);
-
-                $router->add('/api/users', [
-                        'controller' => 'api-users',
-                        'action' => 'index'
-                ]);
-
-                $router->notFound([
-                        'controller' => 'index',
-                        'action' => 'index'
-                ]);
+                require 'routes.php';
 
                 return $router;
         });
@@ -215,13 +191,6 @@ class MyApplication extends Application {
         $this->di->set('dispatcher',
                 function () {
                     $eventsManager = new EventsManager();
-
-                    //$eventsManager->attach('dispatch',
-                    //    function (Event $event, $dispatcher) {
-                    //        // ...
-                    //    }
-                    //);
-
                     $eventsManager->attach('dispatch:beforeExecuteRoute', new SecurityPlugin);
 
                     $dispatcher = new MvcDispatcher();
@@ -232,8 +201,27 @@ class MyApplication extends Application {
         );
     }
 
+    public function makeDir() {
+        $logDir = dirname($this->config->application->logPath);
+        if (!file_exists($logDir)) {
+            mkdir($logDir, 0770, true);
+        }
+
+        $dataDir = $this->config->application->dataDir;
+        if (!file_exists($dataDir)) {
+            $this->logger->warning("#try create datadir $dataDir ");
+            mkdir($dataDir, 0770, true);
+        }
+
+        if (!is_writable($dataDir)) {
+            $this->logger->alert("#datadir $dataDir is not writable");
+        }
+    }
+
     public function main() {
         $this->registerServices();
+        $this->makeDir();
+
         $this->registerAutoloaders();
         $this->registerDispatchService();
 
@@ -242,16 +230,6 @@ class MyApplication extends Application {
     }
 }
 
-try {
-    $app = new MyApplication();
-    //$app->useImplicitView(false); // Disable automatic rendering
-    $app->main();
-
-} catch (\Exception $e) {
-    $response = new Response();
-    $response->setContentType('text/html', 'UTF-8');
-    $response->setStatusCode(404);
-    $response->setContent("<html><body><pre>Exeption: " . $e->getMessage() . "</pre></body></html>");
-    $response->send();
-}
-#EOF
+$app = new MyApplication();
+$app->useImplicitView(false); // Disable automatic rendering
+$app->main();

@@ -4,19 +4,24 @@ use Phalcon\Mvc\Controller;
 
 class ApiDummyController extends JsonRPCController {
 
-    public function list($params) {
+    public function rcpList($params) {
         return [];
     }
 
-    public function create($params) {
+    public function rcpCreate($params) {
         return true;
     }
 
-    public function update($params) {
+    public function rcpUpdate($params) {
         return true;
     }
 
-    public function drop($params) {
+    public function rcpDrop($params) {
         return true;
     }
+
+    public function rcpGet($params) {
+        return true;
+    }
+
 }

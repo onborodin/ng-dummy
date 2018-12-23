@@ -18,6 +18,7 @@ export class PageNavComponent implements OnInit {
 
     @Input() listLength: number = 0
     @Input() pageSize: number = 5
+    @Input() firstElem: number = 0
 
     currentPageNum: number = 0
     firstPageNum: number = 0
@@ -27,30 +28,20 @@ export class PageNavComponent implements OnInit {
 
     @Output() changePageEvent = new EventEmitter<number>();
 
-    createPageList() {
-        var page = 0
-        var list: Page[] = []
-        for (var i = 0; i < (this.listLength + this.pageSize); i += this.pageSize) {
-            list.push({ num: page, firstElem: i })
-            page += 1
-        }
-        this.pageList = list
-        this.lastPageNum = this.pageList.length - 1
-    }
-
     setPage(page: Page) {
         this.currentPageNum = page.num
+        this.changePageEvent.emit(this.pageList[this.currentPageNum].firstElem)
     }
 
     nextPage() {
         if (this.currentPageNum < this.lastPageNum) {
-            this.currentPageNum += 1
+            this.setPage(this.pageList[this.currentPageNum + 1])
         }
     }
 
     prevPage() {
         if (this.currentPageNum > this.firstPageNum) {
-            this.currentPageNum -= 1
+            this.setPage(this.pageList[this.currentPageNum - 1])
         }
     }
 
@@ -59,11 +50,29 @@ export class PageNavComponent implements OnInit {
             this.createPageList()
         }
 
+        if (changes['firstElem']) {
+            this.createPageList()
+        }
+
         if (changes['pageSize']) {
-            if (this.pageSize < 5) this.pageSize = 5
+            if (this.pageSize < 1) this.pageSize = 1
             this.createPageList()
         }
     }
+
+    createPageList() {
+        var page = 0
+        var list: Page[] = []
+        for (var i = 0; i < (this.listLength); i += this.pageSize) {
+            list.push({ num: page, firstElem: i })
+            page += 1
+        }
+        this.pageList = list
+        this.lastPageNum = this.pageList.length - 1
+        this.currentPageNum = Math.round((this.listLength / this.pageSize) + 0.500001)
+    }
+
+
 
     ngOnInit() {
     }

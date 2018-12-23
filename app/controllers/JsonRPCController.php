@@ -1,6 +1,7 @@
 <?php
 
 use Phalcon\Mvc\Controller;
+use Phalcon\Text;
 
 class JsonRPCController extends Controller {
 
@@ -73,6 +74,8 @@ class JsonRPCController extends Controller {
         if (!$params) {
             return $this->sendJson($this->invalidRequest);
         }
+
+        $method = Text::camelize('rpc_'.$method);
 
         if (method_exists($this, $method)) {
             $result = $this->$method($params);
