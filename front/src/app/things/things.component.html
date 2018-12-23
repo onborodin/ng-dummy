@@ -55,6 +55,12 @@
                         <button class="float-right small button" (click)="showCreate()"><i class="fi-plus" style="font-size: 1.3em;"></i></button>
                     </h5>
 
+                    <div  class="text-center">
+                        <small>
+                            <page-nav [listLength]="list.length" [pageSize]="5"  ></page-nav>
+                        </small>
+                    </div>
+
                     <table class="shadow" [@fade]>
                     <!--
                         <thead>
@@ -78,11 +84,14 @@
                         </tbody>
                     </table>
 
+
                 </div>
             </div>
         </div>
 
     </div>
+
+
 
     <app-footer></app-footer>
 

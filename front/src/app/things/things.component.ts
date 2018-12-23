@@ -31,6 +31,8 @@ export class ThingsComponent implements OnInit {
     showListRecords: boolean = true
     showItemCard: boolean = false
 
+    pageSize: number = 5
+
     list: Thing[] = []
 
     currentThing : Thing = {

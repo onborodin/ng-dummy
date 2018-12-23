@@ -4,14 +4,14 @@ import { HttpClient } from '@angular/common/http'
 
 import { LoginService } from '../login.service'
 
-import { fadeAnimation } from '../app.animations'
+import { rotateAnimation } from '../app.animations'
 
 
 @Component({
     selector: 'login',
     templateUrl: './login.component.html',
     styleUrls: [ './login.component.scss' ],
-    animations: [ fadeAnimation ]
+    animations: [ rotateAnimation ]
 
 })
 export class LoginComponent implements OnInit {
@@ -40,8 +40,8 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
-            name: [ '' ],
-            password: [ '' ]
+            name: [ 'qwerty' ],
+            password: [ '12345' ]
         })
     }
 }

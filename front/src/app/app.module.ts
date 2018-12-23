@@ -37,7 +37,8 @@ import { ThingsComponent } from './things/things.component'
 import { ThingCreateComponent } from './thing-create/thing-create.component'
 import { ThingUpdateComponent } from './thing-update/thing-update.component'
 import { ThingDropComponent } from './thing-drop/thing-drop.component'
-import { ThingCardComponent } from './thing-card/thing-card.component'
+import { ThingCardComponent } from './thing-card/thing-card.component';
+import { PageNavComponent } from './page-nav/page-nav.component'
 
 
 @NgModule({
@@ -59,6 +60,7 @@ import { ThingCardComponent } from './thing-card/thing-card.component'
         ThingUpdateComponent,
         ThingDropComponent,
         ThingCardComponent,
+        PageNavComponent,
 
     ],
     imports: [

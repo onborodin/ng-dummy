@@ -65,9 +65,11 @@ export class ThingCreateComponent implements OnInit {
                 if (res.result.rowCount > 0) {
                     this.show = false
                     this.successEvent.emit(true)
+                    this.createForm()
                 } else {
                     this.show = false
                     this.successEvent.emit(false)
+
                 }
             })
     }
