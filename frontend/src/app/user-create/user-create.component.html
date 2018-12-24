@@ -1,4 +1,5 @@
-<div *ngIf="show" [@fade]>
+<div>
+<span *ngIf="show" [@fade]>
 
     <form accept-charset="UTF-8" class="shadow callout" [formGroup]="modelForm" (ngSubmit)="createModel(modelForm)"  >
 
@@ -56,5 +57,5 @@
         </p>
 
     </form>
-
+</span>
 </div>

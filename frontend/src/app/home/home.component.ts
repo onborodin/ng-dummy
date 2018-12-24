@@ -11,11 +11,11 @@ export const fadeAnimation = trigger('fade', [
             transform: 'translateY(-100%) scale(0.5)',
             opacity: 0
         }),
-        animate('2.25s 300ms ease-in')
+        animate('2.25s 1300ms ease-in')
     ]),
 
     transition(':leave', [
-        animate('0.2s 100ms ease-out',
+        animate('0.2s 1100ms ease-out',
             style({
                 transform: 'translateX(0)',
                 opacity: 0
@@ -34,11 +34,11 @@ export const rotateAnimation = trigger('rotate', [
             transform: 'translateX(200%) rotateX(60deg) scale(0.5)',
             opacity: 0
         }),
-        animate('1.25s 300ms ease-in')
+        animate('1.25s 1300ms ease-in')
     ]),
 
     transition(':leave', [
-        animate('0.2s 100ms ease-out',
+        animate('0.2s 1100ms ease-out',
             style({
                 transform: 'translateX(200%) rotateX(-90deg)',
                 opacity: 0

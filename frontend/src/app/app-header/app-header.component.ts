@@ -31,4 +31,8 @@ export class AppHeaderComponent implements OnInit, OnChanges {
         $('#app-header').foundation()
     }
 
+    ngAfterViewChecked() {
+        $('#app-header').foundation()
+    }
+
 }

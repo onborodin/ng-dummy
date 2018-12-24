@@ -29,10 +29,13 @@
                                 "output": "/"
                             }
                         ],
-                        "styles": [{
-                            "input": "src/styles.scss",
-                            "bundleName": "styles"
-                        }],
+                        "styles": [
+                            {
+                                "input": "src/styles.scss",
+                                "bundleName": "styles"
+                            },
+                            "src/loading.scss"
+                        ],
                         "stylePreprocessorOptions": {
                             "includePaths": [
                                 "src/scss",

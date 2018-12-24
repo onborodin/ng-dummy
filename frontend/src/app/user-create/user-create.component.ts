@@ -41,13 +41,14 @@ export class UserCreateComponent implements OnInit {
         return null
     }
 
+
     createForm() {
         this.modelForm = new FormGroup({
             name: new FormControl(),
             password: new FormControl(),
             gecos: new FormControl(),
-            superuser: new FormControl(),
-        },  { validators: this.formValidator });
+            superuser: new FormControl()
+        }, { validators: this.formValidator })
     }
 
 

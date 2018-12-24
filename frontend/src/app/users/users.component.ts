@@ -4,9 +4,9 @@ import { Router } from '@angular/router'
 import { AppHeaderComponent } from '../app-header/app-header.component'
 import { AppFooterComponent } from '../app-footer/app-footer.component'
 
-import { UserCreateComponent } from '../user-create/user-create.component'
-import { UserUpdateComponent } from '../user-update/user-update.component'
-import { UserDropComponent } from '../user-drop/user-drop.component'
+//import { UserCreateComponent } from '../user-create/user-create.component'
+//import { UserUpdateComponent } from '../user-update/user-update.component'
+//import { UserDropComponent } from '../user-drop/user-drop.component'
 
 import { RPCService, RPCResponce, RPCError } from '../rpc.service'
 import { UsersService } from '../users.service'
