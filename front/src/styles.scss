@@ -13,8 +13,7 @@
 @import '../_vendor/sassy-lists/stylesheets/functions/replace';
 @import '../_vendor/sassy-lists/stylesheets/functions/to-list';
 
-@import "fs";
-@import "my";
+@import "foundation-setup";
 
 // --- Components ---
 
@@ -147,6 +146,7 @@
   @include foundation-drilldown-menu;
   @include foundation-dropdown-menu;
 
+
   // Layout components
   @include foundation-off-canvas;
   @include foundation-reveal;
@@ -158,3 +158,4 @@
 
 @include foundation-everything;
 
+@import "my-global";

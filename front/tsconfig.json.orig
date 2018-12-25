@@ -1,0 +1,31 @@
+{
+    "compileOnSave": false,
+    "angularCompilerOptions": {
+        "enableIvy": true
+    },
+    "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": "./",
+        "declaration": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "importHelpers": true,
+        "module": "es2015",
+        "moduleResolution": "node",
+        "noEmitHelpers": true,
+        "sourceMap": true,
+        "strictNullChecks": false,
+        "target": "es5",
+
+        "paths": {
+            "@angular/*": ["node_modules/@angular/*"]
+        },
+        "typeRoots": [
+            "node_modules/@types"
+        ],
+        "lib": [
+            "es2018",
+            "dom"
+        ],
+    }
+}

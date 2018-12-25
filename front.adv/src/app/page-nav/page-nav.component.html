@@ -4,45 +4,47 @@
             <li>
                 <i *ngIf="currentPageNum > firstPageNum" class="arrow-left display-inline-block"></i>
                 <i *ngIf="!(currentPageNum > firstPageNum)" class="fi-stop  display-inline-block"></i>
-                <a (click)="prevPage()" class="display-inline-block">Prev</a>
+                <a (click)="prevPage()" class="display-inline-block rounded">Prev</a>
             </li>
 
             <span *ngIf="pageList.length <= simpleViewLimit">
+
                 <li *ngFor="let item of pageList; let i = index">
-                    <a (click)="setPage(item)" *ngIf="i === currentPageNum" class="current"> {{ i + 1 }}</a>
-                    <a (click)="setPage(item)" *ngIf="i !== currentPageNum"> {{ i + 1 }}</a>
+                    <a (click)="setPage(item)" *ngIf="i === currentPageNum" class="current rounded shadow"> {{ i + 1 }}</a>
+                    <a (click)="setPage(item)" *ngIf="i !== currentPageNum" class="rounded"> {{ i + 1 }}</a>
                 </li>
+
             </span>
 
             <span *ngIf="pageList.length > simpleViewLimit">
 
                 <li *ngIf="(currentPageNum - firstPageNum) > pageWindow">
-                        <a (click)="setPage(pageList[firstPageNum])"> {{ firstPageNum + 1 }}</a>
+                        <a (click)="setPage(pageList[firstPageNum])" class="rounded"> {{ firstPageNum + 1 }}</a>
                 </li>
 
                 <li *ngIf="(currentPageNum - firstPageNum) > (pageWindow + 1)">
-                        ...
+                        &hellip;
                 </li>
 
                 <li *ngFor="let item of pageList; let i = index">
                     <span *ngIf="i >= (currentPageNum - pageWindow) && i <= (currentPageNum + pageWindow)"> 
-                        <a (click)="setPage(item)" *ngIf="i === currentPageNum" class="current"> {{ i + 1 }}</a>
-                        <a (click)="setPage(item)" *ngIf="i !== currentPageNum"> {{ i + 1 }}</a>
+                        <a (click)="setPage(item)" *ngIf="i === currentPageNum" class="current rounded shadow"> {{ i + 1 }}</a>
+                        <a (click)="setPage(item)" *ngIf="i !== currentPageNum" class="rounded"> {{ i + 1 }}</a>
                     </span>
                 </li>
 
                 <li *ngIf="(lastPageNum - currentPageNum) > (pageWindow + 1)">
-                        ...
+                        &hellip;
                 </li>
 
                 <li *ngIf="(lastPageNum - currentPageNum) > pageWindow">
-                        <a (click)="setPage(pageList[lastPageNum])"> {{ lastPageNum + 1}}</a>
+                        <a (click)="setPage(pageList[lastPageNum])" class="rounded"> {{ lastPageNum + 1}}</a>
                 </li>
 
             </span>
 
             <li >
-                <a (click)="nextPage()" class="display-inline-block">Next</a>
+                <a (click)="nextPage()" class="display-inline-block rounded">Next</a>
                 <i *ngIf="currentPageNum < lastPageNum" class="arrow-right margin-left-1 display-inline-block"></i>
                 <i *ngIf="!(currentPageNum < lastPageNum)" class="fi-stop margin-left-1 display-inline-block"></i>
             </li>

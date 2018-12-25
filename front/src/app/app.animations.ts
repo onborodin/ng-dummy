@@ -7,14 +7,6 @@ import {
     keyframes
 } from '@angular/animations';
 
-//export const baseAnimation = trigger('base', [
-//    state('void',
-//        style({
-//            opacity: 0
-//        })
-//    ),
-//    transition('* <=> *', animate('1s')),
-//])
 
 export const fadeAnimation = trigger('fade', [
     state('void', style({

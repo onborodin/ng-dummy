@@ -50,6 +50,15 @@ export class ThingsComponent implements OnInit {
         this.setFirstElem(eventData)
     }
 
+    changePageSize(size: number) {
+        this.pageSize = size
+        var list: number[] = []
+        for (var i: number = this.firstElem; i < (this.firstElem + this.pageSize) && i < this.list.length; i += 1) {
+            list.push(i)
+        }
+        this.elemNumList = list
+    }
+
     setFirstElem(num: number) {
         var list: number[] = []
         this.firstElem = num

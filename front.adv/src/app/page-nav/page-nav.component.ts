@@ -26,12 +26,8 @@ export class PageNavComponent implements OnInit {
     pageWindow: number = 2
     simpleViewLimit: number = 10
 
-    @Output() changePageEvent = new EventEmitter<number>();
+    @Output() changeFirstElemEvent = new EventEmitter<number>();
 
-    setPage(page: Page) {
-        this.currentPageNum = page.num
-        this.changePageEvent.emit(this.pageList[this.currentPageNum].firstElem)
-    }
 
     nextPage() {
         if (this.currentPageNum < this.lastPageNum) {
@@ -45,18 +41,19 @@ export class PageNavComponent implements OnInit {
         }
     }
 
+    setPage(page: Page) {
+        this.currentPageNum = page.num
+        this.changeFirstElemEvent.emit(this.pageList[this.currentPageNum].firstElem)
+    }
+
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['listLength']) {
+        if (changes['listLength'] || changes['pageSize']) {
+            if (this.pageSize < 1) this.pageSize = 1
             this.createPageList()
         }
 
         if (changes['firstElem']) {
-            this.createPageList()
-        }
-
-        if (changes['pageSize']) {
-            if (this.pageSize < 1) this.pageSize = 1
-            this.createPageList()
+            this.setCurrentPage()
         }
     }
 
@@ -69,14 +66,13 @@ export class PageNavComponent implements OnInit {
         }
         this.pageList = list
         this.lastPageNum = this.pageList.length - 1
-        this.currentPageNum = Math.round((this.listLength / this.pageSize) + 0.500001)
     }
 
-
+    setCurrentPage() {
+        this.currentPageNum = Math.abs((this.firstElem / this.pageSize))
+        this.createPageList()
+    }
 
     ngOnInit() {
     }
-
-
-
 }

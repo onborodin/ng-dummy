@@ -1,0 +1,8 @@
+<div class="cell medium-2 padding-right-1 margin-right-2 border-right show-for-medium shrink">
+    <ul class="vertical menu">
+        <li class="menu-text">Pages</li>
+        <li *ngFor="let item of list; let i = index" [class]="itemClass(item)">
+            <a (click)="changePage(item)">{{ item.name }}</a>
+        </li>
+    </ul>
+</div>

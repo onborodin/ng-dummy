@@ -29,7 +29,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵPRE_STYLE", function() { return ɵPRE_STYLE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵAnimationGroupPlayer", function() { return AnimationGroupPlayer; });
 /**
- * @license Angular v7.1.2
+ * @license Angular v7.1.4
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -777,7 +777,7 @@ function useAnimation(animation, options) {
 }
 /**
  * Finds one or more inner elements within the current element that is
- * being animated within a sequence. Use with `animateChild()`.
+ * being animated within a sequence. Use with `animate()`.
  *
  * @param selector The element to query, or a set of elements that contain Angular-specific
  * characteristics, specified with one or more of the following tokens.
@@ -824,7 +824,7 @@ function useAnimation(animation, options) {
  * ### Usage Example
  *
  * The following example queries for inner elements and animates them
- * individually using `animateChild()`.
+ * individually using `animate()`.
  *
  * ```typescript
  * @Component({
@@ -1254,7 +1254,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_animations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/animations */ "./node_modules/@angular/animations/fesm5/animations.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /**
- * @license Angular v7.1.2
+ * @license Angular v7.1.4
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -1537,7 +1537,7 @@ function parseTimeExpression(exp, errors, allowNegativeValues) {
         duration = _convertTimeValueToMS(parseFloat(matches[1]), matches[2]);
         var delayMatch = matches[3];
         if (delayMatch != null) {
-            delay = _convertTimeValueToMS(Math.floor(parseFloat(delayMatch)), matches[4]);
+            delay = _convertTimeValueToMS(parseFloat(delayMatch), matches[4]);
         }
         var easingVal = matches[5];
         if (easingVal) {
@@ -4234,7 +4234,7 @@ var TransitionAnimationEngine = /** @class */ (function () {
             this.markElementAsDisabled(element, false);
         }
         this.driver.query(element, DISABLED_SELECTOR, true).forEach(function (node) {
-            _this.markElementAsDisabled(element, false);
+            _this.markElementAsDisabled(node, false);
         });
     };
     TransitionAnimationEngine.prototype.flush = function (microtaskId) {
@@ -5843,7 +5843,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /**
- * @license Angular v7.1.2
+ * @license Angular v7.1.4
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -6867,7 +6867,7 @@ function getLocaleCurrencySymbol(locale) {
     return data[15 /* CurrencySymbol */] || null;
 }
 /**
- * The name of the currency for the main country using this locale (e.g. USD for the locale
+ * The name of the currency for the main country using this locale (e.g. 'US Dollar' for the locale
  * en-US).
  * The name will be `null` if the main country cannot be determined.
  *
@@ -10956,7 +10956,7 @@ function makeKeyValuePair(key, value) {
  * @usageNotes
  * ### Examples
  *
- * This examples show how an Object or a Map and be iterated by ngFor with the use of this keyvalue
+ * This examples show how an Object or a Map can be iterated by ngFor with the use of this keyvalue
  * pipe.
  *
  * {@example common/pipes/ts/keyvalue_pipe.ts region='KeyValuePipe'}
@@ -10966,6 +10966,7 @@ function makeKeyValuePair(key, value) {
 var KeyValuePipe = /** @class */ (function () {
     function KeyValuePipe(differs) {
         this.differs = differs;
+        this.keyValues = [];
     }
     KeyValuePipe.prototype.transform = function (input, compareFn) {
         var _this = this;
@@ -11214,9 +11215,9 @@ var CurrencyPipe = /** @class */ (function () {
      *   - `minIntegerDigits`: The minimum number of integer digits before the decimal point.
      * Default is `1`.
      *   - `minFractionDigits`: The minimum number of digits after the decimal point.
-     * Default is `0`.
+     * Default is `2`.
      *   - `maxFractionDigits`: The maximum number of digits after the decimal point.
-     * Default is `3`.
+     * Default is `2`.
      * If not provided, the number will be formatted with the proper amount of digits,
      * depending on what the [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) specifies.
      * For example, the Canadian dollar has 2 digits, whereas the Chilean peso has none.
@@ -11503,7 +11504,7 @@ function isPlatformWorkerUi(platformId) {
 /**
  * @publicApi
  */
-var VERSION = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["Version"]('7.1.2');
+var VERSION = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["Version"]('7.1.4');
 
 /**
  * @license
@@ -11732,7 +11733,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 /**
- * @license Angular v7.1.2
+ * @license Angular v7.1.4
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -13951,7 +13952,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "R3BoundTarget", function() { return R3BoundTarget; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /**
- * @license Angular v7.1.2
+ * @license Angular v7.1.4
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -29424,7 +29425,7 @@ function publishFacade(global) {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-var VERSION$1 = new Version('7.1.2');
+var VERSION$1 = new Version('7.1.4');
 
 /**
  * @license
@@ -41109,7 +41110,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 /**
- * @license Angular v7.1.2
+ * @license Angular v7.1.4
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -50998,7 +50999,7 @@ var Version = /** @class */ (function () {
 /**
  * @publicApi
  */
-var VERSION = new Version('7.1.2');
+var VERSION = new Version('7.1.4');
 
 /**
  * @license
@@ -64383,7 +64384,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
 /**
- * @license Angular v7.1.2
+ * @license Angular v7.1.4
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -70203,22 +70204,34 @@ var FormControlName = /** @class */ (function (_super) {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
+/**
+ * @description
+ * Provider which adds `RequiredValidator` to the `NG_VALIDATORS` multi-provider list.
+ */
 var REQUIRED_VALIDATOR = {
     provide: NG_VALIDATORS,
     useExisting: Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function () { return RequiredValidator; }),
     multi: true
 };
+/**
+ * @description
+ * Provider which adds `CheckboxRequiredValidator` to the `NG_VALIDATORS` multi-provider list.
+ */
 var CHECKBOX_REQUIRED_VALIDATOR = {
     provide: NG_VALIDATORS,
     useExisting: Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function () { return CheckboxRequiredValidator; }),
     multi: true
 };
 /**
- * A Directive that adds the `required` validator to any controls marked with the
- * `required` attribute, via the `NG_VALIDATORS` binding.
+ * @description
+ * A directive that adds the `required` validator to any controls marked with the
+ * `required` attribute. The directive is provided with the `NG_VALIDATORS` multi-provider list.
+ *
+ * @see [Form Validation](guide/form-validation)
  *
  * @usageNotes
- * ### Example
+ *
+ * ### Adding a required validator using template-driven forms
  *
  * ```
  * <input name="fullName" ngModel required>
@@ -70232,6 +70245,10 @@ var RequiredValidator = /** @class */ (function () {
     function RequiredValidator() {
     }
     Object.defineProperty(RequiredValidator.prototype, "required", {
+        /**
+         * @description
+         * Tracks changes to the required attribute bound to this directive.
+         */
         get: function () { return this._required; },
         set: function (value) {
             this._required = value != null && value !== false && "" + value !== 'false';
@@ -70241,9 +70258,20 @@ var RequiredValidator = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    /**
+     * @description
+     * Method that validates whether the control is empty.
+     * Returns the validation result if enabled, otherwise null.
+     */
     RequiredValidator.prototype.validate = function (control) {
         return this.required ? Validators.required(control) : null;
     };
+    /**
+     * @description
+     * Registers a callback function to call when the validator inputs change.
+     *
+     * @param fn The callback function
+     */
     RequiredValidator.prototype.registerOnValidatorChange = function (fn) { this._onChange = fn; };
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
@@ -70261,10 +70289,15 @@ var RequiredValidator = /** @class */ (function () {
 }());
 /**
  * A Directive that adds the `required` validator to checkbox controls marked with the
- * `required` attribute, via the `NG_VALIDATORS` binding.
+ * `required` attribute. The directive is provided with the `NG_VALIDATORS` multi-provider list.
+ *
+ * @see [Form Validation](guide/form-validation)
  *
  * @usageNotes
- * ### Example
+ *
+ * ### Adding a required checkbox validator using template-driven forms
+ *
+ * The following example shows how to add a checkbox required validator to an input attached to an ngModel binding.
  *
  * ```
  * <input type="checkbox" name="active" ngModel required>
@@ -70279,6 +70312,11 @@ var CheckboxRequiredValidator = /** @class */ (function (_super) {
     function CheckboxRequiredValidator() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    /**
+     * @description
+     * Method that validates whether or not the checkbox has been checked.
+     * Returns the validation result if enabled, otherwise null.
+     */
     CheckboxRequiredValidator.prototype.validate = function (control) {
         return this.required ? Validators.requiredTrue(control) : null;
     };
@@ -70292,7 +70330,8 @@ var CheckboxRequiredValidator = /** @class */ (function (_super) {
     return CheckboxRequiredValidator;
 }(RequiredValidator));
 /**
- * Provider which adds `EmailValidator` to `NG_VALIDATORS`.
+ * @description
+ * Provider which adds `EmailValidator` to the `NG_VALIDATORS` multi-provider list.
  */
 var EMAIL_VALIDATOR = {
     provide: NG_VALIDATORS,
@@ -70300,11 +70339,16 @@ var EMAIL_VALIDATOR = {
     multi: true
 };
 /**
- * A Directive that adds the `email` validator to controls marked with the
- * `email` attribute, via the `NG_VALIDATORS` binding.
+ * A directive that adds the `email` validator to controls marked with the
+ * `email` attribute. The directive is provided with the `NG_VALIDATORS` multi-provider list.
+ *
+ * @see [Form Validation](guide/form-validation)
  *
  * @usageNotes
- * ### Example
+ *
+ * ### Adding an email validator
+ *
+ * The following example shows how to add an email validator to an input attached to an ngModel binding.
  *
  * ```
  * <input type="email" name="email" ngModel email>
@@ -70320,6 +70364,10 @@ var EmailValidator = /** @class */ (function () {
     function EmailValidator() {
     }
     Object.defineProperty(EmailValidator.prototype, "email", {
+        /**
+         * @description
+         * Tracks changes to the email attribute bound to this directive.
+         */
         set: function (value) {
             this._enabled = value === '' || value === true || value === 'true';
             if (this._onChange)
@@ -70328,9 +70376,20 @@ var EmailValidator = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    /**
+     * @description
+     * Method that validates whether an email address is valid.
+     * Returns the validation result if enabled, otherwise null.
+     */
     EmailValidator.prototype.validate = function (control) {
         return this._enabled ? Validators.email(control) : null;
     };
+    /**
+     * @description
+     * Registers a callback function to call when the validator inputs change.
+     *
+     * @param fn The callback function
+     */
     EmailValidator.prototype.registerOnValidatorChange = function (fn) { this._onChange = fn; };
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
@@ -70346,12 +70405,8 @@ var EmailValidator = /** @class */ (function () {
     return EmailValidator;
 }());
 /**
- * Provider which adds `MinLengthValidator` to `NG_VALIDATORS`.
- *
- * @usageNotes
- * ### Example:
- *
- * {@example common/forms/ts/validators/validators.ts region='min'}
+ * @description
+ * Provider which adds `MinLengthValidator` to the `NG_VALIDATORS` multi-provider list.
  */
 var MIN_LENGTH_VALIDATOR = {
     provide: NG_VALIDATORS,
@@ -70359,16 +70414,36 @@ var MIN_LENGTH_VALIDATOR = {
     multi: true
 };
 /**
- * A directive which installs the `MinLengthValidator` for any `formControlName`,
- * `formControl`, or control with `ngModel` that also has a `minlength` attribute.
+ * A directive that adds minimum length validation to controls marked with the
+ * `minlength` attribute. The directive is provided with the `NG_VALIDATORS` mult-provider list.
  *
- * @ngModule FormsModule
+ * @see [Form Validation](guide/form-validation)
+ *
+ * @usageNotes
+ *
+ * ### Adding a minimum length validator
+ *
+ * The following example shows how to add a minimum length validator to an input attached to an
+ * ngModel binding.
+ *
+ * ```html
+ * <input name="firstName" ngModel minlength="4">
+ * ```
+ *
  * @ngModule ReactiveFormsModule
+ * @ngModule FormsModule
  * @publicApi
  */
 var MinLengthValidator = /** @class */ (function () {
     function MinLengthValidator() {
     }
+    /**
+     * @description
+     * A lifecycle method called when the directive's inputs change. For internal use
+     * only.
+     *
+     * @param changes A object of key/value pairs for the set of changed inputs.
+     */
     MinLengthValidator.prototype.ngOnChanges = function (changes) {
         if ('minlength' in changes) {
             this._createValidator();
@@ -70376,9 +70451,20 @@ var MinLengthValidator = /** @class */ (function () {
                 this._onChange();
         }
     };
+    /**
+     * @description
+     * Method that validates whether the value meets a minimum length
+     * requirement. Returns the validation result if enabled, otherwise null.
+     */
     MinLengthValidator.prototype.validate = function (control) {
         return this.minlength == null ? null : this._validator(control);
     };
+    /**
+     * @description
+     * Registers a callback function to call when the validator inputs change.
+     *
+     * @param fn The callback function
+     */
     MinLengthValidator.prototype.registerOnValidatorChange = function (fn) { this._onChange = fn; };
     MinLengthValidator.prototype._createValidator = function () {
         this._validator = Validators.minLength(parseInt(this.minlength, 10));
@@ -70397,12 +70483,8 @@ var MinLengthValidator = /** @class */ (function () {
     return MinLengthValidator;
 }());
 /**
- * Provider which adds `MaxLengthValidator` to `NG_VALIDATORS`.
- *
- * @usageNotes
- * ### Example:
- *
- * {@example common/forms/ts/validators/validators.ts region='max'}
+ * @description
+ * Provider which adds `MaxLengthValidator` to the `NG_VALIDATORS` multi-provider list.
  */
 var MAX_LENGTH_VALIDATOR = {
     provide: NG_VALIDATORS,
@@ -70410,16 +70492,36 @@ var MAX_LENGTH_VALIDATOR = {
     multi: true
 };
 /**
- * A directive which installs the `MaxLengthValidator` for any `formControlName`,
- * `formControl`, or control with `ngModel` that also has a `maxlength` attribute.
+ * A directive that adds max length validation to controls marked with the
+ * `maxlength` attribute. The directive is provided with the `NG_VALIDATORS` multi-provider list.
  *
- * @ngModule FormsModule
+ * @see [Form Validation](guide/form-validation)
+ *
+ * @usageNotes
+ *
+ * ### Adding a maximum length validator
+ *
+ * The following example shows how to add a maximum length validator to an input attached to an
+ * ngModel binding.
+ *
+ * ```html
+ * <input name="firstName" ngModel maxlength="25">
+ * ```
+ *
  * @ngModule ReactiveFormsModule
+ * @ngModule FormsModule
  * @publicApi
  */
 var MaxLengthValidator = /** @class */ (function () {
     function MaxLengthValidator() {
     }
+    /**
+     * @description
+     * A lifecycle method called when the directive's inputs change. For internal use
+     * only.
+     *
+     * @param changes A object of key/value pairs for the set of changed inputs.
+     */
     MaxLengthValidator.prototype.ngOnChanges = function (changes) {
         if ('maxlength' in changes) {
             this._createValidator();
@@ -70427,9 +70529,20 @@ var MaxLengthValidator = /** @class */ (function () {
                 this._onChange();
         }
     };
+    /**
+     * @description
+     * Method that validates whether the value exceeds
+     * the maximum length requirement.
+     */
     MaxLengthValidator.prototype.validate = function (control) {
         return this.maxlength != null ? this._validator(control) : null;
     };
+    /**
+     * @description
+     * Registers a callback function to call when the validator inputs change.
+     *
+     * @param fn The callback function
+     */
     MaxLengthValidator.prototype.registerOnValidatorChange = function (fn) { this._onChange = fn; };
     MaxLengthValidator.prototype._createValidator = function () {
         this._validator = Validators.maxLength(parseInt(this.maxlength, 10));
@@ -70447,31 +70560,48 @@ var MaxLengthValidator = /** @class */ (function () {
     ], MaxLengthValidator);
     return MaxLengthValidator;
 }());
+/**
+ * @description
+ * Provider which adds `PatternValidator` to the `NG_VALIDATORS` multi-provider list.
+ */
 var PATTERN_VALIDATOR = {
     provide: NG_VALIDATORS,
     useExisting: Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function () { return PatternValidator; }),
     multi: true
 };
 /**
- * A Directive that adds the `pattern` validator to any controls marked with the
- * `pattern` attribute, via the `NG_VALIDATORS` binding. Uses attribute value
- * as the regex to validate Control value against.  Follows pattern attribute
- * semantics; i.e. regex must match entire Control value.
+ * @description
+ * A directive that adds regex pattern validation to controls marked with the
+ * `pattern` attribute. The regex must match the entire control value.
+ * The directive is provided with the `NG_VALIDATORS` multi-provider list.
+ *
+ * @see [Form Validation](guide/form-validation)
  *
  * @usageNotes
- * ### Example
  *
- * ```
- * <input [name]="fullName" pattern="[a-zA-Z ]*" ngModel>
+ * ### Adding a pattern validator
+ *
+ * The following example shows how to add a pattern validator to an input attached to an
+ * ngModel binding.
+ *
+ * ```html
+ * <input name="firstName" ngModel pattern="[a-zA-Z ]*">
  * ```
  *
- * @ngModule FormsModule
  * @ngModule ReactiveFormsModule
+ * @ngModule FormsModule
  * @publicApi
  */
 var PatternValidator = /** @class */ (function () {
     function PatternValidator() {
     }
+    /**
+     * @description
+     * A lifecycle method called when the directive's inputs change. For internal use
+     * only.
+     *
+     * @param changes A object of key/value pairs for the set of changed inputs.
+     */
     PatternValidator.prototype.ngOnChanges = function (changes) {
         if ('pattern' in changes) {
             this._createValidator();
@@ -70479,7 +70609,18 @@ var PatternValidator = /** @class */ (function () {
                 this._onChange();
         }
     };
+    /**
+     * @description
+     * Method that validates whether the value matches the
+     * the pattern requirement.
+     */
     PatternValidator.prototype.validate = function (control) { return this._validator(control); };
+    /**
+     * @description
+     * Registers a callback function to call when the validator inputs change.
+     *
+     * @param fn The callback function
+     */
     PatternValidator.prototype.registerOnValidatorChange = function (fn) { this._onChange = fn; };
     PatternValidator.prototype._createValidator = function () { this._validator = Validators.pattern(this.pattern); };
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
@@ -70646,7 +70787,7 @@ var FormBuilder = /** @class */ (function () {
 /**
  * @publicApi
  */
-var VERSION = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["Version"]('7.1.2');
+var VERSION = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["Version"]('7.1.4');
 
 /**
  * @license
@@ -70872,7 +71013,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
 /**
- * @license Angular v7.1.2
+ * @license Angular v7.1.4
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -71309,7 +71450,7 @@ var CachedResourceLoader = /** @class */ (function (_super) {
 /**
  * @publicApi
  */
-var VERSION = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["Version"]('7.1.2');
+var VERSION = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["Version"]('7.1.4');
 
 /**
  * @license
@@ -71384,7 +71525,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_animations_browser__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/animations/browser */ "./node_modules/@angular/animations/fesm5/browser.js");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 /**
- * @license Angular v7.1.2
+ * @license Angular v7.1.4
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -71905,7 +72046,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /**
- * @license Angular v7.1.2
+ * @license Angular v7.1.4
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -74378,7 +74519,7 @@ var By = /** @class */ (function () {
 /**
  * @publicApi
  */
-var VERSION = new _angular_core__WEBPACK_IMPORTED_MODULE_2__["Version"]('7.1.2');
+var VERSION = new _angular_core__WEBPACK_IMPORTED_MODULE_2__["Version"]('7.1.4');
 
 /**
  * @license
@@ -74495,7 +74636,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
 /**
- * @license Angular v7.1.2
+ * @license Angular v7.1.4
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -80129,7 +80270,7 @@ function provideRouterInitializer() {
 /**
  * @publicApi
  */
-var VERSION = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["Version"]('7.1.2');
+var VERSION = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["Version"]('7.1.4');
 
 /**
  * @license
@@ -80170,96 +80311,6 @@ var VERSION = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["Version"]('7.1.2')
 
 
 //# sourceMappingURL=router.js.map
-
-
-/***/ }),
-
-/***/ "./node_modules/es-cookie/src/es-cookie.js":
-/*!*************************************************!*\
-  !*** ./node_modules/es-cookie/src/es-cookie.js ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
-exports.__esModule = true;
-function stringifyAttribute(name, value) {
-    if (!value) {
-        return '';
-    }
-    var stringified = '; ' + name;
-    if (value === true) {
-        return stringified; // boolean attributes shouldn't have a value
-    }
-    return stringified + '=' + value;
-}
-function stringifyAttributes(attributes) {
-    if (typeof attributes.expires === 'number') {
-        var expires = new Date();
-        expires.setMilliseconds(expires.getMilliseconds() + attributes.expires * 864e+5);
-        attributes.expires = expires;
-    }
-    return stringifyAttribute('Expires', attributes.expires ? attributes.expires.toUTCString() : '')
-        + stringifyAttribute('Domain', attributes.domain)
-        + stringifyAttribute('Path', attributes.path)
-        + stringifyAttribute('Secure', attributes.secure)
-        + stringifyAttribute('SameSite', attributes.sameSite);
-}
-function encode(name, value, attributes) {
-    return encodeURIComponent(name)
-        .replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent) // allowed special characters
-        .replace(/\(/g, '%28').replace(/\)/g, '%29') // replace opening and closing parens
-        + '=' + encodeURIComponent(value)
-        .replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g, decodeURIComponent) // allowed special characters
-        + stringifyAttributes(attributes);
-}
-exports.encode = encode;
-function parse(cookieString) {
-    var result = {};
-    var cookies = cookieString ? cookieString.split('; ') : [];
-    var rdecode = /(%[0-9A-Z]{2})+/g;
-    for (var i = 0; i < cookies.length; i++) {
-        var parts = cookies[i].split('=');
-        var cookie = parts.slice(1).join('=');
-        if (cookie.charAt(0) === '"') {
-            cookie = cookie.slice(1, -1);
-        }
-        try {
-            var name_1 = parts[0].replace(rdecode, decodeURIComponent);
-            result[name_1] = cookie.replace(rdecode, decodeURIComponent);
-        }
-        catch (e) {
-            // ignore cookies with invalid name/value encoding
-        }
-    }
-    return result;
-}
-exports.parse = parse;
-function getAll() {
-    return parse(document.cookie);
-}
-exports.getAll = getAll;
-function get(name) {
-    return getAll()[name];
-}
-exports.get = get;
-function set(name, value, attributes) {
-    document.cookie = encode(name, value, __assign({ path: '/' }, attributes));
-}
-exports.set = set;
-function remove(name, attributes) {
-    set(name, '', __assign({}, attributes, { expires: -1 }));
-}
-exports.remove = remove;
 
 
 /***/ }),
@@ -92950,265 +93001,6 @@ function __importStar(mod) {
 function __importDefault(mod) {
     return (mod && mod.__esModule) ? mod : { default: mod };
 }
-
-
-/***/ }),
-
-/***/ "./node_modules/uuid/index.js":
-/*!************************************!*\
-  !*** ./node_modules/uuid/index.js ***!
-  \************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var v1 = __webpack_require__(/*! ./v1 */ "./node_modules/uuid/v1.js");
-var v4 = __webpack_require__(/*! ./v4 */ "./node_modules/uuid/v4.js");
-
-var uuid = v4;
-uuid.v1 = v1;
-uuid.v4 = v4;
-
-module.exports = uuid;
-
-
-/***/ }),
-
-/***/ "./node_modules/uuid/lib/bytesToUuid.js":
-/*!**********************************************!*\
-  !*** ./node_modules/uuid/lib/bytesToUuid.js ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/**
- * Convert array of 16 byte values to UUID string format of the form:
- * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
- */
-var byteToHex = [];
-for (var i = 0; i < 256; ++i) {
-  byteToHex[i] = (i + 0x100).toString(16).substr(1);
-}
-
-function bytesToUuid(buf, offset) {
-  var i = offset || 0;
-  var bth = byteToHex;
-  // join used to fix memory issue caused by concatenation: https://bugs.chromium.org/p/v8/issues/detail?id=3175#c4
-  return ([bth[buf[i++]], bth[buf[i++]], 
-	bth[buf[i++]], bth[buf[i++]], '-',
-	bth[buf[i++]], bth[buf[i++]], '-',
-	bth[buf[i++]], bth[buf[i++]], '-',
-	bth[buf[i++]], bth[buf[i++]], '-',
-	bth[buf[i++]], bth[buf[i++]],
-	bth[buf[i++]], bth[buf[i++]],
-	bth[buf[i++]], bth[buf[i++]]]).join('');
-}
-
-module.exports = bytesToUuid;
-
-
-/***/ }),
-
-/***/ "./node_modules/uuid/lib/rng-browser.js":
-/*!**********************************************!*\
-  !*** ./node_modules/uuid/lib/rng-browser.js ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// Unique ID creation requires a high quality random # generator.  In the
-// browser this is a little complicated due to unknown quality of Math.random()
-// and inconsistent support for the `crypto` API.  We do the best we can via
-// feature-detection
-
-// getRandomValues needs to be invoked in a context where "this" is a Crypto
-// implementation. Also, find the complete implementation of crypto on IE11.
-var getRandomValues = (typeof(crypto) != 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto)) ||
-                      (typeof(msCrypto) != 'undefined' && typeof window.msCrypto.getRandomValues == 'function' && msCrypto.getRandomValues.bind(msCrypto));
-
-if (getRandomValues) {
-  // WHATWG crypto RNG - http://wiki.whatwg.org/wiki/Crypto
-  var rnds8 = new Uint8Array(16); // eslint-disable-line no-undef
-
-  module.exports = function whatwgRNG() {
-    getRandomValues(rnds8);
-    return rnds8;
-  };
-} else {
-  // Math.random()-based (RNG)
-  //
-  // If all else fails, use Math.random().  It's fast, but is of unspecified
-  // quality.
-  var rnds = new Array(16);
-
-  module.exports = function mathRNG() {
-    for (var i = 0, r; i < 16; i++) {
-      if ((i & 0x03) === 0) r = Math.random() * 0x100000000;
-      rnds[i] = r >>> ((i & 0x03) << 3) & 0xff;
-    }
-
-    return rnds;
-  };
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/uuid/v1.js":
-/*!*********************************!*\
-  !*** ./node_modules/uuid/v1.js ***!
-  \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var rng = __webpack_require__(/*! ./lib/rng */ "./node_modules/uuid/lib/rng-browser.js");
-var bytesToUuid = __webpack_require__(/*! ./lib/bytesToUuid */ "./node_modules/uuid/lib/bytesToUuid.js");
-
-// **`v1()` - Generate time-based UUID**
-//
-// Inspired by https://github.com/LiosK/UUID.js
-// and http://docs.python.org/library/uuid.html
-
-var _nodeId;
-var _clockseq;
-
-// Previous uuid creation time
-var _lastMSecs = 0;
-var _lastNSecs = 0;
-
-// See https://github.com/broofa/node-uuid for API details
-function v1(options, buf, offset) {
-  var i = buf && offset || 0;
-  var b = buf || [];
-
-  options = options || {};
-  var node = options.node || _nodeId;
-  var clockseq = options.clockseq !== undefined ? options.clockseq : _clockseq;
-
-  // node and clockseq need to be initialized to random values if they're not
-  // specified.  We do this lazily to minimize issues related to insufficient
-  // system entropy.  See #189
-  if (node == null || clockseq == null) {
-    var seedBytes = rng();
-    if (node == null) {
-      // Per 4.5, create and 48-bit node id, (47 random bits + multicast bit = 1)
-      node = _nodeId = [
-        seedBytes[0] | 0x01,
-        seedBytes[1], seedBytes[2], seedBytes[3], seedBytes[4], seedBytes[5]
-      ];
-    }
-    if (clockseq == null) {
-      // Per 4.2.2, randomize (14 bit) clockseq
-      clockseq = _clockseq = (seedBytes[6] << 8 | seedBytes[7]) & 0x3fff;
-    }
-  }
-
-  // UUID timestamps are 100 nano-second units since the Gregorian epoch,
-  // (1582-10-15 00:00).  JSNumbers aren't precise enough for this, so
-  // time is handled internally as 'msecs' (integer milliseconds) and 'nsecs'
-  // (100-nanoseconds offset from msecs) since unix epoch, 1970-01-01 00:00.
-  var msecs = options.msecs !== undefined ? options.msecs : new Date().getTime();
-
-  // Per 4.2.1.2, use count of uuid's generated during the current clock
-  // cycle to simulate higher resolution clock
-  var nsecs = options.nsecs !== undefined ? options.nsecs : _lastNSecs + 1;
-
-  // Time since last uuid creation (in msecs)
-  var dt = (msecs - _lastMSecs) + (nsecs - _lastNSecs)/10000;
-
-  // Per 4.2.1.2, Bump clockseq on clock regression
-  if (dt < 0 && options.clockseq === undefined) {
-    clockseq = clockseq + 1 & 0x3fff;
-  }
-
-  // Reset nsecs if clock regresses (new clockseq) or we've moved onto a new
-  // time interval
-  if ((dt < 0 || msecs > _lastMSecs) && options.nsecs === undefined) {
-    nsecs = 0;
-  }
-
-  // Per 4.2.1.2 Throw error if too many uuids are requested
-  if (nsecs >= 10000) {
-    throw new Error('uuid.v1(): Can\'t create more than 10M uuids/sec');
-  }
-
-  _lastMSecs = msecs;
-  _lastNSecs = nsecs;
-  _clockseq = clockseq;
-
-  // Per 4.1.4 - Convert from unix epoch to Gregorian epoch
-  msecs += 12219292800000;
-
-  // `time_low`
-  var tl = ((msecs & 0xfffffff) * 10000 + nsecs) % 0x100000000;
-  b[i++] = tl >>> 24 & 0xff;
-  b[i++] = tl >>> 16 & 0xff;
-  b[i++] = tl >>> 8 & 0xff;
-  b[i++] = tl & 0xff;
-
-  // `time_mid`
-  var tmh = (msecs / 0x100000000 * 10000) & 0xfffffff;
-  b[i++] = tmh >>> 8 & 0xff;
-  b[i++] = tmh & 0xff;
-
-  // `time_high_and_version`
-  b[i++] = tmh >>> 24 & 0xf | 0x10; // include version
-  b[i++] = tmh >>> 16 & 0xff;
-
-  // `clock_seq_hi_and_reserved` (Per 4.2.2 - include variant)
-  b[i++] = clockseq >>> 8 | 0x80;
-
-  // `clock_seq_low`
-  b[i++] = clockseq & 0xff;
-
-  // `node`
-  for (var n = 0; n < 6; ++n) {
-    b[i + n] = node[n];
-  }
-
-  return buf ? buf : bytesToUuid(b);
-}
-
-module.exports = v1;
-
-
-/***/ }),
-
-/***/ "./node_modules/uuid/v4.js":
-/*!*********************************!*\
-  !*** ./node_modules/uuid/v4.js ***!
-  \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var rng = __webpack_require__(/*! ./lib/rng */ "./node_modules/uuid/lib/rng-browser.js");
-var bytesToUuid = __webpack_require__(/*! ./lib/bytesToUuid */ "./node_modules/uuid/lib/bytesToUuid.js");
-
-function v4(options, buf, offset) {
-  var i = buf && offset || 0;
-
-  if (typeof(options) == 'string') {
-    buf = options === 'binary' ? new Array(16) : null;
-    options = null;
-  }
-  options = options || {};
-
-  var rnds = options.random || (options.rng || rng)();
-
-  // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
-  rnds[6] = (rnds[6] & 0x0f) | 0x40;
-  rnds[8] = (rnds[8] & 0x3f) | 0x80;
-
-  // Copy bytes to buffer, if provided
-  if (buf) {
-    for (var ii = 0; ii < 16; ++ii) {
-      buf[i + ii] = rnds[ii];
-    }
-  }
-
-  return buf || bytesToUuid(rnds);
-}
-
-module.exports = v4;
 
 
 /***/ })

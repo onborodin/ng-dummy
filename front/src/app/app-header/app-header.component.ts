@@ -1,7 +1,5 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 
-import { LoginService } from '../login.service'
-
 declare var $ : any
 
 @Component({
@@ -11,39 +9,23 @@ declare var $ : any
 })
 export class AppHeaderComponent implements OnInit, OnChanges {
 
-    constructor(
-        public loginService: LoginService
-    ) {}
-
     ngOnInit() {
-        //this.foundation()
+        $('#app-header').foundation()
     }
 
-    ngDoCheck() {
-        //this.foundation()
+    ngAfterViewInit() {
+        $('#app-header').foundation()
     }
 
-    foundation() {
+    ngOnChanges(changes: SimpleChanges) {
+        $('#app-header').foundation()
+    }
+
+    ngAfterContentChecked() {
         $('#app-header').foundation()
     }
 
     ngAfterViewChecked() {
-        this.foundation()
-    }
-
-    ngAfterViewInit() {
-        //this.foundation()
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
-        //this.foundation()
-    }
-
-    ngAfterContentChecked() {
-        //this.foundation()
-    }
-
-    ngAfterContentInit() { // not called
-        //this.foundation()
+        $('#app-header').foundation()
     }
 }

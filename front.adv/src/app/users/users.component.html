@@ -1,0 +1,78 @@
+<div id="users">
+
+    <app-header></app-header>
+
+    <div class="margin-left-2 margin-right-2">
+
+        <div id="lorem" class="grid-container">
+            <div class="grid-x grid-margin-x align-center">
+                <div class="cell medium-4">
+
+                    <user-create [show]="showCreateForm" (escapeEvent)="escapeForm()"  (successEvent)="successForm($event)"></user-create>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-container">
+            <div class="grid-x grid-margin-x align-center">
+                <div class="cell medium-4">
+
+                    <user-update [user]="currentUser" [show]="showUpdateForm" (escapeEvent)="escapeForm()" (successEvent)="successForm($event)"></user-update>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="grid-container">
+            <div class="grid-x grid-margin-x align-center">
+                <div class="cell medium-4">
+
+                    <user-drop [user]="currentUser" [show]="showDropForm" (escapeEvent)="escapeForm()" (successEvent)="successForm($event)"></user-drop>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="grid-container" *ngIf="showListRecords">
+            <div class="grid-x grid-margin-x align-center">
+                <div class="cell medium-8">
+
+                    <h5>Users <a (click)="getList()"><i class="fi-refresh" style="font-size: 1.3em;"></i></a>
+                        <button class="float-right small button" (click)="showCreate()"><i class="fi-plus" style="font-size: 1.3em;"></i></button>
+                    </h5>
+
+                    <table class="shadow" [@fade]>
+                        <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>name</th>
+                                <th>login</th>
+                                <th>right</th>
+                                <th><i class="fi-pencil"></i></th>
+                                <th><i class="fi-trash"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of list; let i = index">
+                                <td>{{ item.id }}</td>
+                                <td>{{ item.gecos  }}</td>
+                                <td>{{ item.name  }}</td>
+                                <td><span *ngIf="item.superuser"><i class="fi-sheriff-badge" style="font-size: 1.2em;"></i></span></td>
+                                <td><a (click)="updateItem(item)"><i class="fi-pencil"></i></a></td>
+                                <td><a (click)="dropItem(item)"><i class="fi-trash"></i></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <app-footer></app-footer>
+
+</div>

@@ -30,10 +30,12 @@
                                 "output": "/"
                             }
                         ],
-                        "styles": [{
-                            "input": "src/styles.scss",
-                            "bundleName": "styles"
-                        }],
+                        "styles": [
+                            {
+                                "input": "src/styles.scss",
+                                "bundleName": "styles",
+                            }
+                        ],
                         "stylePreprocessorOptions": {
                             "includePaths": [
                                 "src/scss",
@@ -57,8 +59,8 @@
                             "sourceMap": false,
                             "extractCss": true,
                             "namedChunks": false,
-                            //"aot": true,
-                            //"buildOptimizer": true,
+                            "aot": true,
+                            "buildOptimizer": true,
                             "extractLicenses": true,
                             "vendorChunk": true,
                             "budgets": [{
