@@ -9,7 +9,7 @@ import { HttpClientModule } from '@angular/common/http'
 import { FormsModule } from '@angular/forms'
 import { ReactiveFormsModule } from '@angular/forms'
 
-import { RoutingModule } from './routing.module'
+
 import { AppComponent } from './app.component'
 
 import { AppHeaderComponent } from './app-header/app-header.component'
@@ -22,9 +22,19 @@ import { SideBarComponent } from './side-bar/side-bar.component';
 import { LoginComponent } from './login/login.component'
 
 import { LoginService } from './login.service'
+import { PageService } from './page.service'
 
+import { Routes, Route, RouterModule } from '@angular/router'
+
+const routes: Routes = []
 
 @NgModule({
+    entryComponents: [
+        HomeComponent,
+        UsersComponent,
+        NotFoundComponent,
+        LoginComponent
+    ],
     declarations: [
         AppComponent,
         AppHeaderComponent,
@@ -33,20 +43,20 @@ import { LoginService } from './login.service'
         UsersComponent,
         NotFoundComponent,
         SideBarComponent,
-        LoginComponent,
+        LoginComponent
     ],
     imports: [
+        RouterModule.forRoot(routes),
         ReactiveFormsModule,
         FormsModule,
         BrowserModule,
         BrowserAnimationsModule,
-        RoutingModule,
         HttpClientModule
     ],
     providers: [
-        //{provide: LocationStrategy, useClass: HashLocationStrategy},
         Title,
-        LoginService
+        LoginService,
+        PageService
     ],
     bootstrap: [ AppComponent ]
 })

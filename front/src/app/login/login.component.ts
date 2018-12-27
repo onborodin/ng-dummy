@@ -4,20 +4,20 @@ import { HttpClient } from '@angular/common/http'
 import { Router } from "@angular/router"
 
 import { LoginService } from '../login.service'
-import { rotateAnimation } from '../app.animations'
+import { rotateAnimation, fadeAnimation } from '../app.animations'
 
 @Component({
     selector: 'login',
     templateUrl: './login.component.html',
     styleUrls: [ './login.component.scss' ],
-    animations: [ rotateAnimation ]
+    animations: [ rotateAnimation, fadeAnimation ]
 
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
     loginForm: FormGroup
 
-    preMessage: string = ''
+    reasonMessage: string = ''
     message: string = ''
     attemptCounter: number = 0
     debug: string = ''
@@ -33,9 +33,13 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.loginService.checkLogin(event.value.name, event.value.password)
     }
 
+    home() {
+        this.router.navigate([ '/' ])
+    }
+
     ngOnInit() {
         this.loginService.cleanLogin()
-        this.preMessage = this.loginService.returnMessage
+        this.reasonMessage = this.loginService.reasonMessage
         //this.attemptCounter = 0
         this.loginForm = this.formBuilder.group({
             name: [ 'qwerty' ],

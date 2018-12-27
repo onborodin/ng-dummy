@@ -2,7 +2,6 @@ import { Component, Input, OnInit, OnDestroy, OnChanges, SimpleChanges } from '@
 import { Router, RouterStateSnapshot } from "@angular/router"
 
 import { LoginService, AccessLevel } from '../login.service'
-import { SuperuserGuard } from '../superuser.guard'
 
 declare var $ : any
 
@@ -21,7 +20,6 @@ export class AppHeaderComponent implements OnInit, OnChanges, OnDestroy {
     constructor(
         private router: Router,
         private loginService: LoginService,
-        private superuserGuard: SuperuserGuard,
     ) {
     }
 
@@ -59,14 +57,7 @@ export class AppHeaderComponent implements OnInit, OnChanges, OnDestroy {
         this.foundation()
         this.loginService.authSubject
             .subscribe((auth) => {
-                if (auth) {
-                    if (this.loginService.isUser()) this.level = AccessLevel.user
-                    if (this.loginService.isSuperuser()) { 
-                        this.level = AccessLevel.superuser
-                    }
-                    return
-                }
-                this.level = AccessLevel.guest
+                this.level = this.loginService.accessLevel()
             })
     }
 

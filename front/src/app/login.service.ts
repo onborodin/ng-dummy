@@ -9,9 +9,9 @@ import { User } from './models/user.model'
 
 
 export enum AccessLevel {
-    guest,
-    user,
-    superuser
+    guest = 1,
+    user = 2,
+    superuser = 3
 }
 
 @Injectable({ 
@@ -28,11 +28,13 @@ export class LoginService {
 
     cookieName = 'session'
     returnUrl: string = '/'
-    returnMessage: string = ''
+    reasonMessage: string = ''
 
     returnUrlSubject: BehaviorSubject<string>
 
     isAuth: boolean = false
+    //accessLevel: AccessLevel = AccessLevel.guest
+
     authSubject: BehaviorSubject<boolean>
     loginSubject: Subject<boolean>
 
@@ -85,19 +87,29 @@ export class LoginService {
         this.authSubject.next(false)
     }
 
-    isGuest() {
-        if (this.isAuth) return false
-        return true
+    accessLevel() : AccessLevel {
+        if (this.isAuth && Cookies.get(this.cookieName) && this.userProfile.superuser) {
+            return AccessLevel.superuser
+        }
+        if (this.isAuth && Cookies.get(this.cookieName) && !this.userProfile.superuser) {
+            return AccessLevel.user
+        }
+        return AccessLevel.guest
     }
 
-    isUser() {
-        if (this.isAuth && Cookies.get(this.cookieName) && !this.userProfile.superuser) return true
-        return false
-    }
+    //isGuest() {
+    //    if (this.isAuth) return false
+    //    return true
+    //}
 
-    isSuperuser() {
-        if (this.isAuth && this.userProfile.superuser && Cookies.get(this.cookieName)) return true
-        return false
-    }
+    //isUser() {
+    //    if (this.isAuth && Cookies.get(this.cookieName) && !this.userProfile.superuser) return true
+    //    return false
+    //}
+
+    //isSuperuser() {
+    //    if (this.isAuth && this.userProfile.superuser && Cookies.get(this.cookieName)) return true
+    //    return false
+    //}
 
 }
