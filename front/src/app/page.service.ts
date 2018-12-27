@@ -35,12 +35,14 @@ export class PageService {
     ]
 
     constructor() {
+        var defaultAccess = [ AccessLevel.guest, AccessLevel.user, AccessLevel.superuser ]
+
         this.routes.forEach((item) => {
             if (!item['data']) {
-                item.data = { accessLevel: [ AccessLevel.guest ] }
+                item.data = { accessLevel: defaultAccess }
             }
             if (!item.data['accessLevel']) {
-                item.data.accessLevel = [ AccessLevel.guest ]
+                item.data.accessLevel = defaultAccess
             }
         })
     }
@@ -59,11 +61,11 @@ export class PageService {
         this.routes.forEach((item) => {
             if ('/' + item.path === path) {
                 item.data.accessLevel.forEach((elem) => {
-                    if (elem === userAccessLevel) { 
+                    if (elem == userAccessLevel) { 
                         result = true 
-                        console.log(`/${item.path} ${elem} == ${userAccessLevel} -> ${result}`)
+                        console.log(`computeAccess /${item.path} ${elem} == ${userAccessLevel} -> ${elem == userAccessLevel}`)
                     } else {
-                        console.log(`/${item.path} ${elem} == ${userAccessLevel} -> ${result}`)
+                        console.log(`computeAccess /${item.path} ${elem} == ${userAccessLevel} -> ${elem == userAccessLevel}`)
                     }
                 })
             }

@@ -23,6 +23,9 @@ export class PageGuard implements CanActivate {
 
         var url = routerState.url
         var userAccessLevel = this.loginService.accessLevel()
+
+        console.log(`canActivate url=${url} userAccessLevel=${userAccessLevel}`)
+
         if (this.pageService.computeAccess(url, userAccessLevel)) {
             return true
         }

@@ -97,19 +97,4 @@ export class LoginService {
         return AccessLevel.guest
     }
 
-    //isGuest() {
-    //    if (this.isAuth) return false
-    //    return true
-    //}
-
-    //isUser() {
-    //    if (this.isAuth && Cookies.get(this.cookieName) && !this.userProfile.superuser) return true
-    //    return false
-    //}
-
-    //isSuperuser() {
-    //    if (this.isAuth && this.userProfile.superuser && Cookies.get(this.cookieName)) return true
-    //    return false
-    //}
-
 }
