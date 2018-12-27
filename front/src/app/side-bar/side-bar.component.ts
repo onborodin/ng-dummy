@@ -18,7 +18,6 @@ export class SideBarComponent implements OnInit {
     list: Page[] = [
         { name: "Home", route: "/", active: false },
         { name: "Users", route: "/users", active: false },
-        { name: "Some", route: "/some", active: true },
     ]
 
     constructor(

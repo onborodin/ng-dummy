@@ -10,7 +10,7 @@ declare var $: any
 })
 export class AppComponent implements OnInit {
 
-    theTitle: string = 'NgII'
+    theTitle: string = 'NG'
 
     public constructor(private titleService: Title ) { }
 

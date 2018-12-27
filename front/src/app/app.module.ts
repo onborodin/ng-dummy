@@ -18,7 +18,11 @@ import { AppFooterComponent } from './app-footer/app-footer.component'
 import { HomeComponent } from './home/home.component'
 import { UsersComponent } from './users/users.component'
 import { NotFoundComponent } from './not-found/not-found.component';
-import { SideBarComponent } from './side-bar/side-bar.component'
+import { SideBarComponent } from './side-bar/side-bar.component';
+import { LoginComponent } from './login/login.component'
+
+import { LoginService } from './login.service'
+
 
 @NgModule({
     declarations: [
@@ -29,6 +33,7 @@ import { SideBarComponent } from './side-bar/side-bar.component'
         UsersComponent,
         NotFoundComponent,
         SideBarComponent,
+        LoginComponent,
     ],
     imports: [
         ReactiveFormsModule,
@@ -39,7 +44,9 @@ import { SideBarComponent } from './side-bar/side-bar.component'
         HttpClientModule
     ],
     providers: [
-        Title
+        //{provide: LocationStrategy, useClass: HashLocationStrategy},
+        Title,
+        LoginService
     ],
     bootstrap: [ AppComponent ]
 })
