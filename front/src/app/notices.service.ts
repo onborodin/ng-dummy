@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { Subject } from 'rxjs'
 
 export enum NoticeType {
-    secondary = 1,
+    info = 1,
     success = 2,
     warning = 3,
     alert = 4
@@ -25,8 +25,8 @@ export class NoticesService {
         this.subject = new Subject<Notice>()
     }
 
-    sendSecondaryMessage(message: string) {
-        this.subject.next({ type: NoticeType.secondary, message: message })
+    sendInfoMessage(message: string) {
+        this.subject.next({ type: NoticeType.info, message: message })
     }
 
     sendSuccessMessage(message: string) {

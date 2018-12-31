@@ -120,20 +120,21 @@ $ng-form-red: #a94442;
   border: 1px solid $ng-form-red;
 }
 
-
-
-.toast {
+@mixin toast-mixin($toast-bg-color) {
     max-width: $toast-max-width;
     overflow: hidden; // cheap rounded corners on nested items
     font-size: $toast-font-size; // knock it down to 14px
-    background-color: $toast-background-color;
+
+    background-color: $toast-bg-color;
+
     background-clip: padding-box;
     border: $toast-border-width solid $toast-border-color;
     border-radius: $toast-border-radius;
     box-shadow: $toast-box-shadow;
     backdrop-filter: blur(10px);
-    opacity: 0.99;
-    z-index: 20000;
+    opacity: 1;
+    z-index: 2000;
+
     margin-bottom: $toast-padding-x;
 
     &.showing {
@@ -148,27 +149,41 @@ $ng-form-red: #a94442;
     &.hide {
         display: none;
     }
-
-
-    @each $color, $value in $theme-colors {
-        .bg-#{$color} {
-            background-color: lighten($value, 35%) !important;
-        }
-    }
 }
 
-
-.toast-header {
+@mixin toast-header-mixin($toast-bg-color) {
     display: flex;
     align-items: center;
-    padding: $toast-padding-y $toast-padding-x;
+    padding: $toast-padding-y $toast-padding-x $toast-padding-y/2 $toast-padding-x;
     color: $toast-header-color;
-    background-color: $toast-header-background-color;
+
+    background-color: $toast-bg-color;
+
     background-clip: padding-box;
     border-bottom: none; //$toast-border-width solid $toast-header-border-color;
 }
 
+.toast {
+    @include toast-mixin($white);
+}
+
+.toast-header {
+    @include toast-header-mixin($white);
+}
+
+@each $color, $value in $theme-colors {
+    .toast-#{$color} {
+        @include toast-mixin(lighten($value, 37%));
+    }
+}
+
+@each $color, $value in $theme-colors {
+    .toast-header-#{$color} {
+        @include toast-header-mixin(lighten($value, 37%));
+    }
+}
+
 .toast-body {
-    padding: $toast-padding-x; // apply to both vertical and horizontal
+    padding: $toast-padding-y/2 $toast-padding-x $toast-padding-y $toast-padding-x;
 }
 

@@ -30,7 +30,7 @@ export class NotifierComponent implements OnInit, OnDestroy {
 
     noticeId(index) : string {
         var noticeId = `notice${index}`
-        return
+        return noticeId
     }
 
     hide(index) {
@@ -39,6 +39,53 @@ export class NotifierComponent implements OnInit, OnDestroy {
         })
         this.notices = notices
     }
+
+    toastHeaderClass(notice: Notice) : string {
+        switch (notice.type) {
+            case NoticeType.success: {
+                return "toast-header-success"
+            }
+            case NoticeType.alert: {
+                return "toast-header-danger"
+            }
+            case NoticeType.warning: {
+                return "toast-header-warning"
+            }
+        }
+        return "toast-header-info"
+    }
+
+    toastClass(notice: Notice) : string {
+        switch (notice.type) {
+            case NoticeType.success: {
+                return "toast-success ml-auto w-25"
+            }
+            case NoticeType.alert: {
+                return "toast-danger ml-auto w-25"
+            }
+            case NoticeType.warning: {
+                return "toast-warning ml-auto w-25"
+            }
+        }
+        return "toast-info ml-auto w-25"
+    }
+
+
+    toastSubject(notice: Notice) : string {
+        switch (notice.type) {
+            case NoticeType.success: {
+                return "Success"
+            }
+            case NoticeType.alert: {
+                return "Alert"
+            }
+            case NoticeType.warning: {
+                return "Warning"
+            }
+        }
+        return "Information"
+    }
+
 
     ngOnInit() {
     }

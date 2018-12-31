@@ -104,8 +104,10 @@ $dropdown-min-width:                16rem;
 
 
 $toast-max-width: 350px;
-$toast-padding-x: .55rem;
-$toast-padding-y: .25rem;
+
+$toast-padding-x: 0.5rem;
+$toast-padding-y: 0.5rem;
+
 $toast-font-size: .875rem;
 $toast-background-color: $white;
 $toast-border-width: 1px;

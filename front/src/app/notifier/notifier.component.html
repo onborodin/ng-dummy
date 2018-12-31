@@ -2,15 +2,15 @@
 
         <div *ngFor="let item of notices; let i = index">
 
-            <div id="noticeId(i)" class="toast ml-auto w-25" role="alert" data-autohide="false" data-animation="" [@rotate]>
+            <div id="noticeId(i)" [ngClass]="toastClass(item)" role="alert" data-autohide="false" data-animation="" [@rotate]>
 
-                <div class="toast-header bg-warning">
-                    <strong class="mr-auto text-primary">Message</strong>
+                <div [ngClass]="toastHeaderClass(item)">
+                    <strong class="mr-auto text-primary">{{ toastSubject(item) }}</strong>
                     <small class="text-muted"></small>
                     <button type="button" class="ml-2 mb-1 close" (click)="hide(i)">&times;</button>
                 </div>
 
-                <div class="toast-body bg-warning">
+                <div class="toast-body">
                     {{ item.message }}
                 </div>
 

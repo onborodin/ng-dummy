@@ -13,6 +13,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
+                        "extractCss": true,
                         "outputPath": "../public/",
                         "deleteOutputPath": false,
                         "index": "src/main.html",
@@ -69,7 +70,7 @@
                                 "maximumWarning": "2mb",
                                 "maximumError": "5mb"
                             }]
-                        }
+                        },
                     }
                 },
                 "serve": {
