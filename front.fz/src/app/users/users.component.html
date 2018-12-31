@@ -1,0 +1,47 @@
+<div>
+
+    <app-header></app-header>
+
+    <div class="grid-container margin-left-1 margin-right-1">
+        <div class="grid-x grid-margin-x">
+
+            <side-bar></side-bar>
+
+            <user-create [subject]="subject.asObservable()"></user-create>
+
+            <div class="cell auto" [@fade]>
+                <button class="float-right tiny button rounded display-inline-block" (click)="createUser()"><i class="fi-plus"></i></button>
+
+                <h6><b>Users</b></h6>
+
+                <table class="hover">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>name</th>
+                            <th>login</th>
+                            <th>right</th>
+                            <th><i class="fi-pencil"></i></th>
+                            <th><i class="fi-trash"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of users; let i = index">
+                            <td>{{ item.id }}</td>
+                            <td>{{ item.gecos  }}</td>
+                            <td>{{ item.name  }}</td>
+                            <td><span *ngIf="item.superuser"><i class="fi-sheriff-badge" style="font-size: 1.2em;"></i></span></td>
+                            <td><a (click)="updateItem(item)"><i class="fi-pencil"></i></a></td>
+                            <td><a (click)="dropItem(item)"><i class="fi-trash"></i></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+
+    <app-footer></app-footer>
+
+</div>

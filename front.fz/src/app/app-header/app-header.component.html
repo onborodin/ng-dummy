@@ -1,0 +1,33 @@
+<div id="app-header" class="margin-bottom-2">
+
+    <notifier></notifier>
+
+    <div class="top-bar">
+
+        <div class="top-bar-left">
+            <ul class="dropdown menu" data-dropdown-menu>
+                <li class="hide-for-medium">
+                    <a routerLink="/"><i class="menu-icon"></i></a>
+                    <ul class="menu hover">
+                        <li><a routerLink="/">Home</a></li>
+                        <li><a routerLink="/users">Users</a></li>
+                    </ul>
+                </li>
+                <li class="menu-text">{{ brandName }}</li>
+
+            </ul>
+        </div>
+
+        <div class="top-bar-right margin-right-1">
+            <ul class="menu">
+
+                <li *ngIf="level === accessLevel.superuser" class="menu-text"><i class="fi-sheriff-badge" style="font-size: 1.3em;"></i></li>
+                <li *ngIf="level === accessLevel.user" class="menu-text"><i class="fi-torso" style="font-size: 1.3em;"></i></li>
+
+                <li *ngIf="!loginService.isAuth"><a (click)="login()">Login</a></li>
+                <li *ngIf="loginService.isAuth"><a (click)="logout()">Logout</a></li>
+            </ul>
+        </div>
+
+    </div>
+</div>

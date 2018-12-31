@@ -1,0 +1,110 @@
+
+html {
+    font-size: 90% !important;
+}
+
+$color-navy: #191970;
+$color-steel-blue: #4682b4;
+$color-cadet-blue:  #5f9ea0;
+$color-white: #eeeeee;
+$color-black: #000000;
+$color-midnight-blue: #191970;
+
+$title-bar-background: darken($color-steel-blue, 10%);
+$title-bar-foreground: $color-white;
+
+.title-bar {
+    background: $title-bar-background;
+}
+
+.top-bar {
+    background: $title-bar-background;
+}
+
+.top-bar ul {
+    background: $title-bar-background; 
+}
+
+.top-bar ul li {
+    background: $title-bar-background; 
+}
+
+.top-bar ul li a {
+    color: $title-bar-foreground;
+}
+
+.top-bar ul li a {
+    color: $title-bar-foreground;
+}
+
+.top-bar .dropdown.menu > li.is-active > a {
+    color: $title-bar-foreground;
+}
+
+.top-bar .dropdown.menu > li.is-dropdown-submenu-parent > a::after {
+    border-color: $title-bar-foreground transparent transparent;
+}
+
+.top-bar .menu-text {
+    color: $title-bar-foreground;
+}
+
+$menu-icon-color: #424242;
+
+.menu-icon {
+    @include hamburger($color: $title-bar-foreground, $color-hover: $title-bar-foreground);
+    display: inline-block;
+    top: -3px;
+}
+
+$ng-form-green: #42a948;
+$ng-form-red: #a94442;
+
+.ng-valid[required], .ng-valid.required  {
+  border: 1px solid $ng-form-green;
+}
+
+.ng-invalid:not(form)  {
+  border: 1px solid $ng-form-red;
+}
+
+
+.border-all {
+    border: 1px solid #dddddd;
+}
+
+.border-right {
+    border-right: 1px solid #dddddd;
+}
+
+.border-left {
+    border-left: 1px solid #dddddd;
+}
+
+.border-top {
+    border-top: 1px solid #dddddd;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #dddddd;
+}
+
+thead {
+    background: #dadada;
+}
+
+$reveal-background-fade: 85%;
+
+@mixin reveal-style($color: $reveal-background) {
+  $background: scale-color($color, $lightness: $reveal-background-fade);
+  background-color: $background;
+}
+
+.reveal {
+    @each $name, $color in $foundation-palette {
+        &.#{$name} {
+            @include reveal-style($color);
+        }
+    }
+}
+

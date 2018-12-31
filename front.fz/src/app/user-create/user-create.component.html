@@ -1,0 +1,70 @@
+<div id="user-create" class="reveal tiny" data-reveal="user-create" data-multiple-opened="true" data-close-on-click="false" data-animation-in="fade-in" data-animation-out="fade-out">
+
+    <form accept-charset="UTF-8" [formGroup]="form" (ngSubmit)="createUser(form)"  >
+
+        <h5>Create user</h5>
+
+        <label>Name
+            <input type="text" formControlName="gecos" required minlength="5" />
+        </label>
+
+        <p class="help-text"  *ngIf="(gecos.touched || gecos.dirty) && gecos.errors">
+            <span *ngIf="gecos.errors.required">Required.</span>
+            <span *ngIf="gecos.errors.minlength">Minimal length is 5 chars.</span>
+        </p>
+
+        <label>Login
+            <input type="text" formControlName="name"  required minlength="5" pattern="^[a-z0-9_-]{5,64}$" />
+        </label>
+
+        <p class="help-text" *ngIf="(name.touched || name.dirty) && name.errors">
+            <span *ngIf="name.errors.required">Required.</span>
+            <span *ngIf="name.errors.minlength">Minimal length is 5 chars.</span>
+            <span *ngIf="name.errors.pattern">Must include only lower latin char or number</span>
+        </p>
+
+
+        <label>Password
+            <input type="text" formControlName="password" required minlength="5" />
+        </label>
+
+        <p class="help-text">
+            <span *ngIf="(password.touched || password.dirty) && password.errors">
+                <span *ngIf="password.errors.required">Required.</span>
+                <span *ngIf="password.errors.minlength">Minimal length is 5 chars.</span>
+            </span>
+        </p>
+
+
+        <fieldset class="cell margin-bottom-1 text-center">
+            <input id="checkbox-user-as" type="checkbox" formControlName="superuser">
+            <label for="checkbox-user-as">Login as Superuser</label>
+        </fieldset>
+
+        <div class="callout alert" *ngIf="alertMessage.length > 0" [@fade]>
+            <span class="text-center">{{ alertMessage }}</span>
+        </div>
+
+        <div class="text-center">
+            <span *ngIf="form.errors">
+                <button class="button small disabled margin-left-1 margin-right-1" type="button">Accept</button>
+            </span>
+            <span *ngIf="!form.errors" [@fade]>
+                <button class="button small margin-left-1 margin-right-1" type="submit">Accept</button>
+            </span>
+
+            <div class="button small margin-left-1 margin-right-1" (click)="closeForm()">Escape</div>
+        </div>
+
+        <p class="text-center margin-top-1" *ngIf="form.errors">
+                Form is incomplete.
+        </p>
+
+
+
+
+    </form>
+
+
+
+</div>
