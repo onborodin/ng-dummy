@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Router, RouterStateSnapshot } from "@angular/router"
 
 import { LoginService, AccessLevel } from '../login.service'
@@ -10,22 +10,18 @@ declare var $ : any
     templateUrl: './app-header.component.html',
     styleUrls: ['./app-header.component.scss']
 })
-export class AppHeaderComponent implements OnInit, OnChanges, OnDestroy {
+export class AppHeaderComponent implements OnInit, OnDestroy {
 
     brandName: string = "NG"
+    subscription: any
 
     @Input() level : AccessLevel = AccessLevel.guest
-    private accessLevel = AccessLevel
+    accessLevel = AccessLevel
 
     constructor(
         private router: Router,
-        private loginService: LoginService,
-    ) {
-    }
-
-    foundation() {
-        $('#app-header').foundation()
-    }
+        public loginService: LoginService,
+    ) { }
 
     login() {
         this.router.navigate([ '/login' ]) 
@@ -37,30 +33,14 @@ export class AppHeaderComponent implements OnInit, OnChanges, OnDestroy {
         //this.router.navigate([ this.router.routerState.snapshot.url ])
     }
 
-    ngAfterViewInit() {
-        this.foundation()
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
-        this.foundation()
-    }
-
-    ngAfterContentChecked() {
-        this.foundation()
-    }
-
-    ngAfterViewChecked() {
-        this.foundation()
-    }
-
     ngOnInit() {
-        this.foundation()
-        this.loginService.authSubject
+        this.subscription = this.loginService.authSubject
             .subscribe((auth) => {
                 this.level = this.loginService.accessLevel()
             })
     }
 
     ngOnDestroy() {
+        this.subscription.unsubscribe()
     }
 }

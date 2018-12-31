@@ -30,9 +30,9 @@ export class SideBarComponent implements OnInit {
 
     itemClass(item: Page) : string {
         if (item.active) {
-                return 'is-active'
+                return 'dropdown-item active'
         }
-        return ''
+        return 'dropdown-item'
     }
 
     ngOnInit() {

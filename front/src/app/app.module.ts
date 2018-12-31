@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core'
 import { BrowserModule, Title } from '@angular/platform-browser'
-
-import { LocationStrategy, HashLocationStrategy } from '@angular/common'
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { HttpClientModule } from '@angular/common/http'
 
+import { HttpClientModule } from '@angular/common/http'
 import { FormsModule } from '@angular/forms'
 import { ReactiveFormsModule } from '@angular/forms'
+
+import { LocationStrategy, HashLocationStrategy } from '@angular/common'
+import { Routes, Route, RouterModule } from '@angular/router'
 
 
 import { AppComponent } from './app.component'
@@ -22,9 +22,16 @@ import { SideBarComponent } from './side-bar/side-bar.component';
 import { LoginComponent } from './login/login.component'
 
 import { LoginService } from './login.service'
-import { PageService } from './page.service'
+import { PagesService } from './pages.service'
+import { RPCService } from './rpc.service'
+import { UsersService } from './users.service'
+import { NoticesService } from './notices.service'
 
-import { Routes, Route, RouterModule } from '@angular/router'
+import { PagesGuard } from './pages.guard';
+import { NotifierComponent } from './notifier/notifier.component';
+import { UserCreateComponent } from './user-create/user-create.component';
+import { AppContainerComponent } from './app-container/app-container.component'
+
 
 const routes: Routes = []
 
@@ -43,7 +50,10 @@ const routes: Routes = []
         UsersComponent,
         NotFoundComponent,
         SideBarComponent,
-        LoginComponent
+        LoginComponent,
+        NotifierComponent,
+        UserCreateComponent,
+        AppContainerComponent
     ],
     imports: [
         RouterModule.forRoot(routes),
@@ -55,8 +65,11 @@ const routes: Routes = []
     ],
     providers: [
         Title,
+        RPCService,
         LoginService,
-        PageService
+        PagesService,
+        PagesGuard,
+        NoticesService
     ],
     bootstrap: [ AppComponent ]
 })

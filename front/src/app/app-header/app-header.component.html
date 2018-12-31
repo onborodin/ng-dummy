@@ -1,30 +1,43 @@
-<div id="app-header" class="margin-bottom-2">
-    <div class="top-bar">
+<nav class="navbar navbar-expand-sm sticky-top navbar-dark bg-dark mb-4">
 
-        <div class="top-bar-left">
-            <ul class="dropdown menu" data-dropdown-menu>
-                <li class="hide-for-medium">
-                    <a href="#"><i class="menu-icon"></i></a>
-                    <ul class="menu hover">
-                        <li><a routerLink="/">Home</a></li>
-                        <li><a routerLink="/users">Users</a></li>
-                    </ul>
-                </li>
-                <li class="menu-text">{{ brandName }}</li>
+    <div class="d-block d-sm-block d-md-none">
 
-            </ul>
-        </div>
+        <button class="btn" type="button" data-toggle="collapse" data-target="#menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-        <div class="top-bar-right margin-right-1">
-            <ul class="menu">
-
-                <li *ngIf="level === accessLevel.superuser" class="menu-text"><i class="fi-sheriff-badge" style="font-size: 1.3em;"></i></li>
-                <li *ngIf="level === accessLevel.user" class="menu-text"><i class="fi-torso" style="font-size: 1.3em;"></i></li>
-
-                <li *ngIf="!loginService.isAuth"><a (click)="login()">Login</a></li>
-                <li *ngIf="loginService.isAuth"><a (click)="logout()">Logout</a></li>
-            </ul>
+        <div id="menu" class="dropdown-menu shadow">
+            <a class="dropdown-item" routerLink="/">Home</a>
+            <a class="dropdown-item" routerLink="/users">Users</a>
         </div>
 
     </div>
-</div>
+
+    <div class="navbar-brand">{{ brandName }}</div>
+
+    <ul class="nav justify-content-start mr-auto">
+        <li lass="nav-item">
+            <a class="nav-link" routerLink="/">Home</a>
+        </li>
+    </ul>
+
+    <ul class="nav justify-content-end ml-auto">
+
+        <li class="nav-item" *ngIf="!loginService.isAuth">
+            <a class="nav-link" (click)="login()">Login</a>
+        </li>
+
+        <li class="nav-item" *ngIf="loginService.isAuth" >
+            <a class="nav-link" (click)="logout()">
+                <span *ngIf="level === accessLevel.superuser">
+                    <i class="fi-sheriff-badge"></i>
+                </span>
+                <span *ngIf="level === accessLevel.user">
+                    <i class="fi-torso"></i>
+                </span>
+                Logout
+            </a>
+        </li>
+
+    </ul>
+</nav>

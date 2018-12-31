@@ -2,10 +2,8 @@ import { Component, OnInit } from '@angular/core'
 import { Title } from '@angular/platform-browser';
 import { Router, Routes } from '@angular/router'
 
-import { PageService } from './page.service'
-import { PageGuard } from './page.guard'
-
-declare var $: any
+import { PagesService } from './pages.service'
+import { PagesGuard } from './pages.guard'
 
 @Component({
     selector: 'app',
@@ -20,17 +18,16 @@ export class AppComponent implements OnInit {
     public constructor(
         private titleService: Title,
         private router: Router,
-        private pageService: PageService
+        private pageService: PagesService
     ) { 
         this.routes = this.pageService.listRoutes()
         this.routes.forEach((item) => {
-            item.canActivate = [ PageGuard ]
+            item.canActivate = [ PagesGuard ]
         })
         this.router.resetConfig(this.routes)
     }
 
     ngOnInit() {
         this.titleService.setTitle(this.theTitle)
-        $(document).foundation()
     }
 }

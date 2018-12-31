@@ -1,40 +1,85 @@
-<div>
-    <app-header></app-header>
 
-    <div class="grid-container margin-left-2 margin-right-2 auto" >
-        <div class="grid-x grid-margin-x">
+<app-container>
 
-            <side-bar></side-bar>
+    <div id="example-modal" class="modal  fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+            <div class="modal-content">
 
-            <div class="cell medium-8" [@fade]>
+                <form>
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
 
-                <h6><b>Home page</b></h6>
-                <p>
-                    The above vertically left & right aligned menu are
-                    supported in all types of menu's. But align-center
-                    for vertical menu’s is only available for basic menu and is not
-                    available for dropdown, accordion or a drilldown menu.
-                </p>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-                <p>
-                    The above vertically left & right aligned menu are
-                    supported in all types of menu's. But align-center
-                    for vertical menu’s is only available for basic menu and is not
-                    available for dropdown, accordion or a drilldown menu.
-                </p>
+                    </div>
+                    <div class="modal-body">
 
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email address</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        </div>
 
-                <p>
-                    The above vertically left & right aligned menu are
-                    supported in all types of menu's. But align-center
-                    for vertical menu’s is only available for basic menu and is not
-                    available for dropdown, accordion or a drilldown menu.
-                </p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-sm btn-primary">Save changes</button>
+                    </div>
+                </form>
+
 
             </div>
         </div>
     </div>
 
-    <app-footer></app-footer>
 
-</div>
+    <button class="btn btn-primary btn-sm d-inline float-right rounded-circle" (click)="openModal('example-modal')">
+        +
+    </button>
+
+
+    <form>
+        <div class="form-group">
+            <label class="btn btn-primary btn-sm">
+                Browse <input type="file" hidden>
+            </label>
+        </div>
+    </form>
+
+
+
+
+    <button class="btn btn-primary btn-sm" (click)="sendNotice()">
+        Toast
+    </button>
+
+    <h4>Lorem Ipsum</h4>
+
+    <h5>1.10.32 de Finibus Bonorum et Malorum</h5>
+
+    <p>
+        Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+        accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
+        illo inventore veritatis et quasi architecto beatae vitae dicta sunt
+        explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
+        odit aut fugit, sed quia consequuntur magni dolores eos qui ratione
+        voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum
+        quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam
+        eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat
+        voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam
+        corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
+        Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse
+        quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo
+        voluptas nulla pariatur?
+    </p>
+
+</app-container>

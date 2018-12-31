@@ -1,14 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
+import { Subject, Observable } from 'rxjs'
+
+
 import { fadeAnimation } from '../app.animations'
 
 import { RPCService, RPCResponce, RPCError } from '../rpc.service'
 import { UsersService } from '../users.service'
 import { User } from '../models/user.model'
 
-interface Modal {
-    name: string
-    active: boolean
+export enum Form {
+    all = 0,
+    createUser = 1,
+    updateUser = 2,
+    dropUser = 3
+}
+
+export enum Action {
+    closeAll = 0,
+    open = 1,
+    close = 2
+}
+
+export interface Event {
+    destination: Form
+    action: Action
 }
 
 @Component({
@@ -19,33 +35,25 @@ interface Modal {
 })
 export class UsersComponent implements OnInit {
 
-    list: User[] = []
+    users: User[] = []
+    subject: Subject<Event>
 
-    modalList: Modal[] = [
-        { name: 'list', active: true },
-        { name: 'create', active: false },
-        { name: 'update', active: false },
-        { name: 'drop', active: false },
-    ]
-
-    constructor(
-        private usersService: UsersService,
-    ) {}
-
-    updateItem(item: User) {
+    constructor(private usersService: UsersService) {
+        this.subject = new Subject<Event>()
     }
 
-    dropItem(item: User) {
-    }
-
-    createItem() {
+    createUser() {
+        this.subject.next({ 
+            destination: Form.createUser,
+            action: Action.open 
+        })
     }
 
     getList() {
         this.usersService
             .list()
             .subscribe((res: RPCResponce<User[]>) => {
-                this.list = res.result
+                this.users = res.result
             })
     }
 

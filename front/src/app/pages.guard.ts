@@ -3,16 +3,16 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
 import { Observable } from 'rxjs';
 
 import { LoginService, AccessLevel } from './login.service'
-import { PageService } from './page.service'
+import { PagesService } from './pages.service'
 
 @Injectable({
   providedIn: 'root'
 })
-export class PageGuard implements CanActivate {
+export class PagesGuard implements CanActivate {
 
     constructor(
         private loginService: LoginService,
-        private pageService: PageService,
+        private pageService: PagesService,
         private router: Router
     ) {}
 
@@ -23,8 +23,6 @@ export class PageGuard implements CanActivate {
 
         var url = routerState.url
         var userAccessLevel = this.loginService.accessLevel()
-
-        console.log(`canActivate url=${url} userAccessLevel=${userAccessLevel}`)
 
         if (this.pageService.computeAccess(url, userAccessLevel)) {
             return true

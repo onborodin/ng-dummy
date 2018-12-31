@@ -48,13 +48,14 @@ export class LoginComponent implements OnInit, OnDestroy {
 
         this.loginService.loginSubject
             .subscribe((authState) => {
-                this.attemptCounter++
+                //this.attemptCounter++
 
                 if (authState) {
+                    this.attemptCounter = 0
                     this.message = 'Login successful'
                     setTimeout(() => {
                         this.router.navigate([ this.loginService.returnUrl ])
-                    }, 1000)
+                    }, 300)
                 } else {
                     this.attemptCounter++
                     this.message = 'Login incorrect'

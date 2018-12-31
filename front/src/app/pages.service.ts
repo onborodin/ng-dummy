@@ -11,13 +11,13 @@ import { AccessLevel } from './login.service'
 @Injectable({
     providedIn: 'root'
 })
-export class PageService {
+export class PagesService {
 
     routes: Routes = [
         {
             path: '',
             component: HomeComponent,
-            data: { accessLevel: [ AccessLevel.user, AccessLevel.superuser ] }
+            //data: { accessLevel: [ AccessLevel.user, AccessLevel.superuser ] }
         },
         {
             path: 'users',
@@ -47,7 +47,6 @@ export class PageService {
         })
     }
 
-
     listRoutes() : Routes {
         var arr: Routes = []
         this.routes.forEach((item) => {
@@ -63,9 +62,7 @@ export class PageService {
                 item.data.accessLevel.forEach((elem) => {
                     if (elem == userAccessLevel) { 
                         result = true 
-                        console.log(`computeAccess /${item.path} ${elem} == ${userAccessLevel} -> ${elem == userAccessLevel}`)
                     } else {
-                        console.log(`computeAccess /${item.path} ${elem} == ${userAccessLevel} -> ${elem == userAccessLevel}`)
                     }
                 })
             }
