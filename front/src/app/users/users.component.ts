@@ -6,7 +6,7 @@ import { fadeAnimation } from '../app.animations'
 
 import { RPCService, RPCResponce, RPCError } from '../rpc.service'
 import { UsersService } from '../users.service'
-import { User } from '../models/user.model'
+import { User, Users } from '../models/user.model'
 
 export enum Form {
     all = 0,
@@ -39,6 +39,8 @@ export class UsersComponent implements OnInit {
     users: User[] = []
     user: User = { id: -1, name: '', password: '', gecos: '' }
     timestamp: Date
+
+    search: string = ''
 
     subject: Subject<Event>
     subscription: any

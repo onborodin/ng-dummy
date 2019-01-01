@@ -6,13 +6,25 @@
 
     <user-drop [subject]="subject" [user]="user"></user-drop>
 
-    <div class="btn btn-primary btn-sm float-right mb-3" (click)="createUser()"><i class="fi-plus d-inline-block "></i></div>
+    <div class="row">
+        <div class="col">
+            <div class="btn btn-primary btn-sm ml-auto float-right mb-3" (click)="createUser()"><i class="fi-plus d-inline-block"></i></div>
+            <h5 class="mb-3"><b>Users</b></h5>
+        </div>
+    </div>
 
-    <h5><b>Users</b></h5>
 
-    <div class="mb-2">
-        <a (click)="getList()">Update <i class="fi-refresh mr-3"></i></a>
-        <small>Last updated {{ timestamp | date:"h:mm:ss" }}</small>
+    <div class="form-group row my-2">
+        <div class="col-5 mt-auto">
+            <a (click)="getList()"><i class="fi-refresh lead mr-3"></i></a>
+            <small>Updated {{ timestamp | date:"h:mm:ss" }}</small>
+        </div>
+
+        <div class="col-5 ml-auto">
+            <div class="input-group">
+                <input class="form-control form-control-sm" type="search" placeholder="Search" [(ngModel)]="search" [ngModelOptions]="{ standalone: true }">
+            </div>
+        </div>
     </div>
 
     <table class="table table-striped table-hover table-sm">
@@ -28,7 +40,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of users; let i = index">
+            <tr *ngFor="let item of users | usersFilter:search ; let i = index">
                 <th scope="row">{{ i + 1 }}</th>
                 <td>{{ item.gecos  }}</td>
                 <td>{{ item.name  }}</td>

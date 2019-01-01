@@ -5,3 +5,5 @@ export interface User {
     superuser?: boolean
     gecos?: string
 }
+
+export type Users = User[]
