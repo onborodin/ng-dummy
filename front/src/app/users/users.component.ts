@@ -36,25 +36,53 @@ export interface Event {
 export class UsersComponent implements OnInit {
 
     users: User[] = []
+    user: User = { id: -1, name: '', password: '', gecos: '' }
+
     subject: Subject<Event>
 
     constructor(private usersService: UsersService) {
         this.subject = new Subject<Event>()
     }
 
-    createUser() {
+    createUser() : boolean {
         this.subject.next({ 
             destination: Form.createUser,
             action: Action.open 
         })
+        return false;
     }
 
-    getList() {
+    dropUser(user) : boolean  {
+        console.log('dropUser', user)
+
+        this.user = user
+        this.subject.next({ 
+            destination: Form.dropUser,
+            action: Action.open
+        })
+        return false;
+    }
+
+    updateUser(user) {
+        console.log('updateUser', user)
+
+        this.user = user
+        this.subject.next({ 
+            destination: Form.updateUser,
+            action: Action.open
+        })
+        return false;
+
+
+    }
+
+    getList() : boolean {
         this.usersService
             .list()
             .subscribe((res: RPCResponce<User[]>) => {
                 this.users = res.result
             })
+        return false
     }
 
     ngOnInit() {

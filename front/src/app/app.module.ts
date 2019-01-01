@@ -30,7 +30,9 @@ import { NoticesService } from './notices.service'
 import { PagesGuard } from './pages.guard';
 import { NotifierComponent } from './notifier/notifier.component';
 import { UserCreateComponent } from './user-create/user-create.component';
-import { AppContainerComponent } from './app-container/app-container.component'
+import { AppContainerComponent } from './app-container/app-container.component';
+import { UserDropComponent } from './user-drop/user-drop.component';
+import { UserUpdateComponent } from './user-update/user-update.component'
 
 
 const routes: Routes = []
@@ -53,7 +55,9 @@ const routes: Routes = []
         LoginComponent,
         NotifierComponent,
         UserCreateComponent,
-        AppContainerComponent
+        AppContainerComponent,
+        UserDropComponent,
+        UserUpdateComponent
     ],
     imports: [
         RouterModule.forRoot(routes),

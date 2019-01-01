@@ -14,16 +14,16 @@ import { Form, Action, Event } from '../users/users.component'
 declare var $: any
 
 @Component({
-    selector: 'user-create',
-    templateUrl: './user-create.component.html',
-    styleUrls: ['./user-create.component.scss'],
+    selector: 'user-update',
+    templateUrl: './user-update.component.html',
+    styleUrls: ['./user-update.component.scss'],
     animations: [ fadeAnimation ]
 })
-export class UserCreateComponent implements OnInit, OnDestroy {
+export class UserUpdateComponent implements OnInit, OnDestroy {
 
     form: FormGroup
-    user: User
 
+    @Input() user: User = { id: -1, password: '', name: 'xxx', gecos: 'xxx' }
     @Input() subject: Observable<Event>
     private subscription: any
 
@@ -38,8 +38,9 @@ export class UserCreateComponent implements OnInit, OnDestroy {
     ngOnInit(){
         this.createForm()
         this.subscription = this.subject.subscribe((event: Event) => {
-            if (event.destination == Form.createUser) {
+            if (event.destination == Form.updateUser) {
                 if (event.action == Action.open) {
+                    this.createForm()
                     this.openForm()
                 }
                 if (event.action == Action.close) {
@@ -48,6 +49,13 @@ export class UserCreateComponent implements OnInit, OnDestroy {
             }
         })
     }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['user']) {
+            this.createForm()
+        }
+    }
+
 
     formValidator(form: FormGroup) : ValidationErrors | null {
         const name = form.get('name')
@@ -61,21 +69,22 @@ export class UserCreateComponent implements OnInit, OnDestroy {
 
     createForm() {
         this.form = new FormGroup({
-                name: new FormControl(),
-                password: new FormControl(),
-                gecos: new FormControl(),
-                superuser: new FormControl(),
+                id: new FormControl(this.user.id),
+                name: new FormControl(this.user.name),
+                password: new FormControl(this.user.password),
+                gecos: new FormControl(this.user.gecos),
+                superuser: new FormControl(this.user.superuser),
             }, {
                 validators: this.formValidator
             });
     }
 
     openForm() {
-        this.openModal('user-create-modal')
+        this.openModal('user-update-modal')
     }
 
     closeForm() {
-        this.closeModal('user-create-modal')
+        this.closeModal('user-update-modal')
     }
 
     get name() {
@@ -97,16 +106,16 @@ export class UserCreateComponent implements OnInit, OnDestroy {
         }, 3000)
     }
 
-    createUser(form) {
+    updateUser(form) {
         if (this.formValidator(form)) return
 
         this.user = form.value
         this.usersService
-            .create(this.user)
+            .update(this.user)
             .subscribe(
                 (res: RPCResponce<any>) => {
                     if (res.result === true) {
-                        this.noticesService.sendSuccessMessage('User was created ')
+                        this.noticesService.sendSuccessMessage('User was updated ')
                         this.closeForm()
                     } else {
                         this.showAlertMessage('Backend problem')
@@ -130,9 +139,6 @@ export class UserCreateComponent implements OnInit, OnDestroy {
     closeModal(name: string) {
         var name = '#' + name
         $(name).modal('hide')
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
     }
 
     ngOnDestroy() {
