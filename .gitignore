@@ -6,3 +6,12 @@ phalcon
 node_modules/
 *.map
 data/
+public/*.js
+public/*.css
+public/*.png
+public/*.txt
+public/*.html
+
+
+
+

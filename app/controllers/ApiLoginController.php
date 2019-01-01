@@ -13,9 +13,9 @@ class ApiLoginController extends JsonRPCController {
 
         if ($elem->name) {
             $this->session->set('user', $elem);
-            return [ $elem ];
+            return $elem;
         }
-        return [];
+        return new stdClass();
     }
 
     public function rpcLogout($params) {
