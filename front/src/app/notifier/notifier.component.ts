@@ -58,16 +58,17 @@ export class NotifierComponent implements OnInit, OnDestroy {
     toastClass(notice: Notice) : string {
         switch (notice.type) {
             case NoticeType.success: {
-                return "toast-success ml-auto w-25"
+                //return "toast-success ml-auto w-25"
+                return "toast-success"
             }
             case NoticeType.alert: {
-                return "toast-danger ml-auto w-25"
+                return "toast-danger"
             }
             case NoticeType.warning: {
-                return "toast-warning ml-auto w-25"
+                return "toast-warning"
             }
         }
-        return "toast-info ml-auto w-25"
+        return "toast-info"
     }
 
 

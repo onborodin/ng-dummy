@@ -45,6 +45,7 @@ $spacer: .7rem;
 
 $line-height-base:            1.37;
 
+$link-decoration:             none;
 
 $border-radius:               3px;
 
@@ -113,6 +114,9 @@ $pagination-focus-box-shadow:       none;
 $dropdown-link-hover-color:         darken($gray-900, 5%);
 $dropdown-link-hover-bg:            $gray-300;
 $dropdown-min-width:                16rem;
+
+$table-cell-padding:          .55rem;
+$table-cell-padding-sm:       .3rem 0.5rem;
 
 
 $toast-max-width: 350px;

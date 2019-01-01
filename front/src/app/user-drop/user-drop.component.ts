@@ -24,7 +24,7 @@ export class UserDropComponent implements OnInit, OnDestroy {
     form: FormGroup
 
     @Input() user: User
-    @Input() subject: Observable<Event>
+    @Input() subject: Subject<Event>
     private subscription: any
 
     alertMessage: string = ''
@@ -96,15 +96,17 @@ export class UserDropComponent implements OnInit, OnDestroy {
             .subscribe(
                 (res: RPCResponce<any>) => {
                     if (res.result === true) {
+                        this.subject.next({
+                            destination: Form.listUsers,
+                            action: Action.update
+                        })
                         this.noticesService.sendSuccessMessage('User was deleted')
                         this.closeForm()
                     } else {
-                        //this.noticesService.sendAlertMessage('User was deleted')
                         this.showAlertMessage('User was not deleted')
                     }
                 },
                 (error) => {
-                    //this.noticesService.sendAlertMessage('Communication problem')
                     this.showAlertMessage('Communication problem')
                 }
             )

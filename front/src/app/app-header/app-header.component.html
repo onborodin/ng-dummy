@@ -1,8 +1,7 @@
 <nav class="navbar navbar-expand-sm sticky-top navbar-dark bg-dark mb-4">
 
-    <div class="d-block d-sm-block d-md-none">
-
-        <button class="btn" type="button" data-toggle="collapse" data-target="#menu">
+    <div class="d-block d-sm-block d-md-none ml-3">
+        <button class="btn m-0 p-0" type="button" data-toggle="collapse" data-target="#menu">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -10,10 +9,9 @@
             <a class="dropdown-item" routerLink="/">Home</a>
             <a class="dropdown-item" routerLink="/users">Users</a>
         </div>
-
     </div>
 
-    <div class="navbar-brand">{{ brandName }}</div>
+    <div class="navbar-brand ml-3">{{ brandName }}</div>
 
     <ul class="nav justify-content-start mr-auto">
         <li lass="nav-item">
@@ -21,7 +19,7 @@
         </li>
     </ul>
 
-    <ul class="nav justify-content-end ml-auto">
+    <ul class="nav justify-content-end ml-auto mr-3">
 
         <li class="nav-item" *ngIf="!loginService.isAuth">
             <a class="nav-link" (click)="login()">Login</a>

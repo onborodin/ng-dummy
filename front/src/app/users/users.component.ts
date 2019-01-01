@@ -13,13 +13,15 @@ export enum Form {
     all = 0,
     createUser = 1,
     updateUser = 2,
-    dropUser = 3
+    dropUser = 3,
+    listUsers = 4
 }
 
 export enum Action {
     closeAll = 0,
     open = 1,
-    close = 2
+    close = 2,
+    update = 3
 }
 
 export interface Event {
@@ -39,9 +41,17 @@ export class UsersComponent implements OnInit {
     user: User = { id: -1, name: '', password: '', gecos: '' }
 
     subject: Subject<Event>
+    subscription: any
 
     constructor(private usersService: UsersService) {
         this.subject = new Subject<Event>()
+        this.subscription = this.subject.subscribe((event: Event) => {
+            if (event.destination == Form.listUsers) {
+                if (event.action == Action.update) {
+                    this.getList()
+                }
+            }
+        })
     }
 
     createUser() : boolean {
@@ -72,8 +82,6 @@ export class UsersComponent implements OnInit {
             action: Action.open
         })
         return false;
-
-
     }
 
     getList() : boolean {

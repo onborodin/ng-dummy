@@ -11,10 +11,10 @@ $steel-blue: #4682b4;
     background-color: darken($steel-blue, 20%) !important;
 }
 
-.navbar {
-    padding-left: 1em !important;
-    padding-right: 1em !important;
-}
+//.navbar {
+//    padding-left: 1em !important;
+//    padding-right: 1em !important;
+//}
 
 //.navbar-dark .navbar-nav .nav-link {
 //  color: $white;
@@ -193,13 +193,7 @@ $link-hover-color:            darken($link-color, 15%);
 $link-hover-decoration:       underline;
 
 a {
-    color: $link-color;
-    text-decoration: none; //$link-decoration;
-    background-color: transparent; // Remove the gray background on active links in IE 10.
+    text-decoration: none !important;
+    background-color: transparent;
     cursor: pointer;
-
-  //@include hover {
-  //    color: $link-hover-color;
-  //    text-decoration: $link-hover-decoration;
-  //}
 }

@@ -24,7 +24,7 @@ export class UserUpdateComponent implements OnInit, OnDestroy {
     form: FormGroup
 
     @Input() user: User = { id: -1, password: '', name: 'xxx', gecos: 'xxx' }
-    @Input() subject: Observable<Event>
+    @Input() subject: Subject<Event>
     private subscription: any
 
     alertMessage: string = ''
@@ -116,6 +116,10 @@ export class UserUpdateComponent implements OnInit, OnDestroy {
                 (res: RPCResponce<any>) => {
                     if (res.result === true) {
                         this.noticesService.sendSuccessMessage('User was updated ')
+                        this.subject.next({
+                            destination: Form.listUsers,
+                            action: Action.update
+                        })
                         this.closeForm()
                     } else {
                         this.showAlertMessage('Backend problem')

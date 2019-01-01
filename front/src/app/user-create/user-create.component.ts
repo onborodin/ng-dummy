@@ -24,7 +24,7 @@ export class UserCreateComponent implements OnInit, OnDestroy {
     form: FormGroup
     user: User
 
-    @Input() subject: Observable<Event>
+    @Input() subject: Subject<Event>
     private subscription: any
 
     alertMessage: string = ''
@@ -107,6 +107,10 @@ export class UserCreateComponent implements OnInit, OnDestroy {
                 (res: RPCResponce<any>) => {
                     if (res.result === true) {
                         this.noticesService.sendSuccessMessage('User was created ')
+                        this.subject.next({
+                            destination: Form.listUsers,
+                            action: Action.update
+                        })
                         this.closeForm()
                     } else {
                         this.showAlertMessage('Backend problem')

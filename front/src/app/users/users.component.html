@@ -1,10 +1,10 @@
 <app-container>
 
-    <user-create [subject]="subject.asObservable()"></user-create>
+    <user-create [subject]="subject"></user-create>
 
-    <user-update [subject]="subject.asObservable()" [user]="user"></user-update>
+    <user-update [subject]="subject" [user]="user"></user-update>
 
-    <user-drop [subject]="subject.asObservable()" [user]="user"></user-drop>
+    <user-drop [subject]="subject" [user]="user"></user-drop>
 
     <div class="btn btn-primary btn-sm float-right mb-3" (click)="createUser()"><i class="fi-plus d-inline-block "></i></div>
 

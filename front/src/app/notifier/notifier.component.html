@@ -1,22 +1,32 @@
-<div class="w-100" style="position: absolute; top: 3rem; right: 1rem;">
+<div class="w-100"></div>
 
-        <div *ngFor="let item of notices; let i = index">
+<div class="w-100" style="position: absolute; top: 3rem; right: 0.2rem;">
 
-            <div id="noticeId(i)" [ngClass]="toastClass(item)" role="alert" data-autohide="false" data-animation="" [@rotate]>
+    <div *ngFor="let item of notices; let i = index">
 
-                <div [ngClass]="toastHeaderClass(item)">
-                    <strong class="mr-auto text-primary">{{ toastSubject(item) }}</strong>
-                    <small class="text-muted"></small>
-                    <button type="button" class="ml-2 mb-1 close" (click)="hide(i)">&times;</button>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-11 col-sm-7 col-md-5 col-lg-4 ml-auto align-items-end" [@rotate]>
+
+                    <div id="noticeId(i)" [ngClass]="toastClass(item)" role="alert" data-autohide="false" data-animation="" [@rotate]>
+
+                        <div [ngClass]="toastHeaderClass(item)">
+                            <strong class="mr-auto text-primary">{{ toastSubject(item) }}</strong>
+                            <small class="text-muted"></small>
+                            <button type="button" class="ml-2 mb-1 close" (click)="hide(i)">&times;</button>
+                        </div>
+
+                        <div class="toast-body">
+                            {{ item.message }}
+                        </div>
+
+                    </div>
+
                 </div>
 
-                <div class="toast-body">
-                    {{ item.message }}
-                </div>
 
             </div>
-
         </div>
-
+    </div>
 
 </div>
