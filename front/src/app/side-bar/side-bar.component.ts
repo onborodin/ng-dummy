@@ -1,12 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router"
 
-
-interface Page {
-    name: string
-    route: string
-    active: boolean
-}
+import { PagesService, Page, Pages } from '../pages.service'
 
 @Component({
   selector: 'side-bar',
@@ -15,17 +10,17 @@ interface Page {
 })
 export class SideBarComponent implements OnInit {
 
-    list: Page[] = [
-        { name: "Home", route: "/", active: false },
-        { name: "Users", route: "/users", active: false },
+    list: Pages = [
+        { name: "Home", path: "/", active: false },
     ]
 
     constructor(
-        private router: Router
+        private router: Router,
+        private pageService: PagesService,
     ) { }
 
     changePage(page: Page) {
-        this.router.navigate([ page.route ])
+        this.router.navigate([ page.path ])
     }
 
     itemClass(item: Page) : string {
@@ -36,9 +31,11 @@ export class SideBarComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.list = this.pageService.listPages()
+
         this.list.forEach((item: Page) => {
             item.active = false
-            if (item.route === this.router.url) item.active = true
+            if (item.path === this.router.url) item.active = true
         })
     }
 

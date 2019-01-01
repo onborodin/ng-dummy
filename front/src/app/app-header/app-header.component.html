@@ -6,8 +6,9 @@
         </button>
 
         <div id="menu" class="dropdown-menu shadow">
-            <a class="dropdown-item" routerLink="/">Home</a>
-            <a class="dropdown-item" routerLink="/users">Users</a>
+            <a *ngFor="let item of list" [ngClass]="itemClass(item)" (click)="changePage(item)">
+                {{ item.name  }}
+            </a>
         </div>
     </div>
 

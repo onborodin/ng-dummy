@@ -10,10 +10,10 @@
 
     <h5><b>Users</b></h5>
 
-    <a (click)="getList()" href="#">
-        Update <i class="fi-refresh"></i> 
-    </a>
-
+    <div class="mb-2">
+        <a (click)="getList()">Update <i class="fi-refresh mr-3"></i></a>
+        <small>Last updated {{ timestamp | date:"h:mm:ss" }}</small>
+    </div>
 
     <table class="table table-striped table-hover table-sm">
 
@@ -29,7 +29,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let item of users; let i = index">
-                <th scope="row">{{ item.id }}</th>
+                <th scope="row">{{ i + 1 }}</th>
                 <td>{{ item.gecos  }}</td>
                 <td>{{ item.name  }}</td>
                 <td><span *ngIf="item.superuser"><i class="fi-sheriff-badge"></i></span></td>

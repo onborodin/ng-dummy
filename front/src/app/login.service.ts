@@ -64,6 +64,7 @@ export class LoginService {
                 this.userProfile.gecos = res.result.gecos
                 this.userProfile.name = res.result.name
                 this.isAuth = true
+                this.reasonMessage = ''
                 this.loginSubject.next(true)
                 this.authSubject.next(true)
             } else {

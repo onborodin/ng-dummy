@@ -8,6 +8,14 @@ import { NotFoundComponent } from './not-found/not-found.component'
 
 import { AccessLevel } from './login.service'
 
+export interface Page {
+    name: string
+    path: string
+    active: boolean
+}
+
+export type Pages = Page[]
+
 @Injectable({
     providedIn: 'root'
 })
@@ -51,6 +59,39 @@ export class PagesService {
         var arr: Routes = []
         this.routes.forEach((item) => {
             arr.push(item)
+        })
+        return arr
+    }
+
+    camelize(str : string) : string {
+        //return str.replace(/\W+(.)/g, (match, chr) => {
+        //    return chr.toUpperCase()
+        //})
+        //return str.replace(/^([A-Z])|[\s-_]+(\w)/g, (match, p1, p2, offset) => {
+        //    if (p2) return p2.toUpperCase()
+        //    return p1.toLowerCase()
+        //})
+        return str.charAt(0).toUpperCase() + str.slice(1)
+    }
+
+
+    listPages() : Pages {
+        var arr: Pages = []
+        this.routes.forEach((item) => {
+            var page: Page
+            if (item.path !== '**') {
+
+                var path = '/' + item.path
+                var name = this.camelize(item.path)
+                if (path === '/') name = 'Home'
+
+                page = { 
+                    active: false,
+                    path: path,
+                    name: name
+                }
+                arr.push(page)
+            }
         })
         return arr
     }

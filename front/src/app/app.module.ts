@@ -32,7 +32,8 @@ import { NotifierComponent } from './notifier/notifier.component';
 import { UserCreateComponent } from './user-create/user-create.component';
 import { AppContainerComponent } from './app-container/app-container.component';
 import { UserDropComponent } from './user-drop/user-drop.component';
-import { UserUpdateComponent } from './user-update/user-update.component'
+import { UserUpdateComponent } from './user-update/user-update.component';
+import { UserFilterPipe } from './user-filter.pipe'
 
 
 const routes: Routes = []
@@ -57,7 +58,8 @@ const routes: Routes = []
         UserCreateComponent,
         AppContainerComponent,
         UserDropComponent,
-        UserUpdateComponent
+        UserUpdateComponent,
+        UserFilterPipe
     ],
     imports: [
         RouterModule.forRoot(routes),

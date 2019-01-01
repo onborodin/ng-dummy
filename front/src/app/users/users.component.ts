@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
 import { Subject, Observable } from 'rxjs'
 
-
 import { fadeAnimation } from '../app.animations'
 
 import { RPCService, RPCResponce, RPCError } from '../rpc.service'
@@ -32,13 +31,14 @@ export interface Event {
 @Component({
     selector: 'users',
     templateUrl: './users.component.html',
-    styleUrls: ['./users.component.scss'],
+    styleUrls: [ './users.component.scss' ],
     animations: [ fadeAnimation ]
 })
 export class UsersComponent implements OnInit {
 
     users: User[] = []
     user: User = { id: -1, name: '', password: '', gecos: '' }
+    timestamp: Date
 
     subject: Subject<Event>
     subscription: any
@@ -54,15 +54,14 @@ export class UsersComponent implements OnInit {
         })
     }
 
-    createUser() : boolean {
+    createUser() {
         this.subject.next({ 
             destination: Form.createUser,
             action: Action.open 
         })
-        return false;
     }
 
-    dropUser(user) : boolean  {
+    dropUser(user) {
         console.log('dropUser', user)
 
         this.user = user
@@ -70,7 +69,6 @@ export class UsersComponent implements OnInit {
             destination: Form.dropUser,
             action: Action.open
         })
-        return false;
     }
 
     updateUser(user) {
@@ -81,16 +79,15 @@ export class UsersComponent implements OnInit {
             destination: Form.updateUser,
             action: Action.open
         })
-        return false;
     }
 
-    getList() : boolean {
+    getList() {
         this.usersService
             .list()
             .subscribe((res: RPCResponce<User[]>) => {
                 this.users = res.result
+                this.timestamp = new Date()
             })
-        return false
     }
 
     ngOnInit() {

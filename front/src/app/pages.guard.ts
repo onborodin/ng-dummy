@@ -32,6 +32,7 @@ export class PagesGuard implements CanActivate {
 
         this.loginService.returnUrl = routerState.url
         this.loginService.returnUrlSubject.next(routerState.url)
+
         this.router.navigate(['/login'])
         return false
     }
