@@ -64,8 +64,6 @@ export class UsersComponent implements OnInit {
     }
 
     dropUser(user) {
-        console.log('dropUser', user)
-
         this.user = user
         this.subject.next({ 
             destination: Form.dropUser,
@@ -74,8 +72,6 @@ export class UsersComponent implements OnInit {
     }
 
     updateUser(user) {
-        console.log('updateUser', user)
-
         this.user = user
         this.subject.next({ 
             destination: Form.updateUser,

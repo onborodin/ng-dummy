@@ -39,9 +39,6 @@ export class UserDropComponent implements OnInit, OnDestroy {
     ngOnInit(){
         this.createForm()
         this.subscription = this.subject.subscribe((event: Event) => {
-
-            console.log(event)
-
             if (event.destination == Form.dropUser) {
                 if (event.action == Action.open) {
                     this.openForm()

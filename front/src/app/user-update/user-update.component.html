@@ -13,7 +13,7 @@
 
                     <div class="form-group">
                         <label for="user-update-gecos">Name</label>
-                        <input id="user-update-gecos" class="form-control" type="text" formControlName="gecos" required minlength="5" />
+                        <input id="user-update-gecos" uppercase class="form-control" type="text" formControlName="gecos" required minlength="5" />
 
                         <small class="form-text text-danger" *ngIf="(gecos.touched || gecos.dirty) && gecos.errors">
                             <span *ngIf="gecos.errors.required">Required. </span>
