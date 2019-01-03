@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="en">
+  <file original="ng.template" id="ngi18n">
+    <unit id="overviewHeader">
+      <notes>
+        <note category="location">app/home/home.component.html:4</note>
+      </notes>
+      <segment>
+        <source>Overview</source>
+        <target>Обзор</target>
+      </segment>
+    </unit>
+
+    <unit id="overviewBody">
+      <notes>
+        <note category="location">app/home/home.component.html:6,10</note>
+      </notes>
+
+      <segment>
+        <source>
+    It is sample (and/or template) for Angular2/7 + Phalcon full stack web application.
+    This application adapted for different sizes of devices.
+
+    </source>
+        <target>
+    Это пример и он же рабочий шаблон веб-приложения на Angular2/7 + Phalcon серверная часть.
+    Приложение адаптировано под различные виды устройств.
+    </target>
+      </segment>
+    </unit>
+
+    <unit id="notificationHeader">
+
+      <notes>
+        <note category="location">app/home/home.component.html:12</note>
+      </notes>
+
+      <segment>
+        <source>Notification demo</source>
+        <target>Пример уведомлений</target>
+      </segment>
+
+    </unit>
+
+    <unit id="buttonNotices">
+
+      <notes>
+        <note category="location">app/home/home.component.html:14</note>
+      </notes>
+
+      <segment>
+        <source>Notify</source>
+        <target>Уведомить</target>
+      </segment>
+
+    </unit>
+
+    <unit id="shemeHeader">
+
+      <notes>
+        <note category="location">app/home/home.component.html:16</note>
+      </notes>
+
+      <segment>
+        <source>Generic scheme of the application</source>
+        <target>Общая схема приложения</target>
+      </segment>
+
+    </unit>
+  </file>
+</xliff>

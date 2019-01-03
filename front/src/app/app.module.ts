@@ -73,11 +73,19 @@ import {
 
 import {
     faOldRepublic,
-} from '@fortawesome/free-brands-svg-icons';
+} from '@fortawesome/free-brands-svg-icons'
 
 
 //import { ServiceWorkerModule } from '@angular/service-worker'
 //import { environment } from '../environments/environment'
+
+//import { registerLocaleData } from '@angular/common'
+//import localeRu from '@angular/common/locales/ru'
+//import localeRuExtra from '@angular/common/locales/extra/ru'
+
+// the second parameter 'fr' is optional
+//registerLocaleData(localeRu, 'ru', localeRuExtra)
+
 
 
 const routes: Routes = []
@@ -123,7 +131,8 @@ const routes: Routes = []
         LoginService,
         PagesService,
         PagesGuard,
-        NoticesService
+        NoticesService,
+        //{ provide: LOCALE_ID, useValue: 'ru' }
     ],
     bootstrap: [ AppComponent ]
 })
