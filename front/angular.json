@@ -26,17 +26,21 @@
                                 "output": "/"
                             },
                             {
-                                "glob": "*",
+                                "glob": "*.svg",
                                 "input": "src/assets",
                                 "output": "/"
-                            }
-                        ],
-                        "styles": [
+                            },
                             {
-                                "input": "src/styles.scss",
-                                "bundleName": "styles",
-                            }
+                                "glob": "*.png",
+                                "input": "src/assets/icons",
+                                "output": "/icons"
+                            },
+                            "src/manifest.json",
                         ],
+                        "styles": [{
+                            "input": "src/styles.scss",
+                            "bundleName": "styles"
+                        }],
                         "stylePreprocessorOptions": {
                             "includePaths": [
                                 "src/scss",
@@ -70,8 +74,9 @@
                                 "type": "initial",
                                 "maximumWarning": "2mb",
                                 "maximumError": "5mb"
-                            }]
-                        },
+                            }],
+                            "serviceWorker": false
+                        }
                     }
                 },
                 "serve": {

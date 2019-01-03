@@ -1,0 +1,172 @@
+diff --git a/front/angular.json b/front/angular.json
+index 178d800..84e4796 100644
+--- a/front/angular.json
++++ b/front/angular.json
+@@ -26,17 +26,21 @@
+                                 "output": "/"
+                             },
+                             {
+-                                "glob": "*",
++                                "glob": "*.svg",
+                                 "input": "src/assets",
+                                 "output": "/"
+-                            }
+-                        ],
+-                        "styles": [
++                            },
+                             {
+-                                "input": "src/styles.scss",
+-                                "bundleName": "styles",
+-                            }
++                                "glob": "*.png",
++                                "input": "src/assets/icons",
++                                "output": "/icons"
++                            },
++                            "src/manifest.json",
+                         ],
++                        "styles": [{
++                            "input": "src/styles.scss",
++                            "bundleName": "styles"
++                        }],
+                         "stylePreprocessorOptions": {
+                             "includePaths": [
+                                 "src/scss",
+@@ -70,8 +74,9 @@
+                                 "type": "initial",
+                                 "maximumWarning": "2mb",
+                                 "maximumError": "5mb"
+-                            }]
+-                        },
++                            }],
++                            "serviceWorker": true
++                        }
+                     }
+                 },
+                 "serve": {
+diff --git a/front/package.json b/front/package.json
+index f1b7662..8a76390 100644
+--- a/front/package.json
++++ b/front/package.json
+@@ -15,6 +15,7 @@
+     "@angular/http": "^7.1.4",
+     "@angular/platform-browser": "^7.1.4",
+     "@angular/platform-browser-dynamic": "^7.1.4",
++    "@angular/pwa": "^0.11.4",
+     "@angular/router": "^7.1.4",
+     "@angular/service-worker": "^7.1.4",
+     "@fortawesome/angular-fontawesome": "^0.3.0",
+diff --git a/front/src/app/app.component.ts b/front/src/app/app.component.ts
+index 3d2701e..03f8021 100644
+--- a/front/src/app/app.component.ts
++++ b/front/src/app/app.component.ts
+@@ -1,9 +1,11 @@
+ import { Component, OnInit } from '@angular/core'
+-import { Title } from '@angular/platform-browser';
++import { Title } from '@angular/platform-browser'
+ import { Router, Routes } from '@angular/router'
++import { SwUpdate } from '@angular/service-worker'
+ 
+ import { PagesService } from './pages.service'
+ import { PagesGuard } from './pages.guard'
++import { UpdateService } from './update.service'
+ 
+ @Component({
+     selector: 'app',
+@@ -16,15 +18,19 @@ export class AppComponent implements OnInit {
+     routes: Routes = []
+ 
+     public constructor(
++        private updateService: UpdateService,
+         private titleService: Title,
+         private router: Router,
+         private pageService: PagesService
+-    ) { 
++    ) {
++
+         this.routes = this.pageService.listRoutes()
++
+         this.routes.forEach((item) => {
+             item.canActivate = [ PagesGuard ]
+         })
+         this.router.resetConfig(this.routes)
++
+     }
+ 
+     ngOnInit() {
+diff --git a/front/src/app/app.module.ts b/front/src/app/app.module.ts
+index c00f052..add7cb6 100644
+--- a/front/src/app/app.module.ts
++++ b/front/src/app/app.module.ts
+@@ -73,7 +73,11 @@ import {
+ 
+ import {
+     faOldRepublic,
+-} from '@fortawesome/free-brands-svg-icons'
++} from '@fortawesome/free-brands-svg-icons';
++
++
++import { ServiceWorkerModule } from '@angular/service-worker'
++import { environment } from '../environments/environment'
+ 
+ 
+ const routes: Routes = []
+@@ -110,7 +114,8 @@ const routes: Routes = []
+         BrowserModule,
+         BrowserAnimationsModule,
+         FontAwesomeModule,
+-        HttpClientModule
++        HttpClientModule,
++        ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+     ],
+     providers: [
+         Title,
+diff --git a/front/src/main.html b/front/src/main.html
+index eadfd3c..8e62dbd 100644
+--- a/front/src/main.html
++++ b/front/src/main.html
+@@ -10,6 +10,11 @@
+     <base href="/">
+ 
+     <link rel="shortcut icon" href="/favicon.ico">
++
++    <link rel="manifest" href="manifest.json">
++
++    <meta name="theme-color" content="#1976d2">
++
+ </head>
+ 
+ <body>
+@@ -94,6 +99,7 @@
+         </div>
+     </app>
+ 
++  <noscript>Please enable JavaScript to continue using this application.</noscript>
+ </body>
+ 
+ </html>
+\ No newline at end of file
+diff --git a/public/main.html b/public/main.html
+index c3943a7..6364f3b 100644
+--- a/public/main.html
++++ b/public/main.html
+@@ -10,6 +10,11 @@
+     <base href="/">
+ 
+     <link rel="shortcut icon" href="/favicon.ico">
++
++    <link rel="manifest" href="manifest.json">
++
++    <meta name="theme-color" content="#1976d2">
++
+ <link rel="stylesheet" href="styles.css"></head>
+ 
+ <body>
+@@ -94,6 +99,7 @@
+         </div>
+     </app>
+ 
++  <noscript>Please enable JavaScript to continue using this application.</noscript>
+ <script type="text/javascript" src="runtime.js"></script><script type="text/javascript" src="polyfills.js"></script><script type="text/javascript" src="scripts.js"></script><script type="text/javascript" src="vendor.js"></script><script type="text/javascript" src="main.js"></script></body>
+ 
+ </html>
+\ No newline at end of file

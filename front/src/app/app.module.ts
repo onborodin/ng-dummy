@@ -41,8 +41,8 @@ import { TrimDirective } from './directives/trim.directive'
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { fas } from '@fortawesome/free-solid-svg-icons'
-import { far } from '@fortawesome/free-regular-svg-icons'
+//import { fas } from '@fortawesome/free-solid-svg-icons'
+//import { far } from '@fortawesome/free-regular-svg-icons'
 
 import {
     faEdit,
@@ -73,7 +73,11 @@ import {
 
 import {
     faOldRepublic,
-} from '@fortawesome/free-brands-svg-icons'
+} from '@fortawesome/free-brands-svg-icons';
+
+
+//import { ServiceWorkerModule } from '@angular/service-worker'
+//import { environment } from '../environments/environment'
 
 
 const routes: Routes = []
@@ -110,7 +114,8 @@ const routes: Routes = []
         BrowserModule,
         BrowserAnimationsModule,
         FontAwesomeModule,
-        HttpClientModule
+        HttpClientModule,
+        //ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
     ],
     providers: [
         Title,
@@ -150,6 +155,5 @@ export class AppModule {
             faSignOutAlt,
             faOldRepublic,
         )
-
     }
 }
