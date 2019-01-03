@@ -71,6 +71,20 @@ export class NotifierComponent implements OnInit, OnDestroy {
         return "toast-info"
     }
 
+    toastIcon(notice: Notice) : string[] {
+        switch (notice.type) {
+            case NoticeType.success: {
+                return ['fas', 'check']
+            }
+            case NoticeType.alert: {
+                return ['fas', 'exclamation']
+            }
+            case NoticeType.warning: {
+                return ['fas', 'bell']
+            }
+        }
+        return ['fas', 'info']
+    }
 
     toastSubject(notice: Notice) : string {
         switch (notice.type) {

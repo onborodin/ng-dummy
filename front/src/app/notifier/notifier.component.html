@@ -11,6 +11,7 @@
                     <div id="noticeId(i)" [ngClass]="toastClass(item)" role="alert" data-autohide="false" data-animation="" [@rotate]>
 
                         <div [ngClass]="toastHeaderClass(item)">
+                            <span class="mr-2"><fa-icon [icon]="toastIcon(item)" size="xl"></fa-icon></span>
                             <strong class="mr-auto text-primary">{{ toastSubject(item) }}</strong>
                             <small class="text-muted"></small>
                             <button type="button" class="ml-2 mb-1 close" (click)="hide(i)">&times;</button>

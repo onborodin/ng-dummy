@@ -8,7 +8,10 @@
 
     <div class="row">
         <div class="col">
-            <div class="btn btn-primary btn-sm ml-auto float-right mb-3" (click)="createUser()"><i class="fi-plus d-inline-block"></i></div>
+            <div class="btn btn-primary btn-sm ml-auto float-right mb-3 d-inline-block" (click)="createUser()">
+                <!-- i class="fi-plus d-inline-block"></i -->    
+                <fa-icon [icon]="['fas', 'plus']"></fa-icon>
+            </div>
             <h5 class="mb-3"><b>Users</b></h5>
         </div>
     </div>
@@ -16,8 +19,11 @@
 
     <div class="form-group row my-2">
         <div class="col-5 mt-auto">
-            <a (click)="getList()"><i class="fi-refresh lead mr-3"></i></a>
-            <small>Updated {{ timestamp | date:"h:mm:ss" }}</small>
+            <a (click)="getList()">
+                <!-- i class="fi-refresh lead mr-3" ></i -->
+                <fa-icon [icon]="['fas', 'sync-alt']" size="lg"></fa-icon>
+            </a>
+            <small class="ml-3">Updated {{ timestamp | date:"h:mm:ss" }}</small>
         </div>
 
         <div class="col-5 ml-auto">
@@ -35,8 +41,8 @@
                 <th scope="col">name</th>
                 <th scope="col">login</th>
                 <th scope="col">right</th>
-                <th scope="col"><i class="fi-pencil"></i></th>
-                <th scope="col"><i class="fi-trash"></i></th>
+                <th scope="col"><!-- i class="fi-pencil"></i --><fa-icon [icon]="['far', 'edit']"></fa-icon></th>
+                <th scope="col"><!-- i class="fi-trash"></i --><fa-icon [icon]="['far', 'trash-alt']"></fa-icon></th>
             </tr>
         </thead>
         <tbody>
@@ -44,9 +50,9 @@
                 <th scope="row">{{ i + 1 }}</th>
                 <td>{{ item.gecos  }}</td>
                 <td>{{ item.name  }}</td>
-                <td><span *ngIf="item.superuser"><i class="fi-sheriff-badge"></i></span></td>
-                <td><a (click)="updateUser(item)" tabindex="-1"><i class="fi-pencil"></i></a></td>
-                <td><a (click)="dropUser(item)" tabindex="-1"><i class="fi-trash"></i></a></td>
+                <td><span *ngIf="item.superuser"><!-- i class="fi-sheriff-badge"></i --><fa-icon [icon]="['fas', 'star']"></fa-icon></span></td>
+                <td><a (click)="updateUser(item)"><!-- i class="fi-pencil"></i --><fa-icon [icon]="['far', 'edit']"></fa-icon></a></td>
+                <td><a (click)="dropUser(item)"><!-- i class="fi-trash"></i --><fa-icon [icon]="['far', 'trash-alt']"></fa-icon></a></td>
             </tr>
         </tbody>
     </table>

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 
-import { fadeAnimation } from '../app.animations'
+import { fadeAnimation, rotateAnimation } from '../app.animations'
 import { NoticesService } from '../notices.service'
+
 
 declare var $: any
 
@@ -9,7 +10,7 @@ declare var $: any
     selector: 'home',
     templateUrl: './home.component.html',
     styleUrls: [ './home.component.scss' ],
-    animations: [ fadeAnimation ]
+    animations: [ fadeAnimation, rotateAnimation ]
 })
 export class HomeComponent implements OnInit {
 

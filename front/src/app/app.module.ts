@@ -39,6 +39,42 @@ import { UsersFilterPipe } from './users-filter.pipe'
 import { LowercaseDirective } from './directives/lowercase.directive'
 import { TrimDirective } from './directives/trim.directive'
 
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { far } from '@fortawesome/free-regular-svg-icons'
+
+import {
+    faEdit,
+    faPlusSquare,
+    faTrashAlt,
+} from '@fortawesome/free-regular-svg-icons'
+
+import { 
+    faStarOfDavid,
+    faBell,
+    faCheck,
+    faCheckCircle,
+    faExclamation,
+    faExclamationCircle,
+    faInfo,
+    faInfoCircle,
+    faPlus,
+    faShieldAlt,
+    faSyncAlt,
+    faThumbsUp,
+    faUserAlt,
+    faUserPlus,
+    faUserSecret,
+    faStar,
+    faSignInAlt,
+    faSignOutAlt,
+} from '@fortawesome/free-solid-svg-icons'
+
+import {
+    faOldRepublic,
+} from '@fortawesome/free-brands-svg-icons'
+
 
 const routes: Routes = []
 
@@ -73,6 +109,7 @@ const routes: Routes = []
         FormsModule,
         BrowserModule,
         BrowserAnimationsModule,
+        FontAwesomeModule,
         HttpClientModule
     ],
     providers: [
@@ -85,4 +122,34 @@ const routes: Routes = []
     ],
     bootstrap: [ AppComponent ]
 })
-export class AppModule {}
+export class AppModule {
+
+    constructor() {
+        //library.add(fas, far)
+        library.add(
+            faBell,
+            faCheck,
+            faCheckCircle,
+            faEdit,
+            faExclamation,
+            faExclamationCircle,
+            faInfo,
+            faInfoCircle,
+            faPlus,
+            faPlusSquare,
+            faShieldAlt,
+            faStarOfDavid,
+            faSyncAlt,
+            faThumbsUp,
+            faTrashAlt,
+            faUserAlt,
+            faUserPlus,
+            faUserSecret,
+            faStar,
+            faSignInAlt,
+            faSignOutAlt,
+            faOldRepublic,
+        )
+
+    }
+}
