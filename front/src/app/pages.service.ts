@@ -3,6 +3,9 @@ import { Routes, Route } from '@angular/router'
 
 import { HomeComponent } from './home/home.component'
 import { UsersComponent } from './users/users.component'
+import { DriversComponent } from './drivers/drivers.component'
+import { VehiclesComponent } from './vehicles/vehicles.component'
+
 import { LoginComponent } from './login/login.component'
 import { NotFoundComponent } from './not-found/not-found.component'
 
@@ -26,6 +29,16 @@ export class PagesService {
             path: '',
             component: HomeComponent,
             //data: { accessLevel: [ AccessLevel.user, AccessLevel.superuser ] }
+        },
+        {
+            path: 'drivers',
+            component: DriversComponent,
+            data: { accessLevel: [ AccessLevel.user, AccessLevel.superuser ] }
+        },
+        {
+            path: 'vehicles',
+            component: VehiclesComponent,
+            data: { accessLevel: [ AccessLevel.user, AccessLevel.superuser ] }
         },
         {
             path: 'users',

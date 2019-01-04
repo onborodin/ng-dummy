@@ -106,7 +106,7 @@ export class UserCreateComponent implements OnInit, OnDestroy {
             .subscribe(
                 (res: RPCResponce<any>) => {
                     if (res.result === true) {
-                        this.noticesService.sendSuccessMessage('User was created ')
+                        this.noticesService.sendSuccessMessage('User record was created ')
                         this.subject.next({
                             destination: Form.listUsers,
                             action: Action.update

@@ -1,0 +1,59 @@
+<app-container>
+
+    <vehicle-create [subject]="subject"></vehicle-create>
+
+    <vehicle-update [subject]="subject" [vehicle]="vehicle"></vehicle-update>
+
+    <vehicle-drop [subject]="subject" [vehicle]="vehicle"></vehicle-drop>
+
+    <div class="row">
+        <div class="col">
+            <div class="btn btn-primary btn-sm ml-auto float-right mb-3 d-inline-block" (click)="createVehicle()">
+                <fa-icon [icon]="['fas', 'plus']"></fa-icon>
+            </div>
+            <h5 class="mb-3"><b>Vehicles</b></h5>
+        </div>
+    </div>
+
+    <p class="text-center text-danger" *ngIf="alertMessage.length > 0" [@fade]>
+            {{ alertMessage }}
+    </p>
+
+
+
+    <div class="form-group row my-2">
+        <div class="col-5 mt-auto">
+            <a (click)="getList()">
+                <fa-icon [icon]="['fas', 'sync-alt']" size="lg"></fa-icon>
+            </a>
+            <small class="ml-3">Updated {{ timestamp | date:"h:mm:ss" }}</small>
+        </div>
+
+        <div class="col-5 ml-auto">
+            <div class="input-group">
+                <input class="form-control form-control-sm" type="search" placeholder="Search" [(ngModel)]="search" [ngModelOptions]="{ standalone: true }">
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-striped table-hover table-sm">
+
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">name</th>
+                <th scope="col"><fa-icon [icon]="['far', 'edit']"></fa-icon></th>
+                <th scope="col"><fa-icon [icon]="['far', 'trash-alt']"></fa-icon></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of vehicles | vehiclesFilter:search ; let i = index">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ item.name  }}</td>
+                <td><a (click)="updateVehicle(item)"><fa-icon [icon]="['far', 'edit']"></fa-icon></a></td>
+                <td><a (click)="dropVehicle(item)"><fa-icon [icon]="['far', 'trash-alt']"></fa-icon></a></td>
+            </tr>
+        </tbody>
+    </table>
+
+</app-container>

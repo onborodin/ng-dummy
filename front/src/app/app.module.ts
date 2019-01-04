@@ -73,8 +73,19 @@ import {
 
 import {
     faOldRepublic,
-} from '@fortawesome/free-brands-svg-icons'
+} from '@fortawesome/free-brands-svg-icons';
 
+import { DriversComponent } from './drivers/drivers.component';
+import { DriverCreateComponent } from './driver-create/driver-create.component';
+import { DriverUpdateComponent } from './driver-update/driver-update.component';
+import { DriverDropComponent } from './driver-drop/driver-drop.component';
+import { DriversFilterPipe } from './drivers-filter.pipe';
+
+import { VehiclesComponent } from './vehicles/vehicles.component';
+import { VehicleCreateComponent } from './vehicle-create/vehicle-create.component';
+import { VehicleUpdateComponent } from './vehicle-update/vehicle-update.component';
+import { VehicleDropComponent } from './vehicle-drop/vehicle-drop.component'
+import { VehiclesFilterPipe } from './vehicles-filter.pipe';
 
 //import { ServiceWorkerModule } from '@angular/service-worker'
 //import { environment } from '../environments/environment'
@@ -94,6 +105,8 @@ const routes: Routes = []
     entryComponents: [
         HomeComponent,
         UsersComponent,
+        DriversComponent,
+        VehiclesComponent,
         NotFoundComponent,
         LoginComponent
     ],
@@ -114,6 +127,16 @@ const routes: Routes = []
         UsersFilterPipe,
         LowercaseDirective,
         TrimDirective,
+        DriversComponent,
+        DriverCreateComponent,
+        DriverUpdateComponent,
+        DriverDropComponent,
+        DriversFilterPipe,
+        VehiclesComponent,
+        VehicleCreateComponent,
+        VehicleUpdateComponent,
+        VehicleDropComponent,
+        VehiclesFilterPipe,
     ],
     imports: [
         RouterModule.forRoot(routes),

@@ -115,7 +115,7 @@ export class UserUpdateComponent implements OnInit, OnDestroy {
             .subscribe(
                 (res: RPCResponce<any>) => {
                     if (res.result === true) {
-                        this.noticesService.sendSuccessMessage('User was updated ')
+                        this.noticesService.sendSuccessMessage('User record was updated ')
                         this.subject.next({
                             destination: Form.listUsers,
                             action: Action.update

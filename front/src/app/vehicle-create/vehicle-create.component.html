@@ -1,0 +1,53 @@
+<div id="vehicle-create-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="dialog">
+        <div class="modal-content">
+
+            <form accept-charset="UTF-8" [formGroup]="form" (ngSubmit)="createVehicle(form)">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Create vehicle</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+
+
+                    <div class="form-group">
+                        <label for="vehicle-create-login">Name</label>
+                        <input id="vehicle-create-login" class="form-control" type="text" formControlName="name" required minlength="10" />
+
+                        <small class="form-text text-danger" *ngIf="(name.touched || name.dirty) && name.errors">
+                            <span *ngIf="name.errors.required">Required. </span>
+                            <span *ngIf="name.errors.minlength">Minimal length is 5 chars.</span>
+                        </small>
+                    </div>
+
+                    <p *ngIf="form.errors" class="text-center text-danger">
+                        Form is incomplete.
+                    </p>
+
+                    <p class="text-center text-danger" *ngIf="alertMessage.length > 0" [@fade]>
+                        {{ alertMessage }}
+                    </p>
+
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" (click)="closeForm()">Escape</button>
+
+                    <span *ngIf="form.errors">
+                        <button class="btn btn-sm btn-primary disabled" type="button">Accept</button>
+                    </span>
+
+                    <span *ngIf="!form.errors">
+                        <button class="btn btn-sm btn-primary" type="submit">Accept</button>
+                    </span>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>

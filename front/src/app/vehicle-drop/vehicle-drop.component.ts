@@ -6,24 +6,24 @@ import { fadeAnimation } from '../app.animations'
 
 import { NoticesService } from '../notices.service'
 import { RPCService, RPCResponce, RPCError } from '../rpc.service'
-import { UsersService } from '../users.service'
-import { User } from '../models/user.model'
+import { VehiclesService } from '../vehicles.service'
+import { Vehicle } from '../models/vehicle.model'
 
-import { Form, Action, Event } from '../users/users.component'
+import { Form, Action, Event } from '../vehicles/vehicles.component'
 
 declare var $: any
 
 @Component({
-    selector: 'user-drop',
-    templateUrl: './user-drop.component.html',
-    styleUrls: ['./user-drop.component.scss'],
+    selector: 'vehicle-drop',
+    templateUrl: './vehicle-drop.component.html',
+    styleUrls: ['./vehicle-drop.component.scss'],
     animations: [ fadeAnimation ]
 })
-export class UserDropComponent implements OnInit, OnDestroy {
+export class VehicleDropComponent implements OnInit, OnDestroy {
 
     form: FormGroup
 
-    @Input() user: User
+    @Input() vehicle: Vehicle
     @Input() subject: Subject<Event>
     private subscription: any
 
@@ -31,7 +31,7 @@ export class UserDropComponent implements OnInit, OnDestroy {
 
     constructor(
         private formBuilder: FormBuilder,
-        private usersService: UsersService,
+        private vehiclesService: VehiclesService,
         private noticesService: NoticesService
     ) {}
 
@@ -39,7 +39,7 @@ export class UserDropComponent implements OnInit, OnDestroy {
     ngOnInit(){
         this.createForm()
         this.subscription = this.subject.subscribe((event: Event) => {
-            if (event.destination == Form.dropUser) {
+            if (event.destination == Form.dropVehicle) {
                 if (event.action == Action.open) {
                     this.openForm()
                 }
@@ -51,14 +51,14 @@ export class UserDropComponent implements OnInit, OnDestroy {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['user']) {
+        if (changes['vehicle']) {
             this.createForm()
         }
     }
 
     createForm() {
             this.form = new FormGroup({
-                id: new FormControl(this.user.id),
+                id: new FormControl(this.vehicle.id),
                 confirm: new FormControl(false),
             },  { validators: this.formValidator });
     }
@@ -72,11 +72,11 @@ export class UserDropComponent implements OnInit, OnDestroy {
     }
 
     openForm() {
-        this.openModal('user-drop-modal')
+        this.openModal('vehicle-drop-modal')
     }
 
     closeForm() {
-        this.closeModal('user-drop-modal')
+        this.closeModal('vehicle-drop-modal')
     }
 
     get confirm() {
@@ -84,23 +84,23 @@ export class UserDropComponent implements OnInit, OnDestroy {
     }
 
 
-    dropUser(form) {
+    dropVehicle(form) {
         if (this.formValidator(form)) return
 
-        this.user = form.value
-        this.usersService
-            .drop(this.user)
+        this.vehicle = form.value
+        this.vehiclesService
+            .drop(this.vehicle)
             .subscribe(
                 (res: RPCResponce<any>) => {
                     if (res.result === true) {
                         this.subject.next({
-                            destination: Form.listUsers,
+                            destination: Form.listVehicles,
                             action: Action.update
                         })
-                        this.noticesService.sendSuccessMessage('User record was deleted')
+                        this.noticesService.sendSuccessMessage('Vehicle record was deleted')
                         this.closeForm()
                     } else {
-                        this.showAlertMessage('User was not deleted')
+                        this.showAlertMessage('Backend problem')
                     }
                 },
                 (error) => {

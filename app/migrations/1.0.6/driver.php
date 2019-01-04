@@ -6,9 +6,9 @@ use Phalcon\Db\Reference;
 use Phalcon\Mvc\Model\Migration;
 
 /**
- * Class BlobMigration_106
+ * Class ThingMigration_106
  */
-class BlobMigration_106 extends Migration
+class DriverMigration_106 extends Migration
 {
     /**
      * Define the table structure
@@ -17,7 +17,7 @@ class BlobMigration_106 extends Migration
      */
     public function morph()
     {
-        $this->morphTable('blob', [
+        $this->morphTable('driver', [
                 'columns' => [
                     new Column(
                         'id',
@@ -27,15 +27,6 @@ class BlobMigration_106 extends Migration
                             'autoIncrement' => true,
                             'first' => true,
                             'primary' => true
-
-                        ]
-                    ),
-                    new Column(
-                        'thing_id',
-                        [
-                            'type' => Column::TYPE_INTEGER,
-                            'notNull' => true,
-                            'after' => 'id'
                         ]
                     ),
                     new Column(
@@ -44,12 +35,12 @@ class BlobMigration_106 extends Migration
                             'type' => Column::TYPE_TEXT,
                             'notNull' => true,
                             'size' => 1,
-                            'after' => 'thing_id'
+                            'after' => 'id'
                         ]
                     )
                 ],
-                'indexes' => [
-                    new Index('blob_name', ['name'], null)
+                    'indexes' => [
+                    new Index('driver_name', ['name'])
                 ],
             ]
         );
@@ -82,9 +73,8 @@ class BlobMigration_106 extends Migration
      */
      public function afterCreateTable()
      {
-        $this->batchInsert('blob', [
+        $this->batchInsert('driver', [
                 'id',
-                'thing_id',
                 'name'
             ]
         );

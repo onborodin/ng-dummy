@@ -15,15 +15,21 @@ $router->add('/api/login', [
     'action' => 'index'
 ]);
 
-$router->add('/api/things', [
-    'controller' => 'api-things',
-    'action' => 'index'
-]);
-
 $router->add('/api/users', [
     'controller' => 'api-users',
     'action' => 'index'
 ]);
+
+$router->add('/api/drivers', [
+    'controller' => 'api-drivers',
+    'action' => 'index'
+]);
+
+$router->add('/api/vehicles', [
+    'controller' => 'api-vehicles',
+    'action' => 'index'
+]);
+
 
 $router->add('/data/upload', [
     'controller' => 'data',

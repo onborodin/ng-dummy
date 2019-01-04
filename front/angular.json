@@ -38,6 +38,7 @@
                                 "output": "/icons"
                             },
                             "src/manifest.json",
+                            "src/lorem.appcache",
                         ],
                         "styles": [{
                             "input": "src/styles.scss",

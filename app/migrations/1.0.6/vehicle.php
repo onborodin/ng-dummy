@@ -6,9 +6,9 @@ use Phalcon\Db\Reference;
 use Phalcon\Mvc\Model\Migration;
 
 /**
- * Class ThingMigration_106
+ * Class VehicleMigration_106
  */
-class ThingMigration_106 extends Migration
+class VehicleMigration_106 extends Migration
 {
     /**
      * Define the table structure
@@ -17,7 +17,7 @@ class ThingMigration_106 extends Migration
      */
     public function morph()
     {
-        $this->morphTable('thing', [
+        $this->morphTable('vehicle', [
                 'columns' => [
                     new Column(
                         'id',
@@ -27,6 +27,7 @@ class ThingMigration_106 extends Migration
                             'autoIncrement' => true,
                             'first' => true,
                             'primary' => true
+
                         ]
                     ),
                     new Column(
@@ -39,8 +40,8 @@ class ThingMigration_106 extends Migration
                         ]
                     )
                 ],
-                    'indexes' => [
-                    new Index('thing_name', ['name'])
+                'indexes' => [
+                    new Index('vehicle_name', ['name'], null)
                 ],
             ]
         );
@@ -73,7 +74,7 @@ class ThingMigration_106 extends Migration
      */
      public function afterCreateTable()
      {
-        $this->batchInsert('thing', [
+        $this->batchInsert('vehicle', [
                 'id',
                 'name'
             ]
