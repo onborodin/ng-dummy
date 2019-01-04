@@ -42,7 +42,7 @@
             <tr>
                 <th scope="col">id</th>
                 <th scope="col">name</th>
-                <th scope="col">vc</th>
+                <th scope="col"><fa-icon [icon]="['fas', 'shuttle-van']"></fa-icon></th>
                 <th scope="col"><fa-icon [icon]="['far', 'edit']"></fa-icon></th>
                 <th scope="col"><fa-icon [icon]="['far', 'trash-alt']"></fa-icon></th>
             </tr>
@@ -51,7 +51,7 @@
             <tr *ngFor="let item of drivers | driversFilter:search ; let i = index">
                 <th scope="row">{{ i + 1 }}</th>
                 <td>{{ item.name  }}</td> 
-                <td><span *ngIf="item.vehicle_count > 0">{{ item.vehicle_count }}</span></td>
+                <td><span *ngIf="item.vehicle_count > 0">{{ item.vehicle_count }} <small><fa-icon [icon]="['fas', 'shuttle-van']"></fa-icon></small></span></td>
                 <td><a (click)="updateDriver(item)"><fa-icon [icon]="['far', 'edit']"></fa-icon></a></td>
                 <td><a (click)="dropDriver(item)"><fa-icon [icon]="['far', 'trash-alt']"></fa-icon></a></td>
             </tr>

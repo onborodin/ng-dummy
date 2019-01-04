@@ -69,6 +69,7 @@ import {
     faStar,
     faSignInAlt,
     faSignOutAlt,
+    faShuttleVan,
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
@@ -186,6 +187,7 @@ export class AppModule {
             faSignInAlt,
             faSignOutAlt,
             faOldRepublic,
+            faShuttleVan,
         )
     }
 }
