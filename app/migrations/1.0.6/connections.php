@@ -8,7 +8,7 @@ use Phalcon\Mvc\Model\Migration;
 /**
  * Class ThingMigration_106
  */
-class DriverMigration_106 extends Migration
+class ConnectionsMigration_106 extends Migration
 {
     /**
      * Define the table structure
@@ -17,7 +17,7 @@ class DriverMigration_106 extends Migration
      */
     public function morph()
     {
-        $this->morphTable('driver', [
+        $this->morphTable('connections', [
                 'columns' => [
                     new Column(
                         'id',
@@ -30,18 +30,29 @@ class DriverMigration_106 extends Migration
                         ]
                     ),
                     new Column(
-                        'name',
+                        'driver_id',
                         [
-                            'type' => Column::TYPE_TEXT,
+                            'type' => Column::TYPE_INTEGER,
                             'notNull' => true,
                             'size' => 1,
                             'after' => 'id'
                         ]
+                    ),
+                    new Column(
+                        'vehicle_id',
+                        [
+                            'type' => Column::TYPE_INTEGER,
+                            'notNull' => true,
+                            'size' => 1,
+                            'after' => 'driver_id'
+                        ]
                     )
+
                 ],
-                    'indexes' => [
-                    new Index('driver_name', ['name'])
-                ],
+//                    'indexes' => [
+//                    new Index('dv_driver_id', ['driver_id']),
+//                    new Index('dv_vehicle_id', ['vehicle_id'])
+//                ],
             ]
         );
     }
@@ -73,9 +84,10 @@ class DriverMigration_106 extends Migration
      */
      public function afterCreateTable()
      {
-        $this->batchInsert('driver', [
+        $this->batchInsert('connections', [
                 'id',
-                'name'
+                'driver_id',
+                'vehicle_id',
             ]
         );
      }

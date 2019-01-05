@@ -11,7 +11,7 @@ class Driver extends Model {
     public $name;
 
     public function initialize() {
-    //    $this->hasMany("id", "Connection", "driverId");
+        $this->setSource('drivers');
         $this->hasManyToMany(
             'id',
             'Connection',

@@ -8,7 +8,7 @@ use Phalcon\Mvc\Model\Migration;
 /**
  * Class ThingMigration_106
  */
-class ConnectionMigration_106 extends Migration
+class DriversMigration_106 extends Migration
 {
     /**
      * Define the table structure
@@ -17,7 +17,7 @@ class ConnectionMigration_106 extends Migration
      */
     public function morph()
     {
-        $this->morphTable('connection', [
+        $this->morphTable('drivers', [
                 'columns' => [
                     new Column(
                         'id',
@@ -30,29 +30,18 @@ class ConnectionMigration_106 extends Migration
                         ]
                     ),
                     new Column(
-                        'driver_id',
+                        'name',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type' => Column::TYPE_TEXT,
                             'notNull' => true,
                             'size' => 1,
                             'after' => 'id'
                         ]
-                    ),
-                    new Column(
-                        'vehicle_id',
-                        [
-                            'type' => Column::TYPE_INTEGER,
-                            'notNull' => true,
-                            'size' => 1,
-                            'after' => 'driver_id'
-                        ]
                     )
-
                 ],
-                    'indexes' => [
-                    new Index('dv_driver_id', ['driver_id']),
-                    new Index('dv_vehicle_id', ['vehicle_id'])
-                ],
+//                    'indexes' => [
+//                    new Index('driver_name', ['name'])
+//                ],
             ]
         );
     }
@@ -84,10 +73,9 @@ class ConnectionMigration_106 extends Migration
      */
      public function afterCreateTable()
      {
-        $this->batchInsert('connection', [
+        $this->batchInsert('drivers', [
                 'id',
-                'driver_id',
-                'vehicle_id',
+                'name'
             ]
         );
      }

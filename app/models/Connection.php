@@ -9,6 +9,7 @@ class Connection extends Model {
     public $vehicle_id;
 
     public function initialize() {
+        $this->setSource('connections');
         $this->belongsTo('driver_id', 'Driver', 'id' );
         $this->belongsTo('vehicle_id', 'Vehicle', 'id');
     }

@@ -2,7 +2,7 @@
 
 use Phalcon\Mvc\Controller;
 
-use Connection;
+//use Connection;
 
 class ApiDriversController extends JsonRPCController {
 

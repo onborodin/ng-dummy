@@ -9,11 +9,16 @@ class Vehicle extends Model {
     public $name;
 
     public function initialize() {
+        $this->setSource('vehicles');
         $this->hasMany(
             'id',
             'Connection',
             'vehicleId'
         );
+    }
+
+    public function getSequenceName() {
+        return "vehicles_id_seq";
     }
 
 }

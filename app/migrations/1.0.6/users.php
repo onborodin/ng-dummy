@@ -6,9 +6,9 @@ use Phalcon\Db\Reference;
 use Phalcon\Mvc\Model\Migration;
 
 /**
- * Class VehicleMigration_106
+ * Class UserMigration_106
  */
-class VehicleMigration_106 extends Migration
+class UsersMigration_106 extends Migration
 {
     /**
      * Define the table structure
@@ -17,7 +17,7 @@ class VehicleMigration_106 extends Migration
      */
     public function morph()
     {
-        $this->morphTable('vehicle', [
+        $this->morphTable('users', [
                 'columns' => [
                     new Column(
                         'id',
@@ -27,7 +27,6 @@ class VehicleMigration_106 extends Migration
                             'autoIncrement' => true,
                             'first' => true,
                             'primary' => true
-
                         ]
                     ),
                     new Column(
@@ -38,11 +37,37 @@ class VehicleMigration_106 extends Migration
                             'size' => 1,
                             'after' => 'id'
                         ]
+                    ),
+                    new Column(
+                        'gecos',
+                        [
+                            'type' => Column::TYPE_TEXT,
+                            'notNull' => true,
+                            'size' => 1,
+                            'after' => 'name'
+                        ]
+                    ),
+                    new Column(
+                        'password',
+                        [
+                            'type' => Column::TYPE_TEXT,
+                            'notNull' => true,
+                            'size' => 1,
+                            'after' => 'gecos'
+                        ]
+                    ),
+                    new Column(
+                        'superuser',
+                        [
+                            'type' => Column::TYPE_BOOLEAN,
+                            'after' => 'password'
+                        ]
                     )
                 ],
-                'indexes' => [
-                    new Index('vehicle_name', ['name'], null)
-                ],
+//                'indexes' => [
+//                    new Index('user_name', ['name'])
+//                ],
+
             ]
         );
     }
@@ -74,9 +99,12 @@ class VehicleMigration_106 extends Migration
      */
      public function afterCreateTable()
      {
-        $this->batchInsert('vehicle', [
+        $this->batchInsert('users', [
                 'id',
-                'name'
+                'name',
+                'gecos',
+                'password',
+                'superuser'
             ]
         );
      }

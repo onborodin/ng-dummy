@@ -17,9 +17,9 @@ class ApiVehiclesController extends JsonRPCController {
         if ($elem->name) {
             return $elem;
         }
-        $model->name = $params->name;
 
-        $result = $model->save();
+        $model->name = $params->name;
+        $result = $model->create();
         return $result;
     }
 
@@ -34,11 +34,10 @@ class ApiVehiclesController extends JsonRPCController {
                 return 0;
             }
         }
+        $elem =  new Vehicle;
 
         $elem->name = $params->name;
-
         $result = $elem->update();
-
         return $result;
     }
 

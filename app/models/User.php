@@ -8,4 +8,8 @@ class User extends Model {
     public $password;
     public $gecos;
     public $superuser;
+
+    public function initialize() {
+        $this->setSource('users');
+    }
 }
