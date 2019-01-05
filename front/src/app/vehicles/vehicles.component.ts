@@ -74,7 +74,7 @@ export class VehiclesComponent implements OnInit {
         this.alertMessage = message
         setTimeout(() => {
             this.alertMessage = ''
-        }, 30000)
+        }, 3000)
     }
 
 

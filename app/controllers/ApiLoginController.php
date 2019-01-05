@@ -5,7 +5,7 @@ use Phalcon\Mvc\Controller;
 class ApiLoginController extends JsonRPCController {
 
     public function rpcLogin($params) {
-        $model = new Users;
+        $model = new User;
         $elem = $model->findFirst([
             "name = '$params->name' and password = '$params->password'",
             'columns' => 'id, name, gecos, superuser'

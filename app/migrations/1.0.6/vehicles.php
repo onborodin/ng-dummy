@@ -40,9 +40,9 @@ class VehiclesMigration_106 extends Migration
                         ]
                     )
                 ],
-//                'indexes' => [
-//                    new Index('vehicle_name', ['id', 'name'], null)
-//                ],
+                'indexes' => [
+                    new Index('vehicle_name', ['name'], null)
+                ],
             ]
         );
     }

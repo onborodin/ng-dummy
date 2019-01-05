@@ -49,10 +49,10 @@ class ConnectionsMigration_106 extends Migration
                     )
 
                 ],
-//                    'indexes' => [
-//                    new Index('dv_driver_id', ['driver_id']),
-//                    new Index('dv_vehicle_id', ['vehicle_id'])
-//                ],
+                    'indexes' => [
+                    new Index('dv_driver_id', ['driver_id']),
+                    new Index('dv_vehicle_id', ['vehicle_id'])
+                ],
             ]
         );
     }

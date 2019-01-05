@@ -17,8 +17,4 @@ class Vehicle extends Model {
         );
     }
 
-    public function getSequenceName() {
-        return "vehicles_id_seq";
-    }
-
 }

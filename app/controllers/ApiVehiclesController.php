@@ -34,7 +34,6 @@ class ApiVehiclesController extends JsonRPCController {
                 return 0;
             }
         }
-        $elem =  new Vehicle;
 
         $elem->name = $params->name;
         $result = $elem->update();

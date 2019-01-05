@@ -1,5 +1,6 @@
 
 \c pgsql
+
 DROP DATABASE phalcon;
 CREATE DATABASE phalcon;
 
@@ -34,6 +35,10 @@ CREATE TABLE connections (
     driver_id integer NOT NULL,
     vehicle_id integer NOT NULL
 );
+
+ALTER TABLE vehicle ALTER COLUMN id SET DEFAULT nextval('vehicle_id_seq'::regclass)  PRIMARY KEY;
+
+
 
 SELECT setval('users_id_seq', 1);
 SELECT setval('drivers_id_seq', 1);

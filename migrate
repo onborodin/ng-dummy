@@ -5,10 +5,12 @@ psql -U pgsql postgres -c 'create database phalcon;'
 rm .phalcon/migration-version
 ./phalcon migration run --verbose
 
+#psql -U pgsql phalcon -c "ALTER TABLE users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass)"
+#psql -U pgsql phalcon -c "ALTER TABLE drivers ALTER COLUMN id SET DEFAULT nextval('drivers_id_seq'::regclass)"
+#psql -U pgsql phalcon -c "ALTER TABLE vehicles ALTER COLUMN id SET DEFAULT nextval('vehicles_id_seq'::regclass)"
+#psql -U pgsql phalcon -c "ALTER TABLE connections ALTER COLUMN id SET DEFAULT nextval('connections_id_seq'::regclass)"
+
 psql -U pgsql phalcon -c "select setval('drivers_id_seq', (select max(id) from drivers) + 1)"
 psql -U pgsql phalcon -c "select setval('vehicles_id_seq', (select max(id) from vehicles) + 1)"
 psql -U pgsql phalcon -c "select setval('users_id_seq', (select max(id) from users) + 1)"
 psql -U pgsql phalcon -c "select setval('connections_id_seq', (select max(id) from connections) + 1)"
-
-
-

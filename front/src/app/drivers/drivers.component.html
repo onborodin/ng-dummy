@@ -24,7 +24,10 @@
             <a (click)="getList()">
                 <fa-icon [icon]="['fas', 'sync-alt']" size="lg"></fa-icon>
             </a>
-            <small class="ml-3">Updated {{ timestamp | date:"h:mm:ss" }}</small>
+            <small class="ml-3">
+                Updated {{ timestamp | date:"h:mm:ss" }}
+                <span class="badge badge-info">{{ drivers.length }}</span>
+            </small>
         </div>
 
         <div class="col-5 ml-auto">
