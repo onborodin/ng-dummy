@@ -39,6 +39,9 @@ import { UsersFilterPipe } from './users-filter.pipe'
 import { LowercaseDirective } from './directives/lowercase.directive'
 import { TrimDirective } from './directives/trim.directive'
 
+
+
+
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 //import { fas } from '@fortawesome/free-solid-svg-icons'
@@ -70,6 +73,10 @@ import {
     faSignInAlt,
     faSignOutAlt,
     faShuttleVan,
+    faCaretLeft,
+    faCaretRight,
+    faArrowLeft,
+    faArrowRight,
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
@@ -87,6 +94,7 @@ import { VehicleCreateComponent } from './vehicle-create/vehicle-create.componen
 import { VehicleUpdateComponent } from './vehicle-update/vehicle-update.component';
 import { VehicleDropComponent } from './vehicle-drop/vehicle-drop.component'
 import { VehiclesFilterPipe } from './vehicles-filter.pipe';
+import { PageNavComponent } from './page-nav/page-nav.component';
 
 //import { ServiceWorkerModule } from '@angular/service-worker'
 //import { environment } from '../environments/environment'
@@ -138,6 +146,7 @@ const routes: Routes = []
         VehicleUpdateComponent,
         VehicleDropComponent,
         VehiclesFilterPipe,
+        PageNavComponent,
     ],
     imports: [
         RouterModule.forRoot(routes),
@@ -188,6 +197,10 @@ export class AppModule {
             faSignOutAlt,
             faOldRepublic,
             faShuttleVan,
+            faArrowLeft,
+            faArrowRight,
+            faCaretLeft,
+            faCaretRight,
         )
     }
 }

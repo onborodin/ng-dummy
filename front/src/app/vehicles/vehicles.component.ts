@@ -46,6 +46,18 @@ export class VehiclesComponent implements OnInit {
     subject: Subject<Event>
     subscription: any
 
+    firstElem: number = 0
+    pageSize: number = 5
+    listLength: number = 0
+
+    changePageSize(size: number) {
+        this.pageSize = size
+    }
+
+    changePage(eventData) {
+        this.firstElem = eventData
+    }
+
     constructor(private vehiclesService: VehiclesService) {
         this.subject = new Subject<Event>()
         this.subscription = this.subject.subscribe((event: Event) => {

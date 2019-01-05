@@ -103,8 +103,9 @@ export class VehicleCreateComponent implements OnInit, OnDestroy {
                         this.showAlertMessage('Backend problem')
                     }
                 },
-                (error) => {
+                (err) => {
                     this.showAlertMessage('Communication problem')
+                    console.log(err)
                 }
             )
     }

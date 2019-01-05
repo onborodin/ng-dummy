@@ -8,7 +8,7 @@
 
     <div class="row">
         <div class="col">
-            <div class="btn btn-primary btn-sm ml-auto float-right mb-3 d-inline-block" (click)="createDriver()">
+            <div class="btn btn-primary btn-sm ml-auto float-right mb-3 d-inline-block rounded-circle" (click)="createDriver()">
                 <fa-icon [icon]="['fas', 'plus']"></fa-icon>
             </div>
             <h5 class="mb-3"><b>Drivers</b></h5>
@@ -16,10 +16,8 @@
     </div>
 
     <p class="text-center text-danger" *ngIf="alertMessage.length > 0" [@fade]>
-            {{ alertMessage }}
+        {{ alertMessage }}
     </p>
-
-
 
     <div class="form-group row my-2">
         <div class="col-5 mt-auto">
@@ -36,26 +34,39 @@
         </div>
     </div>
 
-    <table class="table table-striped table-hover table-sm">
+    <ng-container *ngIf="(drivers | driversFilter:search) as filteredItems">
 
-        <thead class="thead-light">
-            <tr>
-                <th scope="col">id</th>
-                <th scope="col">name</th>
-                <th scope="col"><fa-icon [icon]="['fas', 'shuttle-van']"></fa-icon></th>
-                <th scope="col"><fa-icon [icon]="['far', 'edit']"></fa-icon></th>
-                <th scope="col"><fa-icon [icon]="['far', 'trash-alt']"></fa-icon></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let item of drivers | driversFilter:search ; let i = index">
-                <th scope="row">{{ i + 1 }}</th>
-                <td>{{ item.name  }}</td> 
-                <td><span *ngIf="item.vehicle_count > 0">{{ item.vehicle_count }} <small><fa-icon [icon]="['fas', 'shuttle-van']"></fa-icon></small></span></td>
-                <td><a (click)="updateDriver(item)"><fa-icon [icon]="['far', 'edit']"></fa-icon></a></td>
-                <td><a (click)="dropDriver(item)"><fa-icon [icon]="['far', 'trash-alt']"></fa-icon></a></td>
-            </tr>
-        </tbody>
-    </table>
+        <table class="table table-striped table-hover table-sm">
+
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">name</th>
+                    <th scope="col"><fa-icon [icon]="['fas', 'shuttle-van']"></fa-icon></th>
+                    <th scope="col"><fa-icon [icon]="['far', 'edit']"></fa-icon></th>
+                    <th scope="col"><fa-icon [icon]="['far', 'trash-alt']"></fa-icon></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr *ngFor="let item of filteredItems; let i = index">
+                    <ng-container *ngIf="(i >= firstElem) && (i < (firstElem + pageSize))">
+                        <th scope="row">{{ i + 1 }}</th>
+                        <td>{{ item.name  }}</td>
+                        <td>
+                            <ng-container *ngIf="item.vehicle_count > 0">
+                                {{ item.vehicle_count }}
+                                <small><fa-icon [icon]="['fas', 'shuttle-van']"></fa-icon></small>
+                            </ng-container>
+                        </td>
+                        <td><a (click)="updateDriver(item)"><fa-icon [icon]="['far', 'edit']"></fa-icon></a></td>
+                        <td><a (click)="dropDriver(item)"><fa-icon [icon]="['far', 'trash-alt']"></fa-icon></a></td>
+                    </ng-container>
+                </tr>
+            </tbody>
+        </table>
+
+        <page-nav [listLength]="filteredItems.length" [pageSize]="pageSize" [firstElem]="firstElem" (changeFirstElemEvent)="changePage($event)"></page-nav>
+    </ng-container>
 
 </app-container>
