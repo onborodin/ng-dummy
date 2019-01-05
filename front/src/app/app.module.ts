@@ -95,6 +95,7 @@ import { VehicleUpdateComponent } from './vehicle-update/vehicle-update.componen
 import { VehicleDropComponent } from './vehicle-drop/vehicle-drop.component'
 import { VehiclesFilterPipe } from './vehicles-filter.pipe';
 import { PageNavComponent } from './page-nav/page-nav.component';
+import { PrettyCodePipe } from './pretty-code.pipe';
 
 //import { ServiceWorkerModule } from '@angular/service-worker'
 //import { environment } from '../environments/environment'
@@ -147,6 +148,7 @@ const routes: Routes = []
         VehicleDropComponent,
         VehiclesFilterPipe,
         PageNavComponent,
+        PrettyCodePipe,
     ],
     imports: [
         RouterModule.forRoot(routes),

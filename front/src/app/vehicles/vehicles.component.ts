@@ -116,6 +116,11 @@ export class VehiclesComponent implements OnInit {
             )
     }
 
+    prettyCode(code: string) {
+
+        return code.substring(0,3) + '-' + code.substring(3,6) + '-' + code.substring(6)
+    }
+
     ngOnInit() {
         this.getList()
     }

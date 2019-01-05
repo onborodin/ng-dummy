@@ -14,7 +14,7 @@
 
                     <div class="form-group">
                         <label for="vehicle-create-login">Name</label>
-                        <input id="vehicle-create-login" class="form-control" type="text" formControlName="name" required minlength="10" />
+                        <input id="vehicle-create-login" class="form-control" type="text" formControlName="name" required minlength="5" />
 
                         <small class="form-text text-danger" *ngIf="(name.touched || name.dirty) && name.errors">
                             <span *ngIf="name.errors.required">Required. </span>
