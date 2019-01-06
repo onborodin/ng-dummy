@@ -77,6 +77,10 @@ import {
     faCaretRight,
     faArrowLeft,
     faArrowRight,
+    faFileUpload,
+    faFolderPlus,
+    faFolderMinus,
+    faFolder,
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
@@ -176,17 +180,30 @@ export class AppModule {
     constructor() {
         //library.add(fas, far)
         library.add(
+            faArrowLeft,
+            faArrowRight,
             faBell,
+            faCaretLeft,
+            faCaretRight,
             faCheck,
             faCheckCircle,
             faEdit,
             faExclamation,
             faExclamationCircle,
+            faFileUpload,
+            faFolderMinus,
+            faFolderPlus,
+            faFolder,
             faInfo,
             faInfoCircle,
+            faOldRepublic,
             faPlus,
             faPlusSquare,
             faShieldAlt,
+            faShuttleVan,
+            faSignInAlt,
+            faSignOutAlt,
+            faStar,
             faStarOfDavid,
             faSyncAlt,
             faThumbsUp,
@@ -194,15 +211,6 @@ export class AppModule {
             faUserAlt,
             faUserPlus,
             faUserSecret,
-            faStar,
-            faSignInAlt,
-            faSignOutAlt,
-            faOldRepublic,
-            faShuttleVan,
-            faArrowLeft,
-            faArrowRight,
-            faCaretLeft,
-            faCaretRight,
         )
     }
 }

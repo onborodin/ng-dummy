@@ -4,10 +4,49 @@
     <h5 i18n="@@overviewHeader">Overview</h5>
 
     <p i18n="@@overviewBody">
-    It is sample (and/or template) for Angular2/7 + Phalcon full stack web application.
-    This application adapted for different sizes of devices.
+        It is sample (and/or template) for Angular2/7 + Phalcon full stack web application.
+        This application adapted for different sizes of devices.
 
     </p>
+
+
+    <form accept-charset="UTF-8" [formGroup]="uploadForm" (ngSubmit)="sendFile(uploadForm)">
+
+        <div formArrayName="formItems">
+
+            <div *ngFor="let item of formItems.controls; index as i">
+
+                <div [formGroupName]="i" class="form-group">
+
+                    <div class="input-group">
+
+                        <div class="input-group-prepend">
+                            <label class="btn btn-primary">
+                                <fa-icon [icon]="['fas', 'folder']" size="lg"></fa-icon>
+                                <input type="file" hidden class="form-control" (change)="selectFile(item, $event)" (ngModelChange)="changeFormItem(item, $event)" formControlName="name">
+                            </label>
+                        </div>
+
+                        <input type="text" class="form-control" formControlName="description" placeholder="Description">
+
+                        <div class="input-group-append">
+                            <label class="btn btn-primary" type="button" (click)="deleteFormItem(i)">&times;</label>
+                            <label class="btn btn-primary" type="button" (click)="addFormItem()">+</label>
+                        </div>
+
+                    </div>
+                    <small class="form-text">
+                        {{ uploadForm.controls.formItems.controls[i].controls.name.value }}
+                    </small>
+
+                </div>
+            </div>
+
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm">Send</button>
+    </form>
+
+
 
     <h5 i18n="@@notificationHeader">Notification demo</h5>
 

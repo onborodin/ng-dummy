@@ -75,7 +75,7 @@ export class DriversComponent implements OnInit {
         this.alertMessage = message
         setTimeout(() => {
             this.alertMessage = ''
-        }, 30000)
+        }, 3000)
     }
 
 
