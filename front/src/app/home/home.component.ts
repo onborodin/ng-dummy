@@ -8,6 +8,13 @@ import { fadeAnimation, rotateAnimation } from '../app.animations'
 import { NoticesService } from '../notices.service'
 import { UploadService } from '../upload.service'
 
+interface Progress {
+    percent: number
+    label: string
+    id: string
+}
+
+type Progresses = Progress[]
 
 @Component({
     selector: 'home',
@@ -47,6 +54,57 @@ export class HomeComponent implements OnInit {
 
     ngOnInit() {
         this.createUploadForm()
+        this.createProgress()
+        const id = this.createProgress("qwerty.yui")
+        setInterval(() => {
+            this.setProgressPercent(id, this.getProgressPercent(id) + 1)
+        }, 500)
+        setTimeout(() => {
+            this.dropProgress(id)
+        }, 10000)
+        this.createProgress()
+
+    }
+
+    progresses: Progresses = []
+
+    createProgress(label = "") : string {
+        var nextNum = this.progresses.length
+        var progress: Progress = {
+            id: "xprogress-" + nextNum,
+            percent: 0,
+            label: label
+        }
+        this.progresses.push(progress)
+        return progress.id
+    }
+
+    getProgressPercent(id: string) {
+        var percent = 0
+        this.progresses.forEach((item) => {
+            if (item.id === id) {
+                percent = item.percent
+            }
+        })
+        return percent
+    }
+
+
+    setProgressPercent(id: string, percent: number) {
+        if (percent >= 0 && percent <= 100) {
+            this.progresses.forEach((item) => {
+                if (item.id === id) {
+                    item.percent = percent
+                }
+            })
+        }
+    }
+
+    dropProgress(id: string) {
+        this.progresses = this.progresses.filter((item) => {
+            if (id === item.id) return false
+            return true
+        })
     }
 
     createUploadForm() {
