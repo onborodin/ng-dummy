@@ -133,19 +133,19 @@ export class HomeComponent implements OnInit {
         form.controls.formItems.controls.forEach((subForm, i) => {
 
             var file = subForm.controls.file.value
-            var name = subForm.controls.name.value
+            var name = subForm.controls.secondName.value
 
-            console.log(i, name)
-            //this.formItems.removeAt(i + 1)
-            //this.uploadService.uploadFile('/data/upload', file)
-            //    .subscribe(
-            //        (event) => {
-            //            if (event.type == HttpEventType.UploadProgress) {
-            //                const percent = Math.round(100 * event.loaded / event.total)
-            //            }
-            //        })
+            console.log(i, name, file)
+
+            this.uploadService.uploadFile('/data/upload', file, name)
+                .subscribe(
+                    (event) => {
+                        //if (event.type == HttpEventType.UploadProgress) {
+                        //    const percent = Math.round(100 * event.loaded / event.total)
+                        //}
+                    })
         })
-        this.formItems = new FormArray([])
+        this.createUploadForm()
     }
 
 }

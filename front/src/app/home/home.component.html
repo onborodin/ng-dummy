@@ -9,7 +9,15 @@
 
     </p>
 
-    <div class="box p-3 mx-3">
+    <!--
+    <div *ngFor="let progress of progresses; index as i">
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width: 25%;" ></div>
+        </div>
+    <div>
+    -->
+
+    <div class="border p-3 my-3">
 
         <button type="button" class="btn btn-primary btn-sm mb-2" (click)="addFormItem()">Add file</button>
 
@@ -19,7 +27,7 @@
 
                 <div *ngFor="let subForm of formItems.controls; index as i">
 
-                    <div [formGroupName]="i" class="form-group">
+                    <div [formGroupName]="i" class="form-group" [@rotate]>
 
                         <div class="input-group">
 
@@ -59,9 +67,12 @@
             </div>
 
             <div *ngIf="formItems.length">
-                <button type="button" class="btn btn-sm btn-secondary mr-3" (click)="createUploadForm()">Clean</button>
-                <button *ngIf="uploadForm.errors" class="btn btn-sm btn-primary disabled" type="button">Send</button>
-                <button *ngIf="!uploadForm.errors" class="btn btn-sm btn-primary" type="submit">Send</button>
+                <hr class="my-3">
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-sm btn-secondary mr-3" (click)="createUploadForm()">Clean</button>
+                    <button *ngIf="uploadForm.errors" class="btn btn-sm btn-primary disabled" type="button">Send</button>
+                    <button *ngIf="!uploadForm.errors" class="btn btn-sm btn-primary" type="submit">Send</button>
+                </div>
             </div>
 
         </form>

@@ -7,12 +7,11 @@ import { Observable } from "rxjs";
 })
 export class UploadService {
 
-    constructor(private httpClient: HttpClient) {
-    }
+    constructor(private httpClient: HttpClient) {}
 
-    uploadFile(url: string, file: File) : Observable<HttpEvent<any>> {
+    uploadFile(url: string, file: File, name: string) : Observable<HttpEvent<any>> {
         let formData = new FormData();
-        formData.append('upload', file);
+        formData.append('upload', file, name);
 
         let params = new HttpParams();
         const options = {
@@ -23,23 +22,4 @@ export class UploadService {
         const req = new HttpRequest('POST', url, formData, options);
         return this.httpClient.request(req);
     }
-
-
-    uploadFiles(url: string, files: File[]) : Observable<HttpEvent<any>> {
-        var formData = new FormData();
-        for (var i: number; i < files.length; i++) { 
-            formData.append('upload', files[i])
-        }
-
-        var params = new HttpParams();
-        const options = {
-            params: params,
-            reportProgress: true,
-        }
-
-        const req = new HttpRequest('POST', url, formData, options);
-        return this.httpClient.request(req);
-    }
-
-
 }
