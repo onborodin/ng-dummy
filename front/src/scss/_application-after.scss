@@ -150,11 +150,11 @@ $steel-blue: #4682b4;
 $ng-form-green: #42a948;
 $ng-form-red: #a94442;
 
-.ng-valid[required], .ng-valid.required  {
+input.ng-valid[required], .ng-valid.required  {
   border: 1px solid $ng-form-green;
 }
 
-.ng-invalid:not(form)  {
+input.ng-invalid:not(form)  {
   border: 1px solid $ng-form-red;
 }
 

@@ -9,43 +9,64 @@
 
     </p>
 
+    <div class="box p-3 mx-3">
 
-    <form accept-charset="UTF-8" [formGroup]="uploadForm" (ngSubmit)="sendFile(uploadForm)">
+        <button type="button" class="btn btn-primary btn-sm mb-2" (click)="addFormItem()">Add file</button>
 
-        <div formArrayName="formItems">
+        <form accept-charset="UTF-8" [formGroup]="uploadForm" (ngSubmit)="sendFile(uploadForm)">
 
-            <div *ngFor="let item of formItems.controls; index as i">
+            <div formArrayName="formItems">
 
-                <div [formGroupName]="i" class="form-group">
+                <div *ngFor="let subForm of formItems.controls; index as i">
 
-                    <div class="input-group">
+                    <div [formGroupName]="i" class="form-group">
 
-                        <div class="input-group-prepend">
-                            <label class="btn btn-primary">
-                                <fa-icon [icon]="['fas', 'folder']" size="lg"></fa-icon>
-                                <input type="file" hidden class="form-control" (change)="selectFile(item, $event)" (ngModelChange)="changeFormItem(item, $event)" formControlName="name">
-                            </label>
+                        <div class="input-group">
+
+                            <div class="input-group-prepend">
+                                <label class="btn btn-primary">
+                                    <fa-icon [icon]="['fas', 'folder']" size="lg"></fa-icon>
+                                    <input type="file" hidden class="form-control" (change)="selectFile(subForm, $event)" formControlName="name">
+                                </label>
+                            </div>
+
+                            <input type="text" class="form-control" formControlName="secondName" placeholder="Name">
+
+                            <div class="input-group-append">
+                                <label class="btn btn-primary" type="button" (click)="deleteFormItem(i)">&times;</label>
+                                <label class="btn btn-primary" type="button" (click)="addFormItem()">+</label>
+                            </div>
+
                         </div>
+                        <small class="form-text text-danger" *ngIf="subForm.get('file').errors && subForm.get('file').errors.fileIsDefined">
+                            Please, select file.
+                        </small>
 
-                        <input type="text" class="form-control" formControlName="description" placeholder="Description">
+                        <small class="form-text text-danger" *ngIf="subForm.get('file').errors && subForm.get('file').errors.fileIsNotMore">
+                            File is too big.
+                        </small>
 
-                        <div class="input-group-append">
-                            <label class="btn btn-primary" type="button" (click)="deleteFormItem(i)">&times;</label>
-                            <label class="btn btn-primary" type="button" (click)="addFormItem()">+</label>
-                        </div>
+                        <small class="form-text text-danger" *ngIf="subForm.get('file').errors && subForm.get('file').errors.fileIsNotZero">
+                            File is zero size.
+                        </small>
 
                     </div>
-                    <small class="form-text">
-                        {{ uploadForm.controls.formItems.controls[i].controls.name.value }}
-                    </small>
-
                 </div>
             </div>
 
-        </div>
-        <button type="submit" class="btn btn-primary btn-sm">Send</button>
-    </form>
+            <div class="text-center text-danger" *ngIf="uploadForm.errors">
+                Form is incomplete.
+            </div>
 
+            <div *ngIf="formItems.length">
+                <button type="button" class="btn btn-sm btn-secondary mr-3" (click)="createUploadForm()">Clean</button>
+                <button *ngIf="uploadForm.errors" class="btn btn-sm btn-primary disabled" type="button">Send</button>
+                <button *ngIf="!uploadForm.errors" class="btn btn-sm btn-primary" type="submit">Send</button>
+            </div>
+
+        </form>
+
+    </div>
 
 
     <h5 i18n="@@notificationHeader">Notification demo</h5>

@@ -45,118 +45,107 @@ export class HomeComponent implements OnInit {
         }, 2100)
     }
 
-
-    // At the drag drop area
-    // (drop)="onDropFile($event)"
-    onDropFile(event: DragEvent) {
-        event.preventDefault()
-        this.uploadFile(event.dataTransfer.files)
-    }
-
-    // At the drag drop area
-    // (dragover)="onDragOverFile($event)"
-    onDragOverFile(event) {
-        event.stopPropagation()
-        event.preventDefault()
-    }
-
-
-
-
     ngOnInit() {
-        this.formItems = new FormArray([ this.createFormItem() ])
+        this.createUploadForm()
+    }
+
+    createUploadForm() {
+        this.formItems = new FormArray([])
         this.uploadForm = new FormGroup({
             formItems: this.formItems
-        })
+        }, this.uploadFormValidator)
     }
+
+    fileIsNotZero(control: FormControl) : ValidationErrors | null {
+        if (!control['value']) {
+            return null
+        }
+        if (control.value.size === 0) {
+            return { fileNotZero: 'File too small' }
+        }
+        return null
+    }
+
+    fileIsNotMore(control: FormControl) : ValidationErrors | null {
+        if (!control['value']) {
+            return null
+        }
+        if (control.value.size > 64 * 1024 * 1024) {
+            return { fileIsNotMore: 'File too big' }
+        }
+        return null
+    }
+
+    fileIsDefined(control: FormControl) : ValidationErrors | null {
+        if (!control['value']) {
+            return { fileIsDefined: 'File undefined' }
+        }
+        return null
+    }
+
+    nameValidator(control: FormControl) : ValidationErrors | null {
+        return null
+    }
+
+    uploadFormValidator(form: FormGroup) : ValidationErrors | null {
+        const formItems = form.get('formItems') as FormArray
+        var error = false
+        formItems.controls.forEach((subForm, i) => {
+            if (subForm.get('file').errors) {
+                error = true
+            }
+        })
+        if (error) {
+            return { uploadFormValidator: 'Form Error' }
+        }
+        return null
+    }
+
 
     createFormItem(): FormGroup {
         return new FormGroup({
             name: new FormControl(),
-            description: new FormControl(),
-            file: new FormControl()
+            secondName: new FormControl(),
+            file: new FormControl(null, [
+                this.fileIsDefined,
+                this.fileIsNotZero,
+                this.fileIsNotMore
+            ]),
         })
     }
 
     addFormItem() : void {
-        //this.formItems = this.uploadForm.get('formItems') as FormArray
         this.formItems.push(this.createFormItem())
     }
 
     deleteFormItem(index: number) : void {
-        if (this.formItems.length > 1) {
             this.formItems.removeAt(index)
-        }
     }
 
-    changeFormItem(form: FormGroup, event) {
-        //form.controls['description'].setValue(form.value.name)
-        //console.log('event', event)
-    }
-
-    // At the file input element
-    // (change)="selectFile($event)"
     selectFile(form: FormGroup, event) {
-        console.log('$event', event)
-        form.controls['description'].setValue(event.target.files[0].name)
-        form.controls['file'].setValue(event.target.files[0])
-        //this.uploadFile(event.target.files)
+        form.controls.file.setValue(event.target.files[0])
+        form.controls.secondName.setValue(event.target.files[0].name)
     }
 
     sendFile(form) {
-        console.log(form)
         var length = form.controls.formItems.length
 
-        var files: any[] = []
-        for (var i = 0; i < length; i++) {
-            files.push(form.controls.formItems.controls[i].controls.file.value)
-        }
-        console.log(files)
+        form.controls.formItems.controls.forEach((subForm, i) => {
+
+            var file = subForm.controls.file.value
+            var name = subForm.controls.name.value
+
+            console.log(i, name)
+            //this.formItems.removeAt(i + 1)
+            //this.uploadService.uploadFile('/data/upload', file)
+            //    .subscribe(
+            //        (event) => {
+            //            if (event.type == HttpEventType.UploadProgress) {
+            //                const percent = Math.round(100 * event.loaded / event.total)
+            //            }
+            //        })
+        })
+        this.formItems = new FormArray([])
     }
-
-    uploadFile(files: FileList) {
-
-        if (files.length == 0) {
-            console.log("No file selected!")
-            return
-
-        }
-        let file: File = files[0]
-
-        this.uploadService.uploadFile('/data/upload', file)
-            .subscribe(
-                (event) => {
-                    if (event.type == HttpEventType.UploadProgress) {
-                        const percentDone = Math.round(100 * event.loaded / event.total)
-                        console.log(`File is ${percentDone}% loaded.`)
-                    } else if (event instanceof HttpResponse) {
-                        console.log('File is completely loaded!')
-                    }
-                },
-                (err) => {
-                    console.log("Upload Error:", err)
-                },
-                () => {
-                    console.log("Upload done")
-                }
-            )
-    }
-
-
-
-    /*
-    <div [formGroup]="myGroup">
-      <div formArrayName="cities">
-        <div *ngFor="let city of cityArray.controls; index as i">
-          <input [formControlName]="i">
-        </div>
-      </div>
-    </div>
-
-    this.cityArray = new FormArray([new FormControl('SF')]);
-    this.myGroup = new FormGroup({
-      cities: this.cityArray
-    });
-    */
 
 }
