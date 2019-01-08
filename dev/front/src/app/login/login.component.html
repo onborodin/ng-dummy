@@ -1,0 +1,65 @@
+<div>
+
+    <nav class="navbar navbar-expand-sm sticky-top navbar-dark bg-dark mb-4">
+        <span class="navbar-text ml-3">
+            <!-- i class="fi-shield"></i --> 
+            <fa-icon [icon]="['fas', 'shield-alt']"></fa-icon>
+            Login
+        </span>
+
+        <ul class="nav justify-content-end ml-auto">
+            <li lass="nav-item">
+                <a class="nav-link" href="/">Go Home</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="container" *ngIf="reasonMessage.length > 0">
+        <div class="row justify-content-center">
+            <div class="col-8 col-sm-8 col-md-6 mt-sm-3" [@rotate]>
+
+                <div class="text-center ">
+                    <span class="text-danger"><b>{{ reasonMessage }}</b></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-8 col-sm-6 col-md-4 border p-4 mt-sm-5 ml-3 mr-3" [@rotate]>
+
+                    <form accept-charset="UTF-8" [formGroup]="loginForm" (ngSubmit)="login(loginForm)">
+
+                        <div class="form-group">
+                            <label for="login-name">Login name (qwerty)</label>
+                            <input id="login-name" class="form-control" type="text" formControlName="name">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Password (12345)</label>
+                            <input id="login-password" class="form-control" type="password" formControlName="password">
+                        </div>
+
+                        <div class="text-center">
+                            <button class="btn btn-primary btn-sm" type="submit">Submit</button>
+                        </div>
+
+                    </form>
+
+                    <div class="mt-3">
+                        <div class="text-center" *ngIf="attemptCounter > 0">
+                            Attempt {{ attemptCounter }}
+                        </div>
+                        <div class="text-center">
+                            {{ message }}
+                        </div>
+                    </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>

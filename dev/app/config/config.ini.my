@@ -1,0 +1,22 @@
+
+[database]
+adapter = Mysql
+host    = localhost
+dbname  = phalcon
+username = root
+password = bowie2
+
+[application]
+appDir         =  app/
+controllersDir =  app/controllers/
+modelsDir      =  app/models/
+migrationsDir  =  app/migrations/
+viewsDir       =  app/views/
+pluginsDir     =  app/plugins/
+libraryDir     =  app/library/
+utilsDir       =  app/utils/
+logPath         = logs/debug.log
+publicDir       = public/
+
+cacheDir       =  cache/
+dataDir       =  data/

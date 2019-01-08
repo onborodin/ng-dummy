@@ -1,0 +1,7 @@
+<div>
+    <a *ngFor="let item of list" [ngClass]="itemClass(item)" (click)="changePage(item)">
+        {{ item.name }}
+    </a>
+    <div class="dropdown-divider"></div>
+</div>
+

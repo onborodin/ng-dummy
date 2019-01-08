@@ -1,0 +1,79 @@
+<ul class="pagination pagination-sm justify-content-center" *ngIf="listLength > pageSize">
+
+    <li class="page-item disabled" *ngIf="!(currentPageNum > firstPageNum)">
+        <a (click)="prevPage()" class="page-link">
+            <fa-icon [icon]="['fas', 'caret-left']" size="lg"></fa-icon>
+            Prev
+        </a>
+    </li>
+
+    <li class="page-item" *ngIf="(currentPageNum > firstPageNum)">
+        <a (click)="prevPage()" class="page-link">
+            <fa-icon [icon]="['fas', 'caret-left']" size="lg"></fa-icon>
+            Prev
+        </a>
+    </li>
+
+    <ng-container *ngIf="pageList.length <= simpleViewLimit">
+
+        <ng-container *ngFor="let item of pageList; let i = index">
+            <li class="page-item active" *ngIf="i === currentPageNum">
+                <a (click)="setPage(item)" class="page-link rounded-circle active">{{ i + 1 }}</a>
+            </li>
+            <li class="page-item" *ngIf="i !== currentPageNum">
+                <a (click)="setPage(item)" class="page-link rounded-circle">{{ i + 1 }}</a>
+            </li>
+        </ng-container>
+
+    </ng-container>
+
+    <ng-container *ngIf="pageList.length > simpleViewLimit">
+
+
+        <li *ngIf="(currentPageNum - firstPageNum) > pageWindow" class="page-item">
+            <a (click)="setPage(pageList[firstPageNum])" class="page-link rounded-circle">
+                {{ firstPageNum + 1 }}
+            </a>
+        </li>
+
+        <li *ngIf="(currentPageNum - firstPageNum) > (pageWindow + 1)" class="page-item">
+            &hellip;
+        </li>
+
+        <ng-container *ngFor="let item of pageList; let i = index">
+            <ng-container *ngIf="i >= (currentPageNum - pageWindow) && i <= (currentPageNum + pageWindow)">
+                <li class="page-item active" *ngIf="i === currentPageNum">
+                    <a (click)="setPage(item)" class="page-link rounded-circle active">{{ i + 1 }}</a>
+                </li>
+                <li class="page-item" *ngIf="i !== currentPageNum">
+                    <a (click)="setPage(item)" class="page-link rounded-circle">{{ i + 1 }}</a>
+                </li>
+            </ng-container>
+        </ng-container>
+
+        <li *ngIf="(lastPageNum - currentPageNum) > (pageWindow + 1)" class="page-item">
+            &hellip;
+        </li>
+
+        <li *ngIf="(lastPageNum - currentPageNum) > pageWindow" class="page-item">
+            <a (click)="setPage(pageList[lastPageNum])" class="page-link rounded-circle"> {{ lastPageNum + 1}}</a>
+        </li>
+
+    </ng-container>
+
+
+    <li class="page-item" *ngIf="(currentPageNum < lastPageNum)">
+        <a (click)="nextPage()" class="page-link">
+            Next
+            <fa-icon [icon]="['fas', 'caret-right']" size="lg"></fa-icon>
+        </a>
+    </li>
+
+    <li class="page-item disabled" *ngIf="!(currentPageNum < lastPageNum)">
+        <a (click)="nextPage()" class="page-link">
+            Next
+            <fa-icon [icon]="['fas', 'caret-right']" size="lg"></fa-icon>
+        </a>
+    </li>
+
+</ul>

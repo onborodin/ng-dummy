@@ -1,0 +1,18 @@
+<app-header></app-header>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-sm-9 col-md-8 mx-auto" [@fade]>
+            <ng-content></ng-content>
+        </div>
+
+        <div class="col-sm-2 col-md-2 border-right border-left d-none d-md-block d-xl-block">
+            <side-bar></side-bar>
+        </div>
+
+
+    </div>
+</div>
+
+<app-footer></app-footer>

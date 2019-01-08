@@ -1,0 +1,41 @@
+<div id="driver-drop-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="dialog">
+        <div class="modal-content">
+
+            <form accept-charset="UTF-8" [formGroup]="form" (ngSubmit)="dropDriver(form)">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Drop driver</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <fieldset class="cell margin-bottom-1 text-center">
+                    <input id="checkbox-driver-as" type="checkbox" class="form-check-input" formControlName="confirm" required>
+                    <label for="checkbox-driver-as"> I confirm the action. </label>
+
+                    <p class="text-center" *ngIf="confirm.errors">
+                        <span *ngIf="confirm.errors.required"  class="form-text text-muted"> Confirmation is required. </span>
+                    </p>
+                </fieldset>
+
+                <p class="text-center text-danger" *ngIf="alertMessage.length > 0">
+                    <b>{{ alertMessage }}</b>
+                </p>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" (click)="closeForm()">Escape</button>
+
+                    <span *ngIf="form.errors">
+                        <button class="btn btn-sm btn-primary disabled" type="button">Accept</button>
+                    </span>
+
+                    <span *ngIf="!form.errors">
+                        <button class="btn btn-sm btn-primary" type="submit">Accept</button>
+                    </span>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
