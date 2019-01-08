@@ -1,47 +1,68 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { HttpClient } from '@angular/common/http'
+import { Router } from "@angular/router"
 
 import { LoginService } from '../login.service'
-
-import { rotateAnimation } from '../app.animations'
-
+import { rotateAnimation, fadeAnimation } from '../app.animations'
 
 @Component({
     selector: 'login',
     templateUrl: './login.component.html',
     styleUrls: [ './login.component.scss' ],
-    animations: [ rotateAnimation ]
+    animations: [ rotateAnimation, fadeAnimation ]
 
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
     loginForm: FormGroup
+
+    reasonMessage: string = ''
     message: string = ''
-    attemptCount: number = 0
+    attemptCounter: number = 0
     debug: string = ''
 
     constructor(
         private formBuilder: FormBuilder,
-        private loginService: LoginService
+        private loginService: LoginService,
+        private router: Router
     ) {}
 
-    login(event) {
-        if (this.loginService.login(event.value.name, event.value.password)) {
-            this.message = `Wow! Login successful`
-            return
-        }
-        setTimeout(() => {
-            this.attemptCount++
-            this.message = `Login incorrect. Attempt ${this.attemptCount}`
-        }, 1000 )
 
+    login(event) {
+        this.loginService.checkLogin(event.value.name, event.value.password)
+    }
+
+    home() {
+        this.router.navigate([ '/' ])
     }
 
     ngOnInit() {
+        this.loginService.cleanLogin()
+        this.reasonMessage = this.loginService.reasonMessage
+        //this.attemptCounter = 0
         this.loginForm = this.formBuilder.group({
             name: [ 'qwerty' ],
             password: [ '12345' ]
         })
+
+        this.loginService.loginSubject
+            .subscribe((authState) => {
+                //this.attemptCounter++
+
+                if (authState) {
+                    this.attemptCounter = 0
+                    this.message = 'Login successful'
+                    setTimeout(() => {
+                        this.router.navigate([ this.loginService.returnUrl ])
+                    }, 300)
+                } else {
+                    this.attemptCounter++
+                    this.message = 'Login incorrect'
+                }
+            })
+    }
+
+    ngOnDestroy() {
     }
 }

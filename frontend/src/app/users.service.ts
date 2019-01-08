@@ -15,7 +15,7 @@ export class UsersService {
 
     list() {
         return this.rpcService
-            .request<null, User[]>('/api/users', 'list', null)
+            .request<any, User[]>('/api/users', 'list', {})
     }
 
     create(user: User) {

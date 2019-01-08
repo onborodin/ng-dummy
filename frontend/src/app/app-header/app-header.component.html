@@ -1,84 +1,47 @@
-<div id="app-header" class="margin-bottom-2">
+<nav class="navbar navbar-expand-sm sticky-top navbar-dark bg-dark mb-4">
 
-    <div class="top-bar" id="top-bar">
+    <div class="d-block d-sm-block d-md-none ml-3">
+        <button class="btn m-0 p-0" type="button" data-toggle="collapse" data-target="#menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-        <div class="top-bar-left" *ngIf="loginService.isSuperuser()">
-
-            <ul class="dropdown menu" data-dropdown-menu>
-                <li><a href="#"><i class="my-menu-icon"></i></a></li>
-                <li class="menu-text">WCM <i class="fi-sheriff-badge" style="font-size: 1.2em;"></i></li>
-                <li>
-                    <a href="#">Pages</a>
-                    <ul class="menu hover">
-
-                        <li><a routerLink="/customers">Customers</a></li>
-                        <li><a routerLink="/users">Users</a></li>
-                        <li><a routerLink="/">Home</a></li>
-                    </ul>
-                </li>
-            </ul>
-
+        <div id="menu" class="dropdown-menu shadow">
+            <a *ngFor="let item of list" [ngClass]="itemClass(item)" (click)="changePage(item)">
+                {{ item.name  }}
+            </a>
         </div>
-
-        <div class="top-bar-left" *ngIf="loginService.isUser() && !loginService.isSuperuser()">
-
-            <ul class="dropdown menu" data-dropdown-menu>
-                <li><a href="#"><i class="my-menu-icon"></i></a></li>
-                <li class="menu-text">WCM</li>
-                <li>
-                    <a href="#">Pages</a>
-                    <ul class="menu hover">
-
-                        <li><a routerLink="/customers">Customers</a></li>
-                        <li><a routerLink="/">Home</a></li>
-                    </ul>
-                </li>
-            </ul>
-
-        </div>
-
-
-        <div class="top-bar-left"  *ngIf="!loginService.isLogin()">
-            <ul class="dropdown menu" data-dropdown-menu>
-                <li><a href="#"><i class="my-menu-icon"></i></a></li>
-                <li class="menu-text">WCM</li>
-                <li>
-                    <a href="#">Pages</a>
-                    <ul class="menu hover">
-                        <li><a routerLink="/">Home</a></li>
-                    </ul>
-                </li>
-
-            </ul>
-        </div>
-
-        <div class="top-bar-right" *ngIf="loginService.isSuperuser()">
-            <ul class="menu">
-                <li><a routerLink="/users">Users</a></li>
-                <li>
-                    <a (click)="loginService.logout()">
-                        <i class="fi-power" style="font-size: 1.3em;"></i>
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="top-bar-right" *ngIf="loginService.isUser() && !loginService.isSuperuser()">
-            <ul class="menu">
-                <li>
-                    <a (click)="loginService.logout()">
-                        <i class="fi-power" style="font-size: 1.3em;"></i>
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="top-bar-right" *ngIf="!loginService.isLogin()">
-            <ul class="menu">
-                <li><a routerLink="/login">Login</a></li>
-            </ul>
-        </div>
-
     </div>
 
-</div>
+    <div class="navbar-brand ml-3"><fa-icon [icon]="['fab', 'old-republic']"></fa-icon> {{ brandName }}</div>
+
+    <ul class="nav justify-content-start mr-auto">
+        <li lass="nav-item">
+            <a class="nav-link" routerLink="/">Home</a>
+        </li>
+    </ul>
+
+    <ul class="nav justify-content-end ml-auto mr-3">
+
+        <li class="nav-item" *ngIf="!loginService.isAuth">
+            <a class="nav-link" (click)="login()">
+                Login <fa-icon [icon]="['fas', 'sign-in-alt']"></fa-icon>
+            </a>
+        </li>
+
+        <li class="nav-item" *ngIf="loginService.isAuth" >
+            <a class="nav-link" (click)="logout()">
+                <span *ngIf="level === accessLevel.superuser">
+                    <!-- i class="fi-sheriff-badge"></i -->
+                    <fa-icon [icon]="['fas', 'star']"></fa-icon>
+                </span>
+                <span *ngIf="level === accessLevel.user">
+                    <!-- i class="fi-torso"></i -->
+                    <fa-icon [icon]="['fas', 'user-alt']"></fa-icon>
+                </span>
+                Logout
+                <fa-icon [icon]="['fas', 'sign-out-alt']"></fa-icon>
+            </a>
+        </li>
+
+    </ul>
+</nav>

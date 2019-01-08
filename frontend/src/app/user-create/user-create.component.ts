@@ -1,12 +1,17 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core'
+import { Component, OnInit, OnChanges, OnDestroy, Input, Output, EventEmitter, SimpleChanges } from '@angular/core'
 import { FormGroup, FormControl, FormBuilder, Validators,  ValidationErrors } from '@angular/forms'
-import { state, query, useAnimation, transition, style, trigger, animate, animateChild } from '@angular/animations';
+import { Subject, Observable } from 'rxjs'
 
+import { fadeAnimation } from '../app.animations'
+
+import { NoticesService } from '../notices.service'
 import { RPCService, RPCResponce, RPCError } from '../rpc.service'
 import { UsersService } from '../users.service'
 import { User } from '../models/user.model'
 
-import { fadeAnimation } from '../app.animations'
+import { Form, Action, Event } from '../users/users.component'
+
+declare var $: any
 
 @Component({
     selector: 'user-create',
@@ -14,81 +19,129 @@ import { fadeAnimation } from '../app.animations'
     styleUrls: ['./user-create.component.scss'],
     animations: [ fadeAnimation ]
 })
-export class UserCreateComponent implements OnInit {
+export class UserCreateComponent implements OnInit, OnDestroy {
 
-    modelForm: FormGroup
+    form: FormGroup
     user: User
-    alertMessage: string = ''
-    message: string = ''
 
-    @Input() show: boolean = false
-    @Output() escapeEvent = new EventEmitter<boolean>();
-    @Output() successEvent = new EventEmitter<boolean>();
+    @Input() subject: Subject<Event>
+    private subscription: any
+
+    alertMessage: string = ''
 
     constructor(
         private formBuilder: FormBuilder,
-        private usersService: UsersService
+        private usersService: UsersService,
+        private noticesService: NoticesService
     ) {}
 
+    ngOnInit(){
+        this.createForm()
+        this.subscription = this.subject.subscribe((event: Event) => {
+            if (event.destination == Form.createUser) {
+                if (event.action == Action.open) {
+                    this.openForm()
+                }
+                if (event.action == Action.close) {
+                    this.closeForm()
+                }
+            }
+        })
+    }
 
     formValidator(form: FormGroup) : ValidationErrors | null {
         const name = form.get('name')
         const password = form.get('password')
         const gecos = form.get('gecos')
-        if (name.errors || password.errors || gecos.errors) { 
+        if (name.errors || password.errors || gecos.errors) {
             return { formValidator: true }
         }
         return null
     }
 
-
     createForm() {
-        this.modelForm = new FormGroup({
-            name: new FormControl(),
-            password: new FormControl(),
-            gecos: new FormControl(),
-            superuser: new FormControl()
-        }, { validators: this.formValidator })
+        this.form = new FormGroup({
+                name: new FormControl(),
+                password: new FormControl(),
+                gecos: new FormControl(),
+                superuser: new FormControl(),
+            }, {
+                validators: this.formValidator
+            });
     }
 
+    openForm() {
+        this.openModal('user-create-modal')
+    }
 
-    createModel(form) {
+    closeForm() {
+        this.closeModal('user-create-modal')
+    }
+
+    get name() {
+        return this.form.get('name')
+    }
+
+    get password() {
+        return this.form.get('password')
+    }
+
+    get gecos() {
+        return this.form.get('gecos')
+    }
+
+    showAlertMessage(message: string) {
+        this.alertMessage = message
+        setTimeout(() => {
+            this.alertMessage = ''
+        }, 3000)
+    }
+
+    createUser(form) {
         if (this.formValidator(form)) return
 
         this.user = form.value
         this.usersService
             .create(this.user)
-            .subscribe((res: RPCResponce<any>) => {
-                if (res.result.rowCount > 0) {
-                    this.show = false
-                    this.successEvent.emit(true)
-                } else {
-                    this.show = false
-                    this.successEvent.emit(false)
+            .subscribe(
+                (res: RPCResponce<any>) => {
+                    if (res.result === true) {
+                        this.noticesService.sendSuccessMessage('User record was created ')
+                        this.subject.next({
+                            destination: Form.listUsers,
+                            action: Action.update
+                        })
+                        this.closeForm()
+                    } else {
+                        this.showAlertMessage('Backend problem')
+                    }
+                },
+                (err) => {
+                    this.showAlertMessage('Communication problem')
+                    console.log(err)
                 }
-            })
+            )
     }
 
-    get name() {
-        return this.modelForm.get('name')
+    openModal(name: string) {
+        var name = '#' + name
+        $(name).modal({
+            keyboard: false,
+            backdrop: 'static'
+        })
+        $(name).modal('show')
     }
 
-    get password() {
-        return this.modelForm.get('password')
+    closeModal(name: string) {
+        var name = '#' + name
+        $(name).modal('hide')
     }
 
-    get gecos() {
-        return this.modelForm.get('gecos')
+    ngOnChanges(changes: SimpleChanges) {
     }
 
-    escape() {
-        this.show = false
-        this.escapeEvent.emit(true)
-        this.createForm()
-    }
-
-    ngOnInit() {
-        this.createForm()
+    ngOnDestroy() {
+        this.subscription.unsubscribe()
     }
 
 }

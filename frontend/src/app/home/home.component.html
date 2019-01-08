@@ -1,87 +1,90 @@
-<div>
-    <app-header></app-header>
-
-    <div class="margin-left-2 margin-right-2">
+<app-container>
 
 
-        <div class="grid-container">
-            <div class="grid-x grid-margin-x">
-                    <div class="cell medium-6 margin-left-3" [@fade]>
+    <h5 i18n="@@overviewHeader">Overview</h5>
 
-                        <h5><b>Overview</b></h5>
+    <p i18n="@@overviewBody">
+        It is sample (and/or template) for Angular2/7 + Phalcon full stack web application.
+        This application adapted for different sizes of devices.
 
-                        <p>
-                            It is demo version of simple corporate program integrated
-                            with contact centre VoIP phone station for
-                            indentificate incoming call. And, if need, search in
-                            customer base.
-                        </p>
+    </p>
 
-                        <p>Short say, it is mini web full-stack application
-                            for medium-corporate contact-centre.
+    <div *ngFor="let progress of progresses; index as i" class="my-2">
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" [ngStyle]="{ width: progresses[i].percent + '%' }" >{{ progresses[i].label }}</div>
+        </div>
+    </div>
 
-                            <i>(Uff... I wrote it looooong definition, and you readed.)</i>
-                        </p>
 
-                        <p>
-                            Program writed with Angular2 and Express.JS
-                            frameworks with using my implementation JSON remote
-                            procedure calls.
-                            Deep into the program work splendid PostgreSQL under KnexJS.
-                        </p>
+    <div class="border p-3 my-3">
 
-                        <p>
-                            Scope of program around 40 page of source code,
-                            with lot of alone code brackets on string.
-                            I am joking about brackets, nevertheless it
-                            is very important to have a readable code.
-                        </p>
+        <button type="button" class="btn btn-primary btn-sm mb-2" (click)="addFormItem()">Add file</button>
 
-                        <p>
-                            Program also include simple component
-                            for user autentification and user management.
-                        </p>
+        <form accept-charset="UTF-8" [formGroup]="uploadForm" (ngSubmit)="sendFile(uploadForm)">
 
-                        <p>
-                            Demo version include fake customer database with 100.000 records.
-                            In actual use the customer base include over 700.000 records.
-                            And into real use-case the program have some addition into code
-                            for safe work and data verification.
-                        </p>
+            <div formArrayName="formItems">
+
+                <div *ngFor="let subForm of formItems.controls; index as i">
+
+                    <div [formGroupName]="i" class="form-group" [@rotate]>
+
+                        <div class="input-group">
+
+                            <div class="input-group-prepend">
+                                <label class="btn btn-primary">
+                                    <fa-icon [icon]="['fas', 'folder']" size="lg"></fa-icon>
+                                    <input type="file" hidden class="form-control" (change)="selectFile(subForm, $event)" formControlName="name">
+                                </label>
+                            </div>
+
+                            <input type="text" class="form-control" formControlName="secondName" placeholder="Name">
+
+                            <div class="input-group-append">
+                                <label class="btn btn-primary" type="button" (click)="deleteFormItem(i)">&times;</label>
+                                <label class="btn btn-primary" type="button" (click)="addFormItem()">+</label>
+                            </div>
+
+                        </div>
+                        <small class="form-text text-danger" *ngIf="subForm.get('file').errors && subForm.get('file').errors.fileIsDefined">
+                            Please, select file.
+                        </small>
+
+                        <small class="form-text text-danger" *ngIf="subForm.get('file').errors && subForm.get('file').errors.fileIsNotMore">
+                            File is too big.
+                        </small>
+
+                        <small class="form-text text-danger" *ngIf="subForm.get('file').errors && subForm.get('file').errors.fileIsNotZero">
+                            File is zero size.
+                        </small>
 
                     </div>
-
-
-                    <div class="cell medium-3 margin-left-1" [@rotate]>
-
-
-                        <h5><b>Sample search</b></h5>
-
-                        <h6><b>Search like phone station</b></h6>
-
-                        <ul class="list-square">
-                            <li *ngFor="let item of samplePhoneList; let i = index">
-                                <!-- <a target="_blank" rel="noopener noreferrer" href='#/customers/{{ item }}'>{{ item }}</a> -->
-                                <a href='#/customers/{{ item }}'>{{ item }}</a>
-                            </li>
-                        </ul>
-
-                        <h6><b>Sample search for substring</b></h6>
-
-                        <ul class="list-square">
-                            <li *ngFor="let item of partialSamples; let i = index">
-                                <!-- <a target="_blank" rel="noopener noreferrer" href='#/customers/{{ item }}'>{{ item }}</a> -->
-                                <a href='#/customers/{{ item }}'>{{ item }}</a>
-                            </li>
-                        </ul>
-
-
                 </div>
             </div>
-        </div>
+
+            <div class="text-center text-danger" *ngIf="uploadForm.errors">
+                Form is incomplete.
+            </div>
+
+            <div *ngIf="formItems.length">
+                <hr class="my-3">
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-sm btn-secondary mr-3" (click)="createUploadForm()">Clean</button>
+                    <button *ngIf="uploadForm.errors" class="btn btn-sm btn-primary disabled" type="button">Send</button>
+                    <button *ngIf="!uploadForm.errors" class="btn btn-sm btn-primary" type="submit">Send</button>
+                </div>
+            </div>
+
+        </form>
 
     </div>
 
-    <app-footer></app-footer>
 
-</div>
+    <h5 i18n="@@notificationHeader">Notification demo</h5>
+
+    <button type="button" class="btn btn-primary btn-sm my-3" (click)="sendNotices()" i18n="@@buttonNotices">Notices</button>
+
+    <h5 i18n="@@shemeHeader">Generic scheme of the application</h5>
+
+    <img src="/app-scheme.svg" class="img-fluid rounded mx-auto d-block" />
+
+</app-container>

@@ -1,96 +1,122 @@
-import { Injectable, OnInit } from '@angular/core'
-import { Router, ActivatedRoute } from '@angular/router'
+import { Injectable, OnInit, OnDestroy } from '@angular/core'
+import { Router } from '@angular/router'
+import { Subject, BehaviorSubject, Observable, Subscription, interval } from 'rxjs'
+
 import * as Cookies from 'es-cookie'
 
 import { RPCService } from './rpc.service'
+import { NoticesService } from './notices.service'
 
 import { User } from './models/user.model'
 
-export interface UserLogin {
-    name: string
-    password: string
+export enum AccessLevel {
+    guest = 1,
+    user = 2,
+    superuser = 3
 }
 
-//export enum AccessLevel { Superuser = 'superuser', User = 'user' }
-
-@Injectable({
-  providedIn: 'root'
+@Injectable({ 
+    providedIn: 'root' 
 })
 export class LoginService {
 
-    cookieName = 'session'
-    returnUrl: string = '/'
-    cookieController: any
-
-    loginState: boolean = false
-    user: User = { 
+    userProfile: User = { 
         id: -1,
         name: '',
         superuser: false,
         gecos: ''
     }
 
+    cookieName = 'session'
+    returnUrl: string = '/'
+    reasonMessage: string = ''
+
+    returnUrlSubject: BehaviorSubject<string>
+
+    isAuth: boolean = false
+    //accessLevel: AccessLevel = AccessLevel.guest
+
+    authSubject: BehaviorSubject<boolean>
+    loginSubject: Subject<boolean>
+
     constructor(
-        private route: ActivatedRoute,
         private router: Router,
-        private rpc: RPCService
-    ) {}
+        private rpc: RPCService,
+        public noticesService: NoticesService,
+    ) {
 
+        this.returnUrlSubject = new BehaviorSubject<string>('/')
+        this.authSubject = new BehaviorSubject<boolean>(false)
+        this.loginSubject = new Subject<boolean>()
 
-    isLogin() : boolean {
-        if (Cookies.get(this.cookieName)) {
-            return true
-        }
-        return false
+        interval(1000).subscribe((value) => {
+            if (this.isAuth && !Cookies.get(this.cookieName)) {
+                this.noticesService.sendAlertMessage('Your session expired! Please login with your account.')
+                this.isAuth = false
+
+                this.reasonMessage = 'Your session expired'
+                this.router.navigate(['/login'])
+            }
+        })
+
+        router.events.subscribe((event: any) => { 
+            console.log(event)
+            if (event['id'] && event['urlAfterRedirects']) {
+                if (event.url !== '/login') {
+                    this.returnUrl = event.urlAfterRedirects
+                }
+            }
+        })
+
     }
 
-    isUser() : boolean {
-        return this.isLogin()
-    }
-
-    isSuperuser() : boolean {
-        if (this.isLogin() && this.user.superuser) {
-            return true
-        }
-        return false
-    }
-
-    login(name: string, password: string) : boolean {
-        let params : User = {
+    checkLogin(name: string, password: string)  {
+        let params: User = {
             name: name,
             password: password,
             id: -1
         }
 
-        this.rpc.request<User, User[]>('/api/login', 'login', params)
+        this.rpc.request<User, User>('/api/login', 'login', params)
             .subscribe((res) => {
-                if (res.result[0].id >= 0) {
+            if (res.result.id >= 0) {
+                this.userProfile.id = res.result.id
+                this.userProfile.superuser = res.result.superuser
+                this.userProfile.gecos = res.result.gecos
+                this.userProfile.name = res.result.name
+                this.isAuth = true
+                this.reasonMessage = ''
+                this.loginSubject.next(true)
+                this.authSubject.next(true)
+            } else {
+                this.isAuth = false
+                this.loginSubject.next(false)
+                this.authSubject.next(false)
+            }
+        })
 
-                    this.user.id = res.result[0].id
-                    this.user.superuser = res.result[0].superuser
-                    this.user.gecos = res.result[0].gecos
-
-                    // bug: strange loop, related with angular setInterval() modification
-                    //var theThis = this
-                    //this.cookieController = setInterval(function() {
-                    //    if (theThis.isLogin() && !Cookies.get(theThis.cookieName)) {
-                    //        theThis.logout()
-                    //    }
-                    //}, 1000)
-
-                    this.router.navigate([ this.returnUrl ])
-                }
-            })
-        if (this.user.id >= 0) return true
-        return false
     }
 
-    logout() {
+    cleanLogin() {
         Cookies.remove(this.cookieName)
-        this.router.navigate(['/'])
+        this.isAuth = false
+        this.userProfile = { 
+            id: -1,
+            name: '',
+            superuser: false,
+            gecos: ''
+        }
+        this.authSubject.next(false)
     }
 
-    ngOnInit() {
+    accessLevel() : AccessLevel {
+        if (this.isAuth && Cookies.get(this.cookieName) && this.userProfile.superuser) {
+            return AccessLevel.superuser
+        }
+        if (this.isAuth && Cookies.get(this.cookieName) && !this.userProfile.superuser) {
+            return AccessLevel.user
+        }
+        return AccessLevel.guest
     }
 
 }

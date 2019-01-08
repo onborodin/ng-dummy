@@ -1,101 +1,106 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
+import { Subject, Observable } from 'rxjs'
 
-import { AppHeaderComponent } from '../app-header/app-header.component'
-import { AppFooterComponent } from '../app-footer/app-footer.component'
-
-//import { UserCreateComponent } from '../user-create/user-create.component'
-//import { UserUpdateComponent } from '../user-update/user-update.component'
-//import { UserDropComponent } from '../user-drop/user-drop.component'
+import { fadeAnimation } from '../app.animations'
 
 import { RPCService, RPCResponce, RPCError } from '../rpc.service'
 import { UsersService } from '../users.service'
-import { User } from '../models/user.model'
+import { User, Users } from '../models/user.model'
 
-import { fadeAnimation } from '../app.animations'
+export enum Form {
+    all = 0,
+    createUser = 1,
+    updateUser = 2,
+    dropUser = 3,
+    listUsers = 4
+}
+
+export enum Action {
+    closeAll = 0,
+    open = 1,
+    close = 2,
+    update = 3
+}
+
+export interface Event {
+    destination: Form
+    action: Action
+}
 
 @Component({
     selector: 'users',
     templateUrl: './users.component.html',
-    styleUrls: ['./users.component.scss'],
+    styleUrls: [ './users.component.scss' ],
     animations: [ fadeAnimation ]
 })
 export class UsersComponent implements OnInit {
 
-    showCreateForm: boolean = false
-    showUpdateForm: boolean = false
-    showDropForm: boolean = false
-    showListRecords: boolean = true
+    users: User[] = []
+    user: User = { id: -1, name: '', password: '', gecos: '' }
+    timestamp: Date
 
-    list: User[] = []
+    search: string = ''
 
-    currentUser : User = {
-        id: -1,
-        name: '',
-        password: '',
-        gecos: ''
+    subject: Subject<Event>
+    subscription: any
+
+    firstElem: number = 0
+    pageSize: number = 5
+    listLength: number = 0
+
+    changePageSize(size: number) {
+        this.pageSize = size
     }
 
-    constructor(
-        private usersService: UsersService,
-    ) {}
-
-    dropItem(item: User) {
-        this.currentUser = item
-        this.showDrop()
+    changePage(eventData) {
+        this.firstElem = eventData
     }
 
-    updateItem(item: User) {
-        this.currentUser = item
-        this.showUpdate()
+    constructor(private usersService: UsersService) {
+        this.subject = new Subject<Event>()
+        this.subscription = this.subject.subscribe((event: Event) => {
+            if (event.destination == Form.listUsers) {
+                if (event.action == Action.update) {
+                    this.getList()
+                }
+            }
+        })
+    }
+
+    createUser() {
+        this.subject.next({ 
+            destination: Form.createUser,
+            action: Action.open 
+        })
+    }
+
+    dropUser(user) {
+        this.user = user
+        this.subject.next({ 
+            destination: Form.dropUser,
+            action: Action.open
+        })
+    }
+
+    updateUser(user) {
+        this.user = user
+        this.subject.next({ 
+            destination: Form.updateUser,
+            action: Action.open
+        })
     }
 
     getList() {
         this.usersService
             .list()
             .subscribe((res: RPCResponce<User[]>) => {
-                this.list = res.result
+                this.users = res.result
+                this.timestamp = new Date()
             })
     }
 
     ngOnInit() {
         this.getList()
-    }
-
-    escapeForm() {
-        this.showList()
-    }
-
-    successForm($event) {
-        this.getList()
-        this.showList()
-    }
-
-    showCreate() {
-        this.showCreateForm = true
-        this.showUpdateForm = false
-        this.showDropForm = false
-        this.showListRecords = false
-    }
-
-    showUpdate() {
-        this.showCreateForm = false
-        this.showUpdateForm = true
-        this.showDropForm = false
-        this.showListRecords = false
-    }
-
-    showDrop() {
-        this.showCreateForm = false
-        this.showUpdateForm = false
-        this.showDropForm = true
-        this.showListRecords = false
-    }
-
-    showList() {
-        this.showCreateForm = false
-        this.showUpdateForm = false
-        this.showDropForm = false
-        this.showListRecords = true
     }
 }

@@ -33,13 +33,13 @@ export class RPCService {
     ) {}
 
     request<TParam, TResult>(url: string, method: string, params: TParam) : Observable<RPCResponce<TResult>> {
-
         let rpcRequest : RPCRequest<TParam> = {
             jsonrpc: '2.0',
             method: method,
             params: params,
             id: uuid()
         }
-        return this.httpClient.post<RPCResponce<TResult>>(url, rpcRequest)
+        return this.httpClient
+            .post<RPCResponce<TResult>>(url, rpcRequest)
     }
 }
