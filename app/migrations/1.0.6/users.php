@@ -32,27 +32,27 @@ class UsersMigration_106 extends Migration
                     new Column(
                         'name',
                         [
-                            'type' => Column::TYPE_TEXT,
+                            'type' => Column::TYPE_VARCHAR,
                             'notNull' => true,
-                            'size' => 1,
+                            'size' => 64,
                             'after' => 'id'
                         ]
                     ),
                     new Column(
                         'gecos',
                         [
-                            'type' => Column::TYPE_TEXT,
+                            'type' => Column::TYPE_VARCHAR,
                             'notNull' => true,
-                            'size' => 1,
+                            'size' => 64,
                             'after' => 'name'
                         ]
                     ),
                     new Column(
                         'password',
                         [
-                            'type' => Column::TYPE_TEXT,
+                            'type' => Column::TYPE_VARCHAR,
                             'notNull' => true,
-                            'size' => 1,
+                            'size' => 64,
                             'after' => 'gecos'
                         ]
                     ),

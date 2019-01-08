@@ -14,6 +14,7 @@ use Phalcon\Http\Response;
 use Phalcon\Http\Request;
 
 use Phalcon\Db\Adapter\Pdo\Postgresql as DbAdapter;
+//use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
 
 use Phalcon\Mvc\Application as Application;
 use Phalcon\Mvc\Model\Metadata\Memory as MemoryMetadata;
@@ -108,10 +109,15 @@ class MyApplication extends Application {
 
         $this->di->setShared('session',
             function () {
+                $sessionLifetime = 30;
+
+                ini_set('session.gc_maxlifetime', $sessionLifetime);
+                session_set_cookie_params($sessionLifetime);
+
                 $session = new SessionAdapter([
                     'uniqueId' => 'session',
                     'persistent' => false,
-                    'lifetime'   => 600
+                    'lifetime'   => 10
                 ]);
                 session_name('session');
                 $session->start();

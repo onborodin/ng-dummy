@@ -25,9 +25,6 @@ class DataController extends Controller {
         $list = []; 
 
         foreach($uploads as $upload){
-
-            $this->logger->log("# upload real type " . $upload->getRealType());
-
             switch($upload->getRealType()) {
                 case "image/png":
                     $newExt = ".png";
@@ -109,7 +106,8 @@ class DataController extends Controller {
         }
 
         $pathInfo = pathinfo($path);
-        switch($pathInfo['extension']) {
+        $extension = $pathInfo['extension'];
+        switch($extension) {
             case "png":
                 $mime = "image/png";
                 break;
@@ -145,9 +143,10 @@ class DataController extends Controller {
                 break;
         }
 
+        $downloadName = "document.". $extension;
         $this->response->setContentLength(filesize($path));
         $this->response->setLastModified(new DateTime(date("D, d M Y H:i:s", filemtime($path))));
-        $this->response->setFileToSend($path);
+        $this->response->setFileToSend($path, $downloadName);
         $this->response->setContentType($mime);
 
     }

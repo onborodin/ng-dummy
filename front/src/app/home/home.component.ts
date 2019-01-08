@@ -61,8 +61,12 @@ export class HomeComponent implements OnInit {
         }, 500)
         setTimeout(() => {
             this.dropProgress(id)
-        }, 10000)
-        this.createProgress()
+        }, 15000)
+        const id2 = this.createProgress("qwerty.yui")
+        setInterval(() => {
+            this.setProgressPercent(id2, this.getProgressPercent(id2) + 1)
+        }, 700)
+
 
     }
 

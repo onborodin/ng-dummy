@@ -32,16 +32,16 @@ class DriversMigration_106 extends Migration
                     new Column(
                         'name',
                         [
-                            'type' => Column::TYPE_TEXT,
+                            'type' => Column::TYPE_VARCHAR,
                             'notNull' => true,
-                            'size' => 1,
+                            'size' => 64,
                             'after' => 'id'
                         ]
                     )
                 ],
-//                    'indexes' => [
-//                    new Index('driver_name', ['name'])
-//                ],
+                    'indexes' => [
+                    new Index('driver_name', ['name'])
+                ],
             ]
         );
     }

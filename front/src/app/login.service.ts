@@ -1,12 +1,13 @@
 import { Injectable, OnInit, OnDestroy } from '@angular/core'
 import { Router } from '@angular/router'
-import { Subject, BehaviorSubject } from 'rxjs'
+import { Subject, BehaviorSubject, Observable, Subscription, interval } from 'rxjs'
 
 import * as Cookies from 'es-cookie'
 
 import { RPCService } from './rpc.service'
-import { User } from './models/user.model'
+import { NoticesService } from './notices.service'
 
+import { User } from './models/user.model'
 
 export enum AccessLevel {
     guest = 1,
@@ -38,15 +39,35 @@ export class LoginService {
     authSubject: BehaviorSubject<boolean>
     loginSubject: Subject<boolean>
 
-
     constructor(
         private router: Router,
-        private rpc: RPCService
+        private rpc: RPCService,
+        public noticesService: NoticesService,
     ) {
 
         this.returnUrlSubject = new BehaviorSubject<string>('/')
         this.authSubject = new BehaviorSubject<boolean>(false)
         this.loginSubject = new Subject<boolean>()
+
+        interval(1000).subscribe((value) => {
+            if (this.isAuth && !Cookies.get(this.cookieName)) {
+                this.noticesService.sendAlertMessage('Your session expired! Please login with your account.')
+                this.isAuth = false
+
+                this.reasonMessage = 'Your session expired'
+                this.router.navigate(['/login'])
+            }
+        })
+
+        router.events.subscribe((event: any) => { 
+            console.log(event)
+            if (event['id'] && event['urlAfterRedirects']) {
+                if (event.url !== '/login') {
+                    this.returnUrl = event.urlAfterRedirects
+                }
+            }
+        })
+
     }
 
     checkLogin(name: string, password: string)  {
