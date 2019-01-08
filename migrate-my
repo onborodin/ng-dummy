@@ -1,0 +1,9 @@
+#!/bin/sh
+
+echo 'drop database phalcon;' | mysql -pbowie2 -uroot
+echo 'create database phalcon;' | mysql -pbowie2 -uroot
+echo 'GRANT ALL PRIVILEGES ON phalcon.* TO `phalcon`@`localhost`;' | mysql -pbowie2 -uroot
+
+rm .phalcon/migration-version
+./phalcon migration run --verbose
+
