@@ -27,7 +27,7 @@ EXTRA_DIST = \
 	src/tslint.json \
 	tsconfig.json \
 	src/assets/.gitkeep \
-	src/assets/favicon.ico \
+	src/assets/favicon.ico
 
 clean-local:
 	rm -f *~ */*~ */*/*~ */*/*/*~

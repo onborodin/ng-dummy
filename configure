@@ -2377,7 +2377,7 @@ fi
 
 
 
-PACKAGE=wcm
+PACKAGE=lorem
 
 # Extract the first word of "node", so it can be a program name with args.
 set dummy node; ac_word=$2
@@ -3218,10 +3218,8 @@ _ACEOF
 app_datadir="$APP_DATADIR"
 
 
-ac_config_commands="$ac_config_commands default-1"
 
-
-ac_config_files="$ac_config_files Makefile frontend/Makefile backend/Makefile backend/wcm backend/wcmconf.js backend/rc.d/wcm"
+ac_config_files="$ac_config_files Makefile frontend/Makefile backend/Makefile backend/lorem backend/config.js backend/rc.d/lorem"
 
 ac_config_commands="$ac_config_commands default"
 
@@ -3962,11 +3960,6 @@ _ASBOX
 
 _ACEOF
 cat >>$CONFIG_STATUS <<_ACEOF || ac_write_fail=1
-#
-# INIT-COMMANDS
-#
-
-
 _ACEOF
 
 cat >>$CONFIG_STATUS <<\_ACEOF || ac_write_fail=1
@@ -3975,13 +3968,12 @@ cat >>$CONFIG_STATUS <<\_ACEOF || ac_write_fail=1
 for ac_config_target in $ac_config_targets
 do
   case $ac_config_target in
-    "default-1") CONFIG_COMMANDS="$CONFIG_COMMANDS default-1" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "frontend/Makefile") CONFIG_FILES="$CONFIG_FILES frontend/Makefile" ;;
     "backend/Makefile") CONFIG_FILES="$CONFIG_FILES backend/Makefile" ;;
-    "backend/wcm") CONFIG_FILES="$CONFIG_FILES backend/wcm" ;;
-    "backend/wcmconf.js") CONFIG_FILES="$CONFIG_FILES backend/wcmconf.js" ;;
-    "backend/rc.d/wcm") CONFIG_FILES="$CONFIG_FILES backend/rc.d/wcm" ;;
+    "backend/lorem") CONFIG_FILES="$CONFIG_FILES backend/lorem" ;;
+    "backend/config.js") CONFIG_FILES="$CONFIG_FILES backend/config.js" ;;
+    "backend/rc.d/lorem") CONFIG_FILES="$CONFIG_FILES backend/rc.d/lorem" ;;
     "default") CONFIG_COMMANDS="$CONFIG_COMMANDS default" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
@@ -4412,8 +4404,7 @@ $as_echo "$as_me: executing $ac_file commands" >&6;}
 
 
   case $ac_file$ac_mode in
-    "default-1":C) chmod a+x backend/wcm ;;
-    "default":C) chmod a+x backend/wcm ;;
+    "default":C) chmod a+x backend/lorem ;;
 
   esac
 done # for ac_tag
@@ -4451,6 +4442,4 @@ if test -n "$ac_unrecognized_opts" && test "$enable_option_checking" != no; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: unrecognized options: $ac_unrecognized_opts" >&5
 $as_echo "$as_me: WARNING: unrecognized options: $ac_unrecognized_opts" >&2;}
 fi
-
-
 

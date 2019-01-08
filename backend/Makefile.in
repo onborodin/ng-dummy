@@ -97,7 +97,7 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 DIST_COMMON = $(srcdir)/Makefile.am $(nobase_dist_pkgdata_DATA) \
 	$(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
-CONFIG_CLEAN_FILES = wcm wcmconf.js
+CONFIG_CLEAN_FILES = lorem config.js
 CONFIG_CLEAN_VPATH_FILES =
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
@@ -152,8 +152,8 @@ am__can_run_installinfo = \
   esac
 DATA = $(conf_DATA) $(nobase_dist_pkgdata_DATA)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
-am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/wcm.in \
-	$(srcdir)/wcmconf.js.in
+am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/config.js.in \
+	$(srcdir)/lorem.in
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
@@ -264,14 +264,14 @@ top_srcdir = @top_srcdir@
 # $Id: Makefile.am 633 2017-04-15 13:51:07Z ziggi $
 #
 AUTOMAKE_OPTIONS = foreign no-dependencies no-installinfo
-sbin_SCRIPTS = wcm
+sbin_SCRIPTS = lorem
 KNEX = ./node_modules/.bin/knex
 @FREEBSD_OS_TRUE@etcdir = @prefix@/etc
-@FREEBSD_OS_TRUE@nobase_etc_SCRIPTS = rc.d/wcm
+@FREEBSD_OS_TRUE@nobase_etc_SCRIPTS = rc.d/lorem
 confdir = $(DESTDIR)$(APP_CONFDIR)
 conf_DATA = \
 	knexfile.js \
-	wcmconf.js
+	lo-config.js
 
 EXTRA_DIST = \
 	package-lock.json \
@@ -280,49 +280,7 @@ EXTRA_DIST = \
 	node_modules \
         public
 
-nobase_dist_pkgdata_DATA = \
-	exserv.js \
-	knexport.js \
-	 \
-	models/customers.js \
-	models/login.js \
-	models/users.js \
-	 \
-	plugins/excors.js \
-	 \
-	routers/customers.js \
-	routers/exrouter.js \
-	routers/login.js \
-	routers/users.js \
-	 \
-	utils/exdaemon.js \
-	utils/exlog.js \
-	utils/exmkdir.js \
-	utils/expid.js \
-	utils/exsig.js \
-	 \
-	migrations/20181214085626_stable.js \
-	 \
-	seeds/20181214085527_customers.js \
-	seeds/20181214085527_users.js \
-	 \
-	public/3rdpartylicenses.txt \
-	public/favicon.ico \
-	public/foundation-icons.css \
-	public/foundation-icons.eot \
-	public/foundation-icons.html \
-	public/foundation-icons.svg \
-	public/foundation-icons.ttf \
-	public/foundation-icons.woff \
-	public/index.html \
-	 \
-	public/main.js \
-	public/polyfills.js \
-	public/runtime.js \
-	public/scripts.js \
-	public/styles.css \
-	public/vendor.js
-
+nobase_dist_pkgdata_DATA = 
 all: all-am
 
 .SUFFIXES:
@@ -355,9 +313,9 @@ $(top_srcdir)/configure:  $(am__configure_deps)
 $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
-wcm: $(top_builddir)/config.status $(srcdir)/wcm.in
+lorem: $(top_builddir)/config.status $(srcdir)/lorem.in
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-wcmconf.js: $(top_builddir)/config.status $(srcdir)/wcmconf.js.in
+config.js: $(top_builddir)/config.status $(srcdir)/config.js.in
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 install-nobase_etcSCRIPTS: $(nobase_etc_SCRIPTS)
 	@$(NORMAL_INSTALL)
@@ -657,7 +615,7 @@ install-data-hook:
 	$(INSTALL) -d -m 750 -o $(APP_USER) -g $(APP_GROUP) $(DESTDIR)$(APP_RUNDIR)
 	$(INSTALL) -d -m 755 -o $(APP_USER) -g $(APP_GROUP) $(DESTDIR)$(APP_LIBDIR)
 	$(CP) -R node_modules $(DESTDIR)$(APP_LIBDIR)
-@FREEBSD_OS_TRUE@	chmod a+x $(DESTDIR)/${etcdir}/rc.d/wcm
+@FREEBSD_OS_TRUE@	chmod a+x $(DESTDIR)/${etcdir}/rc.d/lorem
 
 clean-local:
 	rm -f *~ */*~ logs/*.log run/pid

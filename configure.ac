@@ -2,7 +2,7 @@ AC_INIT(index.js,0.01)
 AM_INIT_AUTOMAKE
 AC_PREFIX_DEFAULT(/usr/local)
 
-PACKAGE=wcm
+PACKAGE=lorem
 
 AC_CHECK_PROG(HAVE_NODE, node, true, false, /bin /usr/local/bin /usr/bin)
 if test "x$HAVE_NODE" = "xfalse"; then
@@ -309,16 +309,14 @@ AC_SUBST(APP_DATADIR, "$APP_DATADIR")
 AC_DEFINE_UNQUOTED(app_datadir, "$APP_DATADIR", [location of data dir])
 AC_SUBST(app_datadir, "$APP_DATADIR")
 
-AC_OUTPUT_COMMANDS([chmod a+x backend/wcm])
+dnl AC_OUTPUT_COMMANDS([chmod a+x backend/lorem])
 
 AC_OUTPUT([
 Makefile
 frontend/Makefile
 backend/Makefile
-backend/wcm
-backend/wcmconf.js
-backend/rc.d/wcm
-],[chmod a+x backend/wcm])
+backend/lorem
+backend/config.js
+backend/rc.d/lorem
+],[chmod a+x backend/lorem])
 dnl EOF
-
-

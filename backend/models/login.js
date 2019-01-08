@@ -26,6 +26,8 @@ module.exports = function(knex) {
             .where({
                 'users.id': params.id
             })
+            .then(function(res) {
+            }) 
     }
 
     return {

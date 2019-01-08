@@ -45,8 +45,10 @@ module.exports = function(knex) {
             })
             .into('users')
             .then(function(res) {
-                if (res.rowCount) return res.rowCount
-                return 0
+                if (res.rowCount) {
+                    return true
+                }
+                return false
             })
 
     }
@@ -64,8 +66,10 @@ module.exports = function(knex) {
                 id: params.id
             })
             .then(function(res) {
-                if (res.rowCount) return res.rowCount
-                return 0
+                if (res.rowCount) {
+                    return true
+                }
+                return false
             })
     }
 

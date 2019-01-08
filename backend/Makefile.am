@@ -3,7 +3,7 @@
 #
 AUTOMAKE_OPTIONS = foreign no-dependencies no-installinfo
 
-sbin_SCRIPTS = wcm
+sbin_SCRIPTS = lorem
 
 pre-build:
 	CFLAGS="$(CFLAGS)" $(NPM) install
@@ -21,19 +21,19 @@ install-data-hook:
 	$(INSTALL) -d -m 755 -o $(APP_USER) -g $(APP_GROUP) $(DESTDIR)$(APP_LIBDIR)
 	$(CP) -R node_modules $(DESTDIR)$(APP_LIBDIR)
 if FREEBSD_OS
-	chmod a+x $(DESTDIR)/${etcdir}/rc.d/wcm
+	chmod a+x $(DESTDIR)/${etcdir}/rc.d/lorem
 endif
 
 if FREEBSD_OS
 etcdir = @prefix@/etc
-nobase_etc_SCRIPTS = rc.d/wcm
+nobase_etc_SCRIPTS = rc.d/lorem
 endif
 
 
 confdir= $(DESTDIR)$(APP_CONFDIR)
 conf_DATA = \
 	knexfile.js \
-	wcmconf.js
+	lo-config.js
 
 EXTRA_DIST = \
 	package-lock.json \
@@ -42,48 +42,7 @@ EXTRA_DIST = \
 	node_modules \
         public
 
-nobase_dist_pkgdata_DATA = \
-	exserv.js \
-	knexport.js \
-	 \
-	models/customers.js \
-	models/login.js \
-	models/users.js \
-	 \
-	plugins/excors.js \
-	 \
-	routers/customers.js \
-	routers/exrouter.js \
-	routers/login.js \
-	routers/users.js \
-	 \
-	utils/exdaemon.js \
-	utils/exlog.js \
-	utils/exmkdir.js \
-	utils/expid.js \
-	utils/exsig.js \
-	 \
-	migrations/20181214085626_stable.js \
-	 \
-	seeds/20181214085527_customers.js \
-	seeds/20181214085527_users.js \
-	 \
-	public/3rdpartylicenses.txt \
-	public/favicon.ico \
-	public/foundation-icons.css \
-	public/foundation-icons.eot \
-	public/foundation-icons.html \
-	public/foundation-icons.svg \
-	public/foundation-icons.ttf \
-	public/foundation-icons.woff \
-	public/index.html \
-	 \
-	public/main.js \
-	public/polyfills.js \
-	public/runtime.js \
-	public/scripts.js \
-	public/styles.css \
-	public/vendor.js
+nobase_dist_pkgdata_DATA = 
 
 
 clean-local:
