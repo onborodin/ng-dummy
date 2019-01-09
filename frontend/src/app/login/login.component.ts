@@ -40,7 +40,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.loginService.cleanLogin()
         this.reasonMessage = this.loginService.reasonMessage
-        //this.attemptCounter = 0
         this.loginForm = this.formBuilder.group({
             name: [ 'qwerty' ],
             password: [ '12345' ]
@@ -48,8 +47,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
         this.loginService.loginSubject
             .subscribe((authState) => {
-                //this.attemptCounter++
-
                 if (authState) {
                     this.attemptCounter = 0
                     this.message = 'Login successful'

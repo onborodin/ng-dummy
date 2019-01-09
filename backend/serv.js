@@ -1,7 +1,7 @@
 
 'use strict'
 
-const config = require('config')
+const config = require('lorem.conf')
 
 const path = require('path')
 const fs = require('fs')
@@ -73,27 +73,34 @@ app.use(session({
 
 // *** create knex shared object ***
 const knexfile = require('knexfile')
-const knex = require('knex')(knexfile.development)
+const knex = require('knex')(knexfile)
 
 // *** set routes ***
 
 var login = require('./routers/login')(knex)
 app.use('/api/login', login)
 
-app.use(function(req, res, next) {
-    if (typeof(req.session.userId) != 'undefined') {
-        req.session.touch()
-        next()
-    } else {
-         res.sendFile(path.join(config.appDir, '/public/index.html'))
-    }
-})
+//app.use(function(req, res, next) {
+//    if (typeof(req.session.userId) != 'undefined') {
+//        req.session.touch()
+//        next()
+//    } else {
+//         res.sendFile(path.join(config.appDir, '/public/index.html'))
+//    }
+//})
 
 var users = require('./routers/users')(knex)
 app.use('/api/users', users)
 
-//var customers = require('./routers/customers')(knex)
-//app.use('/api/customers', customers)
+var drivers = require('./routers/drivers')(knex)
+app.use('/api/drivers', drivers)
+
+var vehicles = require('./routers/vehicles')(knex)
+app.use('/api/vehicles', vehicles)
+
+
+//var customers = require('./routers/drivers')(knex)
+//app.use('/api/drivers', customers)
 
 app.get('/*', function(req, res) {
      res.sendFile(path.join(config.appDir, '/public/index.html'))

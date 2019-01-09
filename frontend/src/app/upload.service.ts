@@ -11,7 +11,7 @@ export class UploadService {
 
     uploadFile(url: string, file: File, name: string) : Observable<HttpEvent<any>> {
         let formData = new FormData();
-        formData.append('upload', file, name);
+        formData.append(name, file, name);
 
         let params = new HttpParams();
         const options = {

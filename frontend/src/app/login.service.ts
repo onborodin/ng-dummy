@@ -53,6 +53,7 @@ export class LoginService {
             if (this.isAuth && !Cookies.get(this.cookieName)) {
                 this.noticesService.sendAlertMessage('Your session expired! Please login with your account.')
                 this.isAuth = false
+                Cookies.remove(this.cookieName)
 
                 this.reasonMessage = 'Your session expired'
                 this.router.navigate(['/login'])
@@ -60,7 +61,7 @@ export class LoginService {
         })
 
         router.events.subscribe((event: any) => { 
-            console.log(event)
+            //console.log(event)
             if (event['id'] && event['urlAfterRedirects']) {
                 if (event.url !== '/login') {
                     this.returnUrl = event.urlAfterRedirects

@@ -15,24 +15,16 @@ module.exports = function(knex) {
                 'users.name': params.name,
                 'users.password': params.password,
             })
-    }
-
-    var check = function(params) {
-        return knex
-            .select([
-                'users.id',
-            ])
-            .from('users')
-            .where({
-                'users.id': params.id
-            })
+            .limit(1)
             .then(function(res) {
+                if (res.length) return res[0]
+                return {}
             }) 
+
     }
 
     return {
         modelName: "login",
         login: login,
-        check: check
     }
 }

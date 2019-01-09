@@ -54,20 +54,19 @@ export class HomeComponent implements OnInit {
 
     ngOnInit() {
         this.createUploadForm()
-        this.createProgress()
-        const id = this.createProgress("qwerty.yui")
-        setInterval(() => {
-            this.setProgressPercent(id, this.getProgressPercent(id) + 1)
-        }, 500)
-        setTimeout(() => {
-            this.dropProgress(id)
-        }, 15000)
-        const id2 = this.createProgress("qwerty.yui")
-        setInterval(() => {
-            this.setProgressPercent(id2, this.getProgressPercent(id2) + 1)
-        }, 700)
 
-
+        //this.createProgress()
+        //const id = this.createProgress("qwerty.yui")
+        //setInterval(() => {
+        //    this.setProgressPercent(id, this.getProgressPercent(id) + 1)
+        //}, 500)
+        //setTimeout(() => {
+        //    this.dropProgress(id)
+        //}, 15000)
+        //const id2 = this.createProgress("qwerty.yui")
+        //setInterval(() => {
+        //    this.setProgressPercent(id2, this.getProgressPercent(id2) + 1)
+        //}, 700)
     }
 
     progresses: Progresses = []
@@ -196,16 +195,30 @@ export class HomeComponent implements OnInit {
 
             var file = subForm.controls.file.value
             var name = subForm.controls.secondName.value
+            var progressId = this.createProgress(name)
 
             console.log(i, name, file)
 
             this.uploadService.uploadFile('/data/upload', file, name)
                 .subscribe(
                     (event) => {
-                        //if (event.type == HttpEventType.UploadProgress) {
-                        //    const percent = Math.round(100 * event.loaded / event.total)
-                        //}
-                    })
+                        console.log(event)
+                        if (event.type == HttpEventType.UploadProgress) {
+                            var percent = Math.round(100 * event.loaded / event.total)
+                            this.setProgressPercent(progressId, percent)
+                        }
+                    },
+                    (err) => {
+                        console.log('upload', name, err)
+                        var errText = JSON.stringify(err)
+                        this.noticesService.sendAlertMessage(`002 Error when upload ${name}: ${errText}`)
+                    },
+                    () => {
+                        console.log(progressId, 'done')
+                        this.noticesService.sendSuccessMessage(`Upload ${name} done`)
+
+                    }
+                )
         })
         this.createUploadForm()
     }

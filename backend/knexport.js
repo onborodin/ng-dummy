@@ -2,7 +2,6 @@
 
 'use strict'
 
-
 Object.defineProperty(Date.prototype, 'timestamp', {
     value: function() {
         function pad2(n) {
@@ -20,9 +19,9 @@ Object.defineProperty(Date.prototype, 'timestamp', {
 
 const timestamp = new Date().timestamp()
 
-const exconfig = require('./exconfig')
+const exconfig = require('./config')
 const knexfile = require(exconfig.appDir + '/knexfile')
-const knex = require('knex')(knexfile.development)
+const knex = require('knex')(knexfile)
 const fs = require('fs')
 
 //var tableName = 'domains'
@@ -46,7 +45,7 @@ var footer = function(tableName) {
 `
 }
 
-var tables = [ 'users', 'customers' ]
+var tables = [ 'users', 'drivers', 'vehicles', 'connections', 'drivers_data' ]
 
 tables.forEach(function(item) {
     console.log('export table ' + item)
@@ -54,7 +53,7 @@ tables.forEach(function(item) {
         .select()
         .from(item)
         .then(function(result) {
-            var out = fs.createWriteStream('./seeds/' + timestamp + '_' + item + '.js', {flags : 'w'})
+            var out = fs.createWriteStream('./seeds/' + timestamp + '__' + item + '.js', {flags : 'w'})
             out.write(header(item) + '\n')
             result.forEach(function(item) {
                 out.write('    rows.push(' + JSON.stringify(item) + ')\n')

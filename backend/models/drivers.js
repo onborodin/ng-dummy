@@ -5,21 +5,18 @@ module.exports = function(knex) {
     var list = function(params) {
         return knex
             .select([
-                'users.*',
+                'drivers.*',
             ])
-            .from('users')
-            .orderBy('users.name')
+            .from('drivers')
+            .orderBy('drivers.name')
     }
 
     var create = function(params) {
         return knex
             .insert({
-                gecos: params.gecos,
                 name: params.name,
-                password: params.password,
-                superuser: params.superuser,
             })
-            .into('users')
+            .into('drivers')
             .then(function(res) {
                 if (res.rowCount) {
                     return true
@@ -32,12 +29,9 @@ module.exports = function(knex) {
     var update = function(params) {
         return knex
             .update({
-                gecos: params.gecos,
                 name: params.name,
-                password: params.password,
-                superuser: params.superuser,
             })
-            .from('users')
+            .from('drivers')
             .where({
                 id: params.id
             })
@@ -50,7 +44,7 @@ module.exports = function(knex) {
     var drop = function(params) {
         return knex
             .delete()
-            .from('users')
+            .from('drivers')
             .where({
                 id: params.id
             })
@@ -62,7 +56,7 @@ module.exports = function(knex) {
     }
 
     return {
-        modelName: "users",
+        modelName: "drivers",
         list: list,
         create: create,
         update: update,

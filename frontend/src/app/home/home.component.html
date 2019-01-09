@@ -9,11 +9,6 @@
 
     </p>
 
-    <div *ngFor="let progress of progresses; index as i" class="my-2">
-        <div class="progress">
-            <div class="progress-bar" role="progressbar" [ngStyle]="{ width: progresses[i].percent + '%' }" >{{ progresses[i].label }}</div>
-        </div>
-    </div>
 
 
     <div class="border p-3 my-3">
@@ -21,7 +16,6 @@
         <button type="button" class="btn btn-primary btn-sm mb-2" (click)="addFormItem()">Add file</button>
 
         <form accept-charset="UTF-8" [formGroup]="uploadForm" (ngSubmit)="sendFile(uploadForm)">
-
             <div formArrayName="formItems">
 
                 <div *ngFor="let subForm of formItems.controls; index as i">
@@ -75,6 +69,14 @@
             </div>
 
         </form>
+        <div *ngFor="let progress of progresses; index as i" class="my-2">
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" [ngStyle]="{ width: progresses[i].percent + '%' }">
+                    {{ progresses[i].label }}
+                </div>
+            </div>
+        </div>
+
 
     </div>
 
