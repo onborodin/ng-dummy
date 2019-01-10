@@ -32,7 +32,7 @@ module.exports = function(knex) {
                 'data.*',
             ])
             .from('data')
-            .orderBy('data.name')
+            .orderBy('data.dataName')
     }
 
     var create = function(params) {
@@ -61,6 +61,9 @@ module.exports = function(knex) {
         return knex
             .delete()
             .from('data')
+            .where({
+                id: params.id
+            })
             .then(function(res) {
                 if (res > 0) return true
                 return false
