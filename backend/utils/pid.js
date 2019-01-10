@@ -8,7 +8,7 @@ var mkdir = require('utils/mkdir')
 var create = function(pidFile) {
     var pidDir = path.basename(path.dirname(pidFile))
 
-    var _write = function(path) {
+    var _write = (path) => {
         try {
             var fd = fs.openSync(path, 'w')
         } catch (err) {

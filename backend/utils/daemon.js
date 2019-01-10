@@ -6,6 +6,7 @@ module.exports = function(nodeBin) {
         const child = child_process.spawn(exe, args, {
             detached: true,
             stdio: ['ignore', 'ignore', 'ignore'],
+
             env: env
         })
         child.unref()

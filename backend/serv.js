@@ -1,4 +1,3 @@
-
 'use strict'
 
 const config = require('lorem.conf')
@@ -36,12 +35,18 @@ const responseTime = require('response-time')
 const morgan = require('morgan')
 const lowercasePaths = require('express-lowercase-paths')
 const cors = require('plugins/cors')
+const busboy = require('connect-busboy')
+//const busboy = require('express-busboy')
 
 const app = express()
 
 var formatStr = ':date[iso] :remote-addr :method :url :status :res[content-length] :res[content-type] :response-time ms'
-var accessLog = fs.createWriteStream(config.logDir + '/access.log', { flags: 'a' })
-app.use(morgan(formatStr, { stream: accessLog }))
+var accessLog = fs.createWriteStream(config.logDir + '/access.log', {
+    flags: 'a'
+})
+app.use(morgan(formatStr, {
+    stream: accessLog
+}))
 app.use(morgan(formatStr))
 
 app.use(cors())
@@ -51,29 +56,40 @@ app.use(helmet())
 app.use(express.static(config.publicDir))
 app.use(cookieParser())
 app.use(bodyParser.json())
+app.use(busboy({
+    highWaterMark: 1 * 1024 * 1024, 
+    limits: {
+        fileSize: 16 * 1024 * 1024,
+        fieldSize: 16 * 1024 * 1024
+    }
+}))
 app.use(responseTime())
+
 
 // *** create session *** 
 const session = require('express-session')
 
 const FileStore = require('session-file-store')(session)
 app.use(session({
-    store: new FileStore({ path: config.runDir }),
+    store: new FileStore({
+        path: config.runDir
+    }),
     name: 'session',
     secret: 'efwe987ysdf9fsd69f9ds',
     resave: false,
     rolling: true,
     saveUninitialized: true,
-    cookie: { 
-            secure: false,
-            maxAge: 40 * 60 * 1000,
-            httpOnly: false
+    cookie: {
+        secure: false,
+        maxAge: 20 * 60 * 1000,
+        httpOnly: false
     }
 }))
 
 // *** create knex shared object ***
 const knexfile = require('knexfile')
-const knex = require('knex')(knexfile)
+const knexStringcase = require('knex-stringcase')(knexfile)
+const knex = require('knex')(knexStringcase)
 
 // *** set routes ***
 
@@ -89,26 +105,31 @@ app.use('/api/login', login)
 //    }
 //})
 
-var users = require('./routers/users')(knex)
+const users = require('./routers/users')(knex)
 app.use('/api/users', users)
 
-var drivers = require('./routers/drivers')(knex)
+const drivers = require('./routers/drivers')(knex)
 app.use('/api/drivers', drivers)
 
-var vehicles = require('./routers/vehicles')(knex)
+const vehicles = require('./routers/vehicles')(knex)
 app.use('/api/vehicles', vehicles)
 
-
-//var customers = require('./routers/drivers')(knex)
-//app.use('/api/drivers', customers)
+const upload = require('./routers/data')(knex)
+app.use('/data', upload)
 
 app.get('/*', function(req, res) {
-     res.sendFile(path.join(config.appDir, '/public/index.html'))
+    res.sendFile(path.join(config.appDir, '/public/index.html'))
 })
+
+app.all('/*', function(req, res) {
+    //res.sendFile(path.join(config.appDir, '/public/index.html'))
+    res.json({  result: true, end: true });
+})
+
 
 // *** daemonize process *** 
 const daemon = require('utils/daemon')
-if(argv.daemon) {
+if (argv.daemon) {
     daemon()
 }
 
@@ -135,9 +156,8 @@ if (cluster.isMaster) {
             process.setgid(config.runGroup)
             process.setuid(config.runUser)
         } catch (err) {
-        console.log('Cannot change process user and group')
+            console.log('Cannot change process user and group')
             process.exit(1)
         }
     })
 }
-

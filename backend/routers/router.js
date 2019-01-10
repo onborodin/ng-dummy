@@ -103,15 +103,6 @@ module.exports = function(model) {
                         req.session.userProfile = result[0]
                 }
 
-                if (method === 'check') {
-                    console.log({ checkResult: result })
-                    if (lodash.has(req, "session.userId") && lodash.has(result, "[0].id")) {
-                        result = true
-                    } else {
-                        result = false
-                    }
-                }
-
                 console.log({ method: method, result: result })
 
                 res.send({
