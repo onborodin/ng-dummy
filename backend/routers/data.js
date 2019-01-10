@@ -1,16 +1,15 @@
 'use strict'
 
 const lodash = require('lodash')
-const path = require('path')
 const util = require('util')
 const crypto = require('crypto')
 const mime = require('mime')
 
-const busboy = require('connect-busboy')
 const readChunk = require('read-chunk')
 const fileType = require('file-type')
 const moment = require('moment')
 const fs = require('fs')
+const path = require('path')
 
 const router = require('express').Router()
 
@@ -39,14 +38,19 @@ function dataType(path) {
         type.ext = '.' + type.ext
         return type
     }
-    return { ext: '.bin', mime: 'application/octet-stream' }
+    return {
+        ext: '.bin',
+        mime: 'application/octet-stream'
+    }
 }
 
+function isDigit(value) {
+    return /^\d+$/.test(value)
+}
 
 module.exports = function(knex) {
 
     const model = require('models/data')(knex)
-
 
     function upload(req, res) {
 
@@ -62,7 +66,9 @@ module.exports = function(knex) {
 
             file.on('end', function() {
                 var type = dataType(newPath)
-                console.log({ type: type })
+                console.log({
+                    type: type
+                })
                 list.push({
                     fileName: newName + type.ext,
                     dataName: dataName,
@@ -98,32 +104,53 @@ module.exports = function(knex) {
     }
 
     async function download(req, res) {
-        const id = req.params.id
-        var profile = await model.get({ id: id })
-        console.log({ profile: profile })
+        const id = req.params.id 
+        if (isDigit(id)) {
+            var profile = await model.get({ id: id })
 
-        if (profile['fileName']) {
-            var path = require('path').join(config.dataDir, profile.fileName)
-            console.log({ path0: path })
-
-            if (fs.existsSync(path)) {
-                console.log({ path: path })
-
-                res.setHeader('Content-Transfer-Encoding', 'binary')
-                res.setHeader('Content-Disposition', 'attachment; filename=' + profile.dataName)
-                res.setHeader('Content-Type', profile.mimeType)
-                res.sendFile(path)
-            } else {
-                res.sendStatus(404)
+            if (profile['fileName']) {
+                var path = require('path').join(config.dataDir, profile.fileName)
+                if (fs.existsSync(path)) {
+                    res.setHeader('Content-Transfer-Encoding', 'binary')
+                    res.setHeader('Content-Disposition', 'attachment; filename=' + profile.dataName)
+                    res.setHeader('Content-Type', profile.mimeType)
+                    return res.sendFile(path)
+                }
             }
-        } else {
-            res.sendStatus(404)
         }
+        res.status(404)
+        res.send()
+    }
+
+    async function drop(req, res) {
+        const id = req.params.id 
+        if (isDigit(id)) {
+            const profile = await model.get({ id: id })
+
+            if (profile['fileName']) {
+                const path = require('path').join(config.dataDir, profile.fileName)
+                if (fs.existsSync(path)) {
+                    fs.unlinkSync(path)
+                }
+                const result = await model.drop({ id: id })
+                return res.send({
+                    jsonrpc: "2.0",
+                    result: true,
+                    id: uuid()
+                })
+            }
+        }
+        res.send({
+            jsonrpc: "2.0",
+            result: false,
+            id: uuid()
+        })
     }
 
     router.post('/upload', upload)
     router.get('/list', list)
     router.get('/download/:id', download)
+    router.get('/drop/:id', drop)
 
     return router
 }
