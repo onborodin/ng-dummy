@@ -316,7 +316,7 @@ Makefile
 frontend/Makefile
 backend/Makefile
 backend/lorem
-backend/config.js
+backend/lorem.conf
 backend/rc.d/lorem
 ],[chmod a+x backend/lorem])
 dnl EOF
