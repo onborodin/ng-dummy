@@ -12,4 +12,7 @@ uploads/
 run/
 logs/
 backend/public/
+backend/data/
+backend/run/
+backend/log/
 Makefile
