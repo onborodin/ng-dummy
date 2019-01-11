@@ -79,23 +79,27 @@ export class LoginService {
         }
 
         this.rpc.request<User, User>('/api/login', 'login', params)
-            .subscribe((res) => {
-            if (res.result.id >= 0) {
-                this.userProfile.id = res.result.id
-                this.userProfile.superuser = res.result.superuser
-                this.userProfile.gecos = res.result.gecos
-                this.userProfile.name = res.result.name
-                this.isAuth = true
-                this.reasonMessage = ''
-                this.loginSubject.next(true)
-                this.authSubject.next(true)
-            } else {
-                this.isAuth = false
-                this.loginSubject.next(false)
-                this.authSubject.next(false)
-            }
-        })
-
+            .subscribe(
+                (res) => {
+                    if (res.result.id >= 0) {
+                        this.userProfile.id = res.result.id
+                        this.userProfile.superuser = res.result.superuser
+                        this.userProfile.gecos = res.result.gecos
+                        this.userProfile.name = res.result.name
+                        this.isAuth = true
+                        this.reasonMessage = ''
+                        this.loginSubject.next(true)
+                        this.authSubject.next(true)
+                    } else {
+                        this.isAuth = false
+                        this.loginSubject.next(false)
+                        this.authSubject.next(false)
+                    }
+                },
+                (err) => {
+                    this.noticesService.sendAlertMessage('Backend communication problem')
+                    //console.log(err)
+                })
     }
 
     cleanLogin() {

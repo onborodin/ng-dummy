@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     loginForm: FormGroup
 
     reasonMessage: string = ''
+    alertMessage: string = ''
     message: string = ''
     attemptCounter: number = 0
     debug: string = ''
@@ -37,6 +38,14 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.router.navigate([ '/' ])
     }
 
+    showAlertMessage(message: string) {
+        this.alertMessage = message
+        setTimeout(() => {
+            this.alertMessage = ''
+        }, 3000)
+    }
+
+
     ngOnInit() {
         this.loginService.cleanLogin()
         this.reasonMessage = this.loginService.reasonMessage
@@ -46,18 +55,20 @@ export class LoginComponent implements OnInit, OnDestroy {
         })
 
         this.loginService.loginSubject
-            .subscribe((authState) => {
-                if (authState) {
-                    this.attemptCounter = 0
-                    this.message = 'Login successful'
-                    setTimeout(() => {
-                        this.router.navigate([ this.loginService.returnUrl ])
-                    }, 300)
-                } else {
-                    this.attemptCounter++
-                    this.message = 'Login incorrect'
+            .subscribe(
+                (authState) => {
+                    if (authState) {
+                        this.attemptCounter = 0
+                        this.message = 'Login successful'
+                        setTimeout(() => {
+                            this.router.navigate([ this.loginService.returnUrl ])
+                        }, 300)
+                    } else {
+                        this.attemptCounter++
+                        this.message = 'Login incorrect'
+                    }
                 }
-            })
+            )
     }
 
     ngOnDestroy() {

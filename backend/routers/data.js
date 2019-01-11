@@ -79,7 +79,7 @@ module.exports = function(knex) {
         })
 
         req.busboy.on('finish', async function() {
-            console.log(list)
+
             var idList = await model.create({
                 list: list
             })
@@ -104,9 +104,12 @@ module.exports = function(knex) {
     }
 
     async function download(req, res) {
-        const id = req.params.id 
+        const id = req.params.id
+
         if (isDigit(id)) {
-            var profile = await model.get({ id: id })
+            var profile = await model.get({
+                id: id
+            })
 
             if (profile['fileName']) {
                 var path = require('path').join(config.dataDir, profile.fileName)
@@ -123,16 +126,20 @@ module.exports = function(knex) {
     }
 
     async function drop(req, res) {
-        const id = req.params.id 
+        const id = req.params.id
         if (isDigit(id)) {
-            const profile = await model.get({ id: id })
+            const profile = await model.get({
+                id: id
+            })
 
             if (profile['fileName']) {
                 const path = require('path').join(config.dataDir, profile.fileName)
                 if (fs.existsSync(path)) {
                     fs.unlinkSync(path)
                 }
-                const result = await model.drop({ id: id })
+                const result = await model.drop({
+                    id: id
+                })
                 return res.send({
                     jsonrpc: "2.0",
                     result: true,

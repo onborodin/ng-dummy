@@ -1,0 +1,70 @@
+<div class="border p-3 my-3">
+
+    <div *ngFor="let progress of progresses; index as i" class="my-2">
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" [ngStyle]="{ width: progresses[i].percent + '%' }">
+                {{ progresses[i].label }}
+            </div>
+        </div>
+    </div>
+
+
+    <button type="button" class="btn btn-primary btn-sm mb-2" (click)="addFormItem()">Add file</button>
+
+
+    <form accept-charset="UTF-8" [formGroup]="uploadForm" (ngSubmit)="sendFile(uploadForm)">
+        <div formArrayName="formItems">
+
+            <div *ngFor="let subForm of formItems.controls; index as i">
+
+                <div [formGroupName]="i" class="form-group" [@rotate]>
+
+                    <div class="input-group">
+
+                        <div class="input-group-prepend">
+                            <label class="btn btn-primary">
+                                <fa-icon [icon]="['fas', 'folder']" size="lg"></fa-icon>
+                                <input type="file" hidden class="form-control" (change)="selectFile(subForm, $event)" formControlName="name">
+                            </label>
+                        </div>
+
+                        <input type="text" class="form-control" formControlName="secondName" placeholder="Name">
+
+                        <div class="input-group-append">
+                            <label class="btn btn-primary" type="button" (click)="deleteFormItem(i)">&times;</label>
+                            <label class="btn btn-primary" type="button" (click)="addFormItem()">+</label>
+                        </div>
+
+                    </div>
+                    <small class="form-text text-danger" *ngIf="subForm.get('file').errors && subForm.get('file').errors.fileIsDefined">
+                        Please, select file.
+                    </small>
+
+                    <small class="form-text text-danger" *ngIf="subForm.get('file').errors && subForm.get('file').errors.fileIsNotMore">
+                        File is too big.
+                    </small>
+
+                    <small class="form-text text-danger" *ngIf="subForm.get('file').errors && subForm.get('file').errors.fileIsNotZero">
+                        File is zero size.
+                    </small>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center text-danger" *ngIf="uploadForm.errors">
+            Form is incomplete.
+        </div>
+
+        <div *ngIf="formItems.length">
+            <hr class="my-3">
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-sm btn-secondary mr-3" (click)="createUploadForm()">Clean</button>
+                <button *ngIf="uploadForm.errors" class="btn btn-sm btn-primary disabled" type="button">Send</button>
+                <button *ngIf="!uploadForm.errors" class="btn btn-sm btn-primary" type="submit">Send</button>
+            </div>
+        </div>
+
+    </form>
+
+</div>

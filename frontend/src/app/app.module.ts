@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { BrowserModule, Title } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { FormsModule } from '@angular/forms'
 import { ReactiveFormsModule } from '@angular/forms'
 
@@ -39,13 +39,12 @@ import { UsersFilterPipe } from './users-filter.pipe'
 import { LowercaseDirective } from './directives/lowercase.directive'
 import { TrimDirective } from './directives/trim.directive'
 
-
-
-
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 //import { fas } from '@fortawesome/free-solid-svg-icons'
 //import { far } from '@fortawesome/free-regular-svg-icons'
+
+import { ApiInterceptor } from './api.interceptor'
 
 import {
     faEdit,
@@ -100,6 +99,7 @@ import { VehicleDropComponent } from './vehicle-drop/vehicle-drop.component'
 import { VehiclesFilterPipe } from './vehicles-filter.pipe';
 import { PageNavComponent } from './page-nav/page-nav.component';
 import { PrettyCodePipe } from './pretty-code.pipe';
+import { UploaderComponent } from './uploader/uploader.component';
 
 //import { ServiceWorkerModule } from '@angular/service-worker'
 //import { environment } from '../environments/environment'
@@ -153,6 +153,7 @@ const routes: Routes = []
         VehiclesFilterPipe,
         PageNavComponent,
         PrettyCodePipe,
+        UploaderComponent,
     ],
     imports: [
         RouterModule.forRoot(routes),
@@ -172,6 +173,7 @@ const routes: Routes = []
         PagesGuard,
         NoticesService,
         //{ provide: LOCALE_ID, useValue: 'ru' }
+        { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true }
     ],
     bootstrap: [ AppComponent ]
 })

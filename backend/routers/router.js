@@ -44,7 +44,7 @@ module.exports = function(model) {
 
     function responder(req, res) {
 
-        console.log({ body: req.body })
+        //console.log({ body: req.body })
 
         if(!lodash.has(req, 'body.method')) {
             res.send(error.invalidRequest)
@@ -82,28 +82,17 @@ module.exports = function(model) {
         }
 
         const method = req.body.method
-        var params = req.body.params
+        const params = req.body.params
         const id = req.body.id
 
-        if (method === 'check') {
-            if (lodash.has(req, 'session.userId')) {
-                params = { id: req.session.userId }
-            } else {
-                params = { id: -1 }
-            }
-        }
-
-        var modelPromise = model[method](params)
-
-        modelPromise
+        model[method](params)
             .then(function(result) {
 
-                if (method === 'login' && lodash.has(result, '[0].id')) {
-                        req.session.userId = result[0].id
-                        req.session.userProfile = result[0]
+                if (method === 'login' && lodash.has(result, 'id')) {
+                        req.session.user = result
+                        req.session.user.password = 'xxxxxxxxxxx'
                 }
-
-                console.log({ method: method, result: result })
+                //console.log({ method: method, result: result })
 
                 res.send({
                     jsonrpc: "2.0",
@@ -112,7 +101,9 @@ module.exports = function(model) {
                 })
             })
             .catch(function(err) {
+
                 console.log(err)
+
                 res.send({
                     jsonrpc: "2.0",
                     error: {
