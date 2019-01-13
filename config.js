@@ -1,6 +1,4 @@
 
-const path = require('path') 
-
 config = {
     publicDir: __dirname + '/public',
     runDir: __dirname + '/run',

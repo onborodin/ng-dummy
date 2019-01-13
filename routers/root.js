@@ -17,8 +17,8 @@ async function hello(ctx) {
 
 async function index(ctx) {
     ctx.type = 'text/html'
-    const path = path.join(config.piblicDir, 'index.html')
-    ctx.response.body = fs.createReadStream(path)
+    const filePath = path.join(config.publicDir, 'index.html')
+    ctx.response.body = fs.createReadStream(filePath)
 }
 
 router.all('/api', hello)

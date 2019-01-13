@@ -54,18 +54,19 @@ app.use(async function (ctx, next) {
 
 
 // *** generic logger *** //
-async function logger (...data) {
-    var date = new Date().toISOString()
+if (!module.parent) { 
+    async function logger (...data) {
+        var date = new Date().toISOString()
 
-    const logPath = path.join(config.logDir, 'debug.log')
-    const logStream = fs.createWriteStream(logPath, {flags : 'a'})
-    const logStdout = process.stdout
-    logStream.write(`${date} ${util.format(data)}\n`)
-    logStdout.write(`${date} ${util.format(data)}\n`)
-}
+        const logPath = path.join(config.logDir, 'debug.log')
+        const logStream = fs.createWriteStream(logPath, {flags : 'a'})
+        const logStdout = process.stdout
+        logStream.write(`${date} ${util.format(data)}\n`)
+        logStdout.write(`${date} ${util.format(data)}\n`)
+    }
 console.log = logger
 console.error = logger
-
+}
 // *** access logger *** //
 
 app.use(async function (ctx, next) {
@@ -82,7 +83,7 @@ app.use(async function (ctx, next) {
             ` ${req.protocol}://${req.header.host} ${req.url}` + 
             ` ${req.type} ${delta}ms ${res.status} ${res.message}`
         const logPath = path.join(config.logDir, 'access.log')
-        const logStream = fs.createWriteStream(accessLogPath, {flags : 'a'})
+        const logStream = fs.createWriteStream(logPath, {flags : 'a'})
         logStream.write(record)
         console.log(record)
     })
@@ -123,21 +124,24 @@ app.use(mount('/', root))
 
 // *** listener *** //
 
-const cluster = require('cluster')
-if (cluster.isMaster) {
-    var cpuCount = require('os').cpus().length
-    for (var i = 0; i < cpuCount; i += 1) {
-        cluster.fork()
+if (!module.parent) { 
+    const cluster = require('cluster')
+    if (cluster.isMaster) {
+        var cpuCount = require('os').cpus().length
+        for (var i = 0; i < cpuCount; i += 1) {
+            cluster.fork()
+        }
+        const pidFile = path.join(config.runDir, 'lorem.pid')
+        const fd = fs.openSync(pidFile, 'w')
+        fs.writeSync(fd, process.pid)
+        fs.closeSync(fd)
+    } else {
+        app.listen({ port: config.port, host: config.host })
+        console.log(`#server running on ${config.host}:${config.port}`)
     }
-    const pidFile = path.join(config.runDir, 'lorem.pid')
-    const fd = fs.openSync(pidFile, 'w')
-    fs.writeSync(fd, process.pid)
-    fs.closeSync(fd)
-} else {
-    app.listen({ port: config.port, host: config.host })
-    console.log(`#server running on ${config.host}:${config.port}`)
 }
 
-module.exports = cluster
-
+if (module.parent) { 
+    module.exports = app
+}
 // *** eof *** //
