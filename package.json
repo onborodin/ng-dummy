@@ -1,0 +1,30 @@
+{
+  "name": "koa-lorem",
+  "version": "0.0.1",
+  "description": "Koa Lorem",
+  "main": "app.js",
+  "dependencies": {
+    "async-busboy": "^0.7.0",
+    "koa": "^2.6.2",
+    "koa-body": "^4.0.6",
+    "koa-bodyparser": "^4.2.1",
+    "koa-compress": "^3.0.0",
+    "koa-conditional-get": "^2.0.0",
+    "koa-csrf": "^3.0.7",
+    "koa-etag": "^3.0.0",
+    "koa-helmet": "^4.0.0",
+    "koa-json": "^2.0.2",
+    "koa-json-error": "^3.1.2",
+    "koa-mount": "^4.0.0",
+    "koa-response-time": "^2.1.0",
+    "koa-router": "^7.4.0",
+    "koa-session": "^5.10.1",
+    "koa-sqlite3-session": "^1.0.4",
+    "koa-static": "^5.0.0",
+    "moment": "^2.23.0",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC"
+}
