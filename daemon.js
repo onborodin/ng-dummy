@@ -1,15 +1,21 @@
 'use strict'
 
+const debug = require('debug')('daemon')
+
 const childProcess = require('child_process')
 
 function daemon() {
 
+    debug('#start daemon')
+
     function detach(exe, args, env) {
+        debug('#detach subprocess')
         const subprocess = childProcess.spawn(exe, args, {
             detached: true,
             stdio: ['ignore', 'ignore', 'ignore'],
             env: env
         })
+
         subprocess.unref()
     }
 
@@ -25,6 +31,7 @@ function daemon() {
 
     detach(node, args, process.env)
 
+    debug('#exit from process')
     return process.exit()
 }
 

@@ -14,13 +14,39 @@ const compress = require('koa-compress')
 const helmet = require('koa-helmet')
 const conditional = require('koa-conditional-get')
 const etag = require('koa-etag')
-const uuid = require('uuid/v4')
 
-const config = require('./config')
+const uuid = require('uuid/v4')
+const lodash = require('lodash')
 
 const Koa = require('koa')
 const app = new Koa()
 
+
+// *** command line option handler *** //
+
+const minimist = require('minimist')
+var argv = minimist(process.argv.slice(2))
+
+if (argv.help) {
+    console.log('Expresso sample web application')
+    console.log('Usage: expresso [options]')
+    console.log('    --daemon daemonize process')
+    process.exit()
+}
+
+// *** configuration *** //
+
+const customConfig = require('./config')
+var config = {
+    publicDir: __dirname + '/public',
+    runDir: __dirname + '/run',
+    logDir: __dirname + '/log',
+    dataDir: __dirname + '/data',
+    port: 3000,
+    host: "0.0.0.0"
+}
+
+config = lodash.defaultsDeep(customConfig, config)
 
 // *** access logger *** //
 
@@ -35,6 +61,7 @@ const session = require('./session')
 app.use(session())
 
 // *** pligins *** //
+
 app.use(responseTime())
 app.use(helmet())
 app.use(json())
@@ -101,17 +128,20 @@ app.use(mount('/', root))
 // *** daemonize *** //
 
 const daemon = require('./daemon')
-//daemon()
+if (argv.daemon) {
+    daemon()
+}
 
 
 // *** listener *** //
 
+/*
 if (!module.parent) { 
     app.listen({ port: config.port, host: config.host })
     console.log(`#server running on ${config.host}:${config.port}`)
 }
+*/
 
-/*
 if (!module.parent) { 
     const cluster = require('cluster')
     if (cluster.isMaster) {
@@ -128,7 +158,6 @@ if (!module.parent) {
         console.log(`#server running on ${config.host}:${config.port}`)
     }
 }
-*/
 
 if (module.parent) { 
     module.exports = app

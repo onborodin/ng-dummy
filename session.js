@@ -1,115 +1,141 @@
 'use strict'
 
+const debug = require('debug')('session')
+
 const crypto = require('crypto')
 const fs = require('fs')
 const util = require('util')
+const path = require('path')
+const os = require('os')
+
 const uuid = require('uuid/v4')
+const lodash = require('lodash')
 
 const readFile = util.promisify(fs.readFile)
 const writeFile = util.promisify(fs.writeFile)
 const open = util.promisify(fs.open)
 const unlink = util.promisify(fs.unlink)
 
-async function getSessionData(sessionId) {
+module.exports = function(customOptions) {
 
-    const fileName = sessionId + '.json'
-    var sessionData = {}
-    try {
-        var buffer = await readFile(fileName)
-        sessionData = JSON.parse(buffer)
-
-    } catch (err) {}
-    return sessionData
-}
-
-async function storeSessionData(sessionId, data) {
-    try {
-        const fileName = sessionId + '.json'
-        await writeFile(fileName, JSON.stringify(data, null, 4))
-    } catch (err) {
-        console.log('#error store session data', err)
+    var defaultOptions = {
+        cookieName: 'session',
+        autoRenewal: true,
+        maxAge: 600 * 1000,
+        domain: '',
+        httpOnly: false,
+        runDir: os.tmpdir()
     }
-}
 
-async function deleteSessionData(sessionId) {
-    try {
-        const fileName = sessionId + '.json'
-        await unlink(fileName)
-    } catch (err) {
-        console.log('#error delete session data', err)
+    const opt = lodash.defaultsDeep(customOptions, defaultOptions)
+
+    function getFileName(sessionId) {
+        return path.join(opt.runDir, sessionId + '.json')
     }
-}
 
+    async function getSessionData(sessionId) {
 
-module.exports = function() {
+        const fileName = getFileName(sessionId)
+        var sessionData = null
+        try {
+            var buffer = await readFile(fileName)
+            if (buffer) sessionData = JSON.parse(buffer)
+        } catch (err) {}
+        return sessionData
+    }
 
-        const cookieName = 'session'
-        const autoRenewal = true
-        const maxAge = 600 * 1000
-        const domain = ''
-        const httpOnly = false
+    async function storeSessionData(sessionId, data) {
+        try {
+            const fileName = getFileName(sessionId)
+            await writeFile(fileName, JSON.stringify(data, null, 4))
+        } catch (err) {
+            debug('#error store session data', err)
+        }
+    }
 
-        return async function(ctx, next) {
+    async function deleteSessionData(sessionId) {
+        try {
+            const fileName = getFileName(sessionId)
+            await unlink(fileName)
+        } catch (err) {}
+    }
 
-            var sessionId = ctx.cookies.get(cookieName)
-            console.log(`#received session id ${sessionId}`)
+    return async function(ctx, next) {
 
-            var sessionData = null
-            if (sessionId) {
-                sessionData = await getSessionData(sessionId)
-                console.log(`#session data ${sessionData}`)
+        var sessionId = ctx.cookies.get(opt.cookieName)
+        debug(`#received session id ${sessionId}`)
 
-                if (sessionData.cookie && sessionData.expires) {
-                    if (sessionData.expires > Date.now() && sessionData.session) {
-                        ctx.state.session = Object.assign({}, sessionData.session)
-                        console.log(`#ctx.state.session ${ctx.state.session}`)
+        var sessionData = {}
+        var expiries = 0
+
+        if (sessionId) {
+            sessionData = await getSessionData(sessionId)
+            if (sessionData !== null && sessionData.expiries) {
+
+                if ((sessionData.expiries - Date.now()) > 0) {
+
+                    debug('#session still relevant')
+                    if (sessionData && sessionData.session) {
+                        ctx.state.session = sessionData.session
+                        expiries = sessionData.expiries
                     }
+
+                } else {
+                    debug('#session expired')
+                    sessionId = null
+                    ctx.state.session = null
+                    sessionData = null
                 }
             }
-
-            await next()
-            //return next().then(function() {
-
-                //ctx.state.session = { auth: true, userId: 7 }
-                //ctx.state.session = null
-
-                if (ctx.state.session != null) {
-
-                    const cookieOptions = {
-                        overwrite: true,
-                        maxAge: maxAge,
-                        httpOnly: httpOnly,
-                        domain: domain
-                    }
-
-                    if (sessionId) {
-                        if (autoRenewal) {
-                            sessionData.expires = Date.now() + maxAge
-                            ctx.cookies.set(cookieName, sessionId, cookieOptions)
-                        }
-                    } else {
-                        sessionId = crypto.createHmac('md5', uuid()).digest('hex')
-                        console.log(`#create new session ${sessionId}`)
-
-                        sessionData = {
-                            sessionId: sessionId,
-                            expiries: Date.now() + maxAge,
-                            cookiesOptions: cookieOptions,
-                            session: ctx.state.session
-                        }
-                        ctx.cookies.set(cookieName, sessionId, cookieOptions)
-                    }
-                    storeSessionData(sessionId, sessionData)
-                } else {
-                    if (sessionId) {
-                        ctx.cookies.set(cookieName, null, {
-                            maxAge: 0
-                        })
-                        deleteSessionData(sessionId)
-                        console.log(`#delete session ${sessionId}`)
-                    }
-                }
-            //})
-
         }
+
+        if (sessionData === null) sessionData = {}
+
+        await next()
+
+
+        if (ctx.state.session != null) {
+
+            var nextSessionId = ''
+            var nextExpiries = 0
+
+            if (sessionId) {
+                nextSessionId = sessionId
+                debug(`#use prevention session id ${nextSessionId}`)
+            } else {
+                nextSessionId = crypto.createHmac('md5', uuid()).digest('hex')
+                debug(`#create new session id ${nextSessionId}`)
+            }
+
+            if (opt.autoRenewal) {
+                var cookieOptions = {
+                    overwrite: true,
+                    maxAge: opt.maxAge,
+                    httpOnly: opt.httpOnly,
+                    domain: opt.domain
+                }
+                ctx.cookies.set(opt.cookieName, nextSessionId, cookieOptions)
+                nextExpiries = Date.now() + opt.maxAge
+            } else {
+                nextExpiries = expiries
+            }
+
+            const nextSessionData = {
+                sessionId: nextSessionId,
+                expiries: nextExpiries,
+                session: ctx.state.session
+            }
+            storeSessionData(nextSessionId, nextSessionData)
+
+        } else {
+            if (sessionId) {
+                ctx.cookies.set(opt.cookieName, null, {
+                    maxAge: 0,
+                    httpOnly: false
+                })
+                deleteSessionData(sessionId)
+                debug(`#delete old session data ${sessionId}`)
+            }
+        }
+    }
 }
