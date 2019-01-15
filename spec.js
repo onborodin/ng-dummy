@@ -12,11 +12,17 @@ describe('loading server', function() {
         server.close()
     })
 
-    it('responds to /', function testSlash(done) {
+    it('responds to /', function(done) {
         request(server)
             .get('/')
             .expect(200, done)
 
+    })
+
+    it('responds to /blabla', function(done) {
+        request(server)
+            .get('/blabla')
+            .expect(200, done)
     })
 
 })

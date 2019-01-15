@@ -9,85 +9,58 @@ const json = require('koa-json')
 const mount = require('koa-mount')
 const responseTime = require('koa-response-time')
 const send = require('koa-send')
-const session = require('koa-session')
 const serve = require('koa-static')
 const compress = require('koa-compress')
 const helmet = require('koa-helmet')
 const conditional = require('koa-conditional-get')
 const etag = require('koa-etag')
+const uuid = require('uuid/v4')
 
 const config = require('./config')
 
 const Koa = require('koa')
 const app = new Koa()
 
-app.use(helmet())
-app.use(body())
-app.use(responseTime())
-app.use(json())
-app.use(serve(config.publicDir))
-app.use(conditional())
-app.use(etag())
+
+// *** access logger *** //
+
+if (!module.parent) {
+    const accessLogger = require('./logger')
+    app.use(accessLogger(config))
+}
 
 // *** sessioning *** //
 
-const sessionStore = require('koa-sqlite3-session')
-const sessionConfig = {
-    key: 'session',
-    maxAge: 60 * 1000,
-    autoCommit: true,
-    overwrite: true,
-    httpOnly: false,
-    signed: true,
-    rolling: true,
-    renew: false,
-    //store: new sessionStore(__dirname + '/session.db')
-}
+const session = require('./session')
+app.use(session())
 
-app.keys = ['secret']
-app.use(session(sessionConfig, app))
-app.use(async function (ctx, next) {
-    //ctx.session.count = ctx.session.count || 0
-    //ctx.session.count += 1
-    await next()
-})
+// *** pligins *** //
+app.use(responseTime())
+app.use(helmet())
+app.use(json())
+app.use(serve(config.publicDir))
+app.use(body())
+app.use(conditional())
+app.use(etag())
 
 
 // *** generic logger *** //
-if (!module.parent) { 
-    async function logger (...data) {
+
+if (!module.parent) {
+    function logger (...data) {
         var date = new Date().toISOString()
 
         const logPath = path.join(config.logDir, 'debug.log')
         const logStream = fs.createWriteStream(logPath, {flags : 'a'})
         const logStdout = process.stdout
-        logStream.write(`${date} ${util.format(data)}\n`)
-        logStdout.write(`${date} ${util.format(data)}\n`)
-    }
-console.log = logger
-console.error = logger
-}
-// *** access logger *** //
+        const record = `${date} ${util.format(data)}\n`
 
-app.use(async function (ctx, next) {
-    let start = process.hrtime()
-    const stamp = new Date().toISOString()
-
-    return next().then(function() {
-        let delta = process.hrtime(start)
-        delta = delta[0] * 1000 + delta[1] / 1000000
-        delta = Math.round(delta)
-        const req = ctx.request
-        const res = ctx.response
-        const record = `${stamp} ${req.ip} ${req.method}` + 
-            ` ${req.protocol}://${req.header.host} ${req.url}` + 
-            ` ${req.type} ${delta}ms ${res.status} ${res.message}`
-        const logPath = path.join(config.logDir, 'access.log')
-        const logStream = fs.createWriteStream(logPath, {flags : 'a'})
         logStream.write(record)
-        console.log(record)
-    })
-})
+        logStdout.write(record)
+    }
+    console.log = logger
+    console.error = logger
+}
 
 // *** error reporter *** //
 
@@ -101,7 +74,6 @@ function formatError(err) {
         }
     }
 }
-
 app.use(error(formatError))
 
 // *** compressor *** //
@@ -116,14 +88,30 @@ app.use(compress({
 
 // *** uploader *** //
 
+const login = require('./routers/login')
+app.use(mount('/', login()))
+
 const upload = require('./routers/upload')
 app.use(mount('/upload', upload))
 
 const root = require('./routers/root')
 app.use(mount('/', root))
 
+
+// *** daemonize *** //
+
+const daemon = require('./daemon')
+//daemon()
+
+
 // *** listener *** //
 
+if (!module.parent) { 
+    app.listen({ port: config.port, host: config.host })
+    console.log(`#server running on ${config.host}:${config.port}`)
+}
+
+/*
 if (!module.parent) { 
     const cluster = require('cluster')
     if (cluster.isMaster) {
@@ -140,6 +128,7 @@ if (!module.parent) {
         console.log(`#server running on ${config.host}:${config.port}`)
     }
 }
+*/
 
 if (module.parent) { 
     module.exports = app
