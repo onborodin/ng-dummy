@@ -69,7 +69,7 @@ module.exports = function(knex, config) {
             onFile: function(fieldname, file, fileName, encoding, mimeType) {
 
                 const blobName = 'blob-' + tools.timestamp() + '-' + tools.hash(fileName)
-                const blobPath = require('path').join(config.dataDir, blobName)
+                const blobPath = path.join(config.dataDir, blobName)
 
                 file.pipe(fs.createWriteStream(blobPath))
 
@@ -132,17 +132,17 @@ module.exports = function(knex, config) {
             }
 
             if (profile['blobName']) {
-                var path = require('path').join(config.dataDir, profile.blobName)
-                if (fs.existsSync(path)) {
+                var aPath = path.join(config.dataDir, profile.blobName)
+                if (fs.existsSync(aPath)) {
 
-                    debug('##data:download blob found as ', path)
+                    debug('##data:download blob found as ', aPath)
 
                     ctx.set('Content-Transfer-Encoding', 'binary')
                     ctx.set('Content-Disposition', 'attachment; filename=' + profile.fileName)
                     ctx.set('Content-Type', profile.mimeType)
-                    return ctx.body = fs.createReadStream(path)
+                    return ctx.body = fs.createReadStream(aPath)
                 }
-                debug('##data:download blob not found, path ', path)
+                debug('##data:download blob not found, path ', aPath)
             }
         }
         ctx.throw(404)
@@ -180,7 +180,7 @@ module.exports = function(knex, config) {
                     id: uuid()
                 }
             }
-            debug('##data:delete blob not found, path ', path)
+            debug('##data:delete blob not found, path ', aPath)
 
         }
         ctx.body = {
