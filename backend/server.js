@@ -172,16 +172,6 @@ router.all('/*', index)
 app.use(router.routes())
 app.use(router.allowedMethods())
 
-
-//const login = require('./routers/login')
-//app.use(mount('/', login()))
-
-//const upload = require('./routers/upload')
-//app.use(mount('/upload', upload))
-
-//const root = require('./routers/root')
-//app.use(mount('/', root))
-
 // *** daemonize *** //
 
 if (argv.daemon && !module.parent) {
