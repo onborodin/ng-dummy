@@ -21,7 +21,7 @@ module.exports = function(customOptions) {
     var defaultOptions = {
         cookieName: 'session',
         autoRenewal: true,
-        maxAge: 600 * 1000,
+        maxAge: 10 * 60 * 1000,
         domain: '',
         httpOnly: false,
         runDir: os.tmpdir()

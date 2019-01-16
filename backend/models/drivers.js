@@ -1,5 +1,7 @@
 'use strict'
 
+const debug = require('debug')('rpc')
+
 module.exports = function(knex) {
 
     var list = function(params) {
@@ -57,9 +59,9 @@ module.exports = function(knex) {
 
     return {
         modelName: "drivers",
-        list: list,
-        create: create,
-        update: update,
-        drop: drop
+        list,
+        create,
+        update,
+        drop
     }
 }

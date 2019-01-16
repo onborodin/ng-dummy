@@ -14,29 +14,32 @@ function timestamp() {
     return moment().format('YYYYMMDDhhmmss')
 }
 
+function writable(dir) {
+    var dummy = path.join(dir, '.dummy')
+    try {
+        var fd = fs.openSync(dummy, 'w')
+        fs.writeSync(fd, 'dummy')
+        fs.closeSync(fd)
+        fs.unlinkSync(dummy)
+        return true
+    } catch (err) {
+        return false
+    }
+}
+
 function mkdir(dir) {
 
     var dummy = path.join(dir, '.dummy')
 
     if (fs.existsSync(dir)) {
-        try {
-            var fd = fs.openSync(dummy, 'w')
-            fs.writeSync(fd, 'dummy')
-            fs.closeSync(fd)
-            fs.unlinkSync(dummy)
-            return true
-        } catch (err) {
-            return false
-        }
+        return writable(dir)
     }
 
-    if (!fs.existsSync(dir)) {
-        try {
-            fs.mkdirSync(dir)
-            return true
-        } catch {
-            return false
-        }
+    try {
+        fs.mkdirSync(dir)
+        return true
+    } catch(err) {
+        return false
     }
 }
 

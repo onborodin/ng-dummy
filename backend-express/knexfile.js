@@ -3,7 +3,6 @@
 var path = require('path')
 
 module.exports = {
-    //debug: true,
     client: 'pg',
     connection: 'postgres://pgsql@localhost/lorem',
     useNullAsDefault: true,

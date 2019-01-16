@@ -1,0 +1,13 @@
+{
+    "nodeBin": "@node@",
+    "appDir": "@app_libdir@",
+    "publicDir": "@app_libdir@/public",
+    "dataDir": "@app_libdir@/data",
+    "port": 3101,
+    "host": "0.0.0.0",
+    "runUser": "@app_user@",
+    "runGroup": "@app_group@",
+    "logDir": "@app_logdir@",
+    "pidFile": "@app_rundir@/pid",
+    "runDir": "@app_rundir@"
+}

@@ -1,7 +1,12 @@
 'use strict'
 
+const debug = require('debug')('rpc')
+
 module.exports = function(knex) {
-    const model = require('models/vehicles')(knex)
-    const router = require('routers/router')(model)
-    return router
+
+    debug('#load vehicles router')
+    const model = require('../models/vehicles')(knex)
+    const app = require('./rpc')(model)
+    return app
 }
+

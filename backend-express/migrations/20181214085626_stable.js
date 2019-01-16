@@ -31,7 +31,7 @@ exports.up = function(knex, Promise) {
         })
         .createTable('data', function(table) {
             table.increments('id').primary().unique()
-            table.string('blob_name')
+            table.string('data_name')
             table.string('file_name')
             table.string('mime_type')
             table.timestamp('created_at').defaultTo(knex.fn.now())

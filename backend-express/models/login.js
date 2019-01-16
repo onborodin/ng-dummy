@@ -1,7 +1,5 @@
 'use strict'
 
-const debug = require('debug')('rpc')
-
 module.exports = function(knex) {
 
     var login = function(params) {
@@ -27,6 +25,6 @@ module.exports = function(knex) {
 
     return {
         modelName: "login",
-        login,
+        login: login,
     }
 }

@@ -1,16 +1,14 @@
 'use strict'
 
-const debug = require('debug')('rpc')
-
 module.exports = function(knex) {
 
     var list = function(params) {
         return knex
             .select([
-                'vehicles.*',
+                'drivers.*',
             ])
-            .from('vehicles')
-            .orderBy('vehicles.name')
+            .from('drivers')
+            .orderBy('drivers.name')
     }
 
     var create = function(params) {
@@ -18,7 +16,7 @@ module.exports = function(knex) {
             .insert({
                 name: params.name,
             })
-            .into('vehicles')
+            .into('drivers')
             .then(function(res) {
                 if (res.rowCount) {
                     return true
@@ -33,7 +31,7 @@ module.exports = function(knex) {
             .update({
                 name: params.name,
             })
-            .from('vehicles')
+            .from('drivers')
             .where({
                 id: params.id
             })
@@ -46,7 +44,7 @@ module.exports = function(knex) {
     var drop = function(params) {
         return knex
             .delete()
-            .from('vehicles')
+            .from('drivers')
             .where({
                 id: params.id
             })
@@ -58,10 +56,10 @@ module.exports = function(knex) {
     }
 
     return {
-        modelName: "vehicles",
-        list,
-        create,
-        update,
-        drop
+        modelName: "drivers",
+        list: list,
+        create: create,
+        update: update,
+        drop: drop
     }
 }

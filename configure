@@ -3219,7 +3219,7 @@ app_datadir="$APP_DATADIR"
 
 
 
-ac_config_files="$ac_config_files Makefile frontend/Makefile backend/Makefile backend/lorem backend/lorem.conf backend/rc.d/lorem"
+ac_config_files="$ac_config_files Makefile frontend/Makefile backend/Makefile backend/lorem backend/lorem.json backend/rc.d/lorem"
 
 ac_config_commands="$ac_config_commands default"
 
@@ -3972,7 +3972,7 @@ do
     "frontend/Makefile") CONFIG_FILES="$CONFIG_FILES frontend/Makefile" ;;
     "backend/Makefile") CONFIG_FILES="$CONFIG_FILES backend/Makefile" ;;
     "backend/lorem") CONFIG_FILES="$CONFIG_FILES backend/lorem" ;;
-    "backend/lorem.conf") CONFIG_FILES="$CONFIG_FILES backend/lorem.conf" ;;
+    "backend/lorem.json") CONFIG_FILES="$CONFIG_FILES backend/lorem.json" ;;
     "backend/rc.d/lorem") CONFIG_FILES="$CONFIG_FILES backend/rc.d/lorem" ;;
     "default") CONFIG_COMMANDS="$CONFIG_COMMANDS default" ;;
 

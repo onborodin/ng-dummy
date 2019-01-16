@@ -97,7 +97,7 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 DIST_COMMON = $(srcdir)/Makefile.am $(nobase_dist_pkgdata_DATA) \
 	$(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
-CONFIG_CLEAN_FILES = lorem lorem.json
+CONFIG_CLEAN_FILES = lorem lorem.conf
 CONFIG_CLEAN_VPATH_FILES =
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
@@ -152,8 +152,8 @@ am__can_run_installinfo = \
   esac
 DATA = $(conf_DATA) $(nobase_dist_pkgdata_DATA)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
-am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/lorem.in \
-	$(srcdir)/lorem.json.in
+am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/lorem.conf.in \
+	$(srcdir)/lorem.in
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
@@ -315,7 +315,7 @@ $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 $(am__aclocal_m4_deps):
 lorem: $(top_builddir)/config.status $(srcdir)/lorem.in
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-lorem.json: $(top_builddir)/config.status $(srcdir)/lorem.json.in
+lorem.conf: $(top_builddir)/config.status $(srcdir)/lorem.conf.in
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 install-nobase_etcSCRIPTS: $(nobase_etc_SCRIPTS)
 	@$(NORMAL_INSTALL)

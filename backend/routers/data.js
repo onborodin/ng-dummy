@@ -1,6 +1,6 @@
 'use strict'
 
-const lodash = require('lodash')
+const debug = require('debug')('data')
 const util = require('util')
 const crypto = require('crypto')
 const mime = require('mime')
@@ -11,9 +11,15 @@ const moment = require('moment')
 const fs = require('fs')
 const path = require('path')
 
-const router = require('express').Router()
+const lodash = require('lodash')
+const asyncBusboy = require('async-busboy')
 
-const config = require('lorem.conf')
+
+const Koa = require('koa')
+const Router = require('koa-router')
+
+const tools = require('../tools')
+
 
 function uuid() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -31,8 +37,8 @@ function timestamp() {
     return moment().format('YYYYMMDDhhmmss')
 }
 
-function dataType(path) {
-    const buffer = readChunk.sync(path, 0, fileType.minimumBytes)
+function dataType(aPath) {
+    const buffer = readChunk.sync(aPath, 0, fileType.minimumBytes)
     const type = fileType(buffer)
     if (type !== null) {
         type.ext = '.' + type.ext
@@ -48,110 +54,186 @@ function isDigit(value) {
     return /^\d+$/.test(value)
 }
 
-module.exports = function(knex) {
+module.exports = function(knex, config) {
 
     const model = require('models/data')(knex)
 
-    function upload(req, res) {
+    const app = new Koa()
+    const router = new Router()
 
-        var list = []
+    async function upload(ctx) {
 
-        req.pipe(req.busboy)
+        var fileList = []
 
-        req.busboy.on('file', function(fieldName, file, dataName, encoding, mimeType) {
+        await asyncBusboy(ctx.req, {
 
-            const newName = 'data' + '-' + timestamp() + '-' + hash(dataName)
-            const newPath = path.join(config.dataDir, newName)
-            file.pipe(fs.createWriteStream(newPath))
+            onFile: function(fieldname, file, fileName, encoding, mimeType) {
 
-            file.on('end', function() {
-                var type = dataType(newPath)
-                console.log({
-                    type: type
+                const blobName = tools.timestamp() + '-' + tools.hash(fileName) + '.bin'
+                const blobPath = require('path').join(config.dataDir, blobName)
+
+                file.pipe(fs.createWriteStream(blobPath))
+
+                file.on('end', function() {
+                    fileList.push({
+                        fileName: fileName,
+                        blobName: blobName,
+                        mimeType: mimeType
+                    })
                 })
-                list.push({
-                    fileName: newName + type.ext,
-                    dataName: dataName,
-                    mimeType: type.mime,
-                })
-                fs.renameSync(newPath, newPath + type.ext)
-            })
+
+            }
         })
 
-        req.busboy.on('finish', async function() {
-
-            var idList = await model.create({
-                list: list
-            })
-            var dataList = await model.findIn({
-                list: idList
-            })
-            res.send({
-                jsonrpc: "2.0",
-                result: dataList,
-                id: uuid()
-            })
+        var idList = await model.create({
+            list: fileList
         })
+
+        var dataList = await model.findIn({
+            list: idList
+        })
+
+        ctx.body = {
+            jsonrpc: "2.0",
+            result: dataList,
+            id: uuid()
+        }
+
+        /*
+            var req = ctx.request
+            var list = []
+
+            req.pipe(req.busboy)
+
+            req.busboy.on('file', function(fieldName, file, dataName, encoding, mimeType) {
+                console.log(req.head)
+
+                const newName = 'data' + '-' + timestamp() + '-' + hash(dataName)
+                const newPath = path.join(config.dataDir, newName)
+                file.pipe(fs.createWriteStream(newPath))
+
+                file.on('end', function() {
+                    var type = dataType(newPath)
+                    console.log({
+                        type: type
+                    })
+                    list.push({
+                        fileName: newName + type.ext,
+                        dataName: dataName,
+                        mimeType: type.mime,
+                    })
+                    fs.renameSync(newPath, newPath + type.ext)
+                })
+            })
+
+            req.busboy.on('finish', async function() {
+
+                var idList = await model.create({
+                    list: list
+                })
+                var dataList = await model.findIn({
+                    list: idList
+                })
+                res.send({
+                    jsonrpc: "2.0",
+                    result: dataList,
+                    id: uuid()
+                })
+            })
+        */
+
     }
 
-    async function list(req, res) {
+    async function list(ctx) {
         var result = await model.list()
-        res.send({
+        ctx.body = {
             jsonrpc: "2.0",
             result: result,
             id: uuid()
-        })
+        }
     }
 
-    async function download(req, res) {
-        const id = req.params.id
+    async function download(ctx) {
+        const id = ctx.params.id
+
+        debug('##data:download download id = ', id)
 
         if (isDigit(id)) {
-            var profile = await model.get({
-                id: id
-            })
+            try {
+                var profile = await model.get({
+                    id: id
+                })
+            } catch (err) {
+                console.log(err)
+                return ctx.throw(404)
+            }
 
-            if (profile['fileName']) {
-                var path = require('path').join(config.dataDir, profile.fileName)
+            debug('##data:download download profile = ', profile)
+
+            if (!profile['id']) {
+                debug('##data:download not found record with id = ', id)
+                return ctx.throw(404)
+            }
+
+            if (profile['blobName']) {
+                var path = require('path').join(config.dataDir, profile.blobName)
                 if (fs.existsSync(path)) {
-                    res.setHeader('Content-Transfer-Encoding', 'binary')
-                    res.setHeader('Content-Disposition', 'attachment; filename=' + profile.dataName)
-                    res.setHeader('Content-Type', profile.mimeType)
-                    return res.sendFile(path)
+
+                    debug('##data:download blob found as ', path)
+
+                    ctx.set('Content-Transfer-Encoding', 'binary')
+                    ctx.set('Content-Disposition', 'attachment; filename=' + profile.fileName)
+                    ctx.set('Content-Type', profile.mimeType)
+                    return ctx.body = fs.createReadStream(path)
                 }
+                debug('##data:download blob not found, path ', path)
             }
         }
-        res.status(404)
-        res.send()
+
+        ctx.throw(404)
     }
 
-    async function drop(req, res) {
-        const id = req.params.id
+    async function drop(ctx) {
+
+        const id = ctx.params.id
+        debug('##data:delete drop id = ', id)
+
         if (isDigit(id)) {
             const profile = await model.get({
                 id: id
             })
 
+            debug('##data:delete drop profile = ', profile)
+
             if (profile['fileName']) {
-                const path = require('path').join(config.dataDir, profile.fileName)
-                if (fs.existsSync(path)) {
-                    fs.unlinkSync(path)
+                const aPath = path.join(config.dataDir, profile.blobName)
+
+                debug('##data:delete blob found as ', aPath)
+
+                //*** need async !!! ***//
+                if (fs.existsSync(aPath)) {
+                    fs.unlinkSync(aPath)
                 }
+
+                //*** need try/catch !!! ***//
                 const result = await model.drop({
                     id: id
                 })
-                return res.send({
+
+                return ctx.body = {
                     jsonrpc: "2.0",
                     result: true,
                     id: uuid()
-                })
+                }
             }
+            debug('##data:delete blob not found, path ', path)
+
         }
-        res.send({
+        ctx.body = {
             jsonrpc: "2.0",
             result: false,
             id: uuid()
-        })
+        }
     }
 
     router.post('/upload', upload)
@@ -159,5 +241,7 @@ module.exports = function(knex) {
     router.get('/download/:id', download)
     router.get('/drop/:id', drop)
 
-    return router
+    app.use(router.routes())
+    app.use(router.allowedMethods())
+    return app
 }

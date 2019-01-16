@@ -1,0 +1,18 @@
+#!/bin/sh
+
+NODE_PATH="@app_confdir@"
+NODE_PATH="$NODE_PATH:@app_libdir@"
+NODE_PATH="$NODE_PATH:@app_libdir@/models"
+NODE_PATH="$NODE_PATH:@app_libdir@/controllers"
+NODE_PATH="$NODE_PATH:@app_libdir@/utils"
+NODE_PATH="$NODE_PATH:@app_libdir@/plugins"
+NODE_PATH="$NODE_PATH:@app_libdir@/routers"
+export NODE_PATH
+
+NODE_ENV=production
+export NODE_ENV
+
+cd @app_libdir@ && @node@ @app_libdir@/serv.js $@
+#EOF
+
+

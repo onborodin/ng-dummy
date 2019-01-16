@@ -1,0 +1,18 @@
+#!/bin/sh
+
+NODE_PATH="/home/ziggi/lorem/backend"
+NODE_PATH="$NODE_PATH:/home/ziggi/lorem/backend"
+NODE_PATH="$NODE_PATH:/home/ziggi/lorem/backend/models"
+NODE_PATH="$NODE_PATH:/home/ziggi/lorem/backend/controllers"
+NODE_PATH="$NODE_PATH:/home/ziggi/lorem/backend/utils"
+NODE_PATH="$NODE_PATH:/home/ziggi/lorem/backend/plugins"
+NODE_PATH="$NODE_PATH:/home/ziggi/lorem/backend/routers"
+export NODE_PATH
+
+NODE_ENV=production
+export NODE_ENV
+
+cd /home/ziggi/lorem/backend && /usr/local/bin/node --trace-warnings /home/ziggi/lorem/backend/serv.js $@
+#EOF
+
+

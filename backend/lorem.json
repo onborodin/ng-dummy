@@ -1,0 +1,13 @@
+{
+    "nodeBin": "/usr/local/bin/node",
+    "appDir": "/home/ziggi/lorem/backend",
+    "publicDir": "/home/ziggi/lorem/backend/public",
+    "dataDir": "/home/ziggi/lorem/backend/data",
+    "port": 3101,
+    "host": "0.0.0.0",
+    "runUser": "ziggi",
+    "runGroup": "wheel",
+    "logDir": "/home/ziggi/lorem/backend/logs",
+    "pidFile": "/home/ziggi/lorem/backend/run/pid",
+    "runDir": "/home/ziggi/lorem/backend/run"
+}

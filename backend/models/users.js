@@ -1,8 +1,12 @@
 'use strict'
 
+const debug = require('debug')('rpc')
+
 module.exports = function(knex) {
 
-    var list = function(params) {
+    debug('#load model users')
+
+    function list (params) {
         return knex
             .select([
                 'users.*',
@@ -11,7 +15,7 @@ module.exports = function(knex) {
             .orderBy('users.name')
     }
 
-    var create = function(params) {
+    function create(params) {
         return knex
             .insert({
                 gecos: params.gecos,
@@ -29,7 +33,7 @@ module.exports = function(knex) {
 
     }
 
-    var update = function(params) {
+    function update(params) {
         return knex
             .update({
                 gecos: params.gecos,
@@ -47,7 +51,7 @@ module.exports = function(knex) {
             })
     }
 
-    var drop = function(params) {
+    function drop(params) {
         return knex
             .delete()
             .from('users')
@@ -63,9 +67,9 @@ module.exports = function(knex) {
 
     return {
         modelName: "users",
-        list: list,
-        create: create,
-        update: update,
-        drop: drop
+        list,
+        create,
+        update,
+        drop
     }
 }

@@ -32,7 +32,7 @@ module.exports = function(knex) {
                 'data.*',
             ])
             .from('data')
-            .orderBy('data.blobName')
+            .orderBy('data.dataName')
     }
 
     var create = function(params) {
@@ -73,11 +73,11 @@ module.exports = function(knex) {
 
     return {
         modelName: "data",
-        findIn,
-        list,
-        get,
-        create,
-        update,
-        drop,
+        findIn: findIn,
+        list: list,
+        create: create,
+        update: update,
+        drop: drop,
+        get: get
     }
 }
