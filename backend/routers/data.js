@@ -20,7 +20,6 @@ const Router = require('koa-router')
 
 const tools = require('../tools')
 
-
 function uuid() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
         var r = Math.random() * 16 | 0,
@@ -69,17 +68,21 @@ module.exports = function(knex, config) {
 
             onFile: function(fieldname, file, fileName, encoding, mimeType) {
 
-                const blobName = tools.timestamp() + '-' + tools.hash(fileName) + '.bin'
+                const blobName = 'blob-' + tools.timestamp() + '-' + tools.hash(fileName)
                 const blobPath = require('path').join(config.dataDir, blobName)
 
                 file.pipe(fs.createWriteStream(blobPath))
 
                 file.on('end', function() {
+                    var type = dataType(blobPath)
+
                     fileList.push({
                         fileName: fileName,
-                        blobName: blobName,
-                        mimeType: mimeType
+                        blobName: blobName + type.ext,
+                        mimeType: type.mime
                     })
+                    //*** need async !!! ***//
+                    fs.renameSync(blobPath, blobPath + type.ext)
                 })
 
             }
@@ -88,59 +91,14 @@ module.exports = function(knex, config) {
         var idList = await model.create({
             list: fileList
         })
-
         var dataList = await model.findIn({
             list: idList
         })
-
         ctx.body = {
             jsonrpc: "2.0",
             result: dataList,
             id: uuid()
         }
-
-        /*
-            var req = ctx.request
-            var list = []
-
-            req.pipe(req.busboy)
-
-            req.busboy.on('file', function(fieldName, file, dataName, encoding, mimeType) {
-                console.log(req.head)
-
-                const newName = 'data' + '-' + timestamp() + '-' + hash(dataName)
-                const newPath = path.join(config.dataDir, newName)
-                file.pipe(fs.createWriteStream(newPath))
-
-                file.on('end', function() {
-                    var type = dataType(newPath)
-                    console.log({
-                        type: type
-                    })
-                    list.push({
-                        fileName: newName + type.ext,
-                        dataName: dataName,
-                        mimeType: type.mime,
-                    })
-                    fs.renameSync(newPath, newPath + type.ext)
-                })
-            })
-
-            req.busboy.on('finish', async function() {
-
-                var idList = await model.create({
-                    list: list
-                })
-                var dataList = await model.findIn({
-                    list: idList
-                })
-                res.send({
-                    jsonrpc: "2.0",
-                    result: dataList,
-                    id: uuid()
-                })
-            })
-        */
 
     }
 
@@ -157,7 +115,6 @@ module.exports = function(knex, config) {
         const id = ctx.params.id
 
         debug('##data:download download id = ', id)
-
         if (isDigit(id)) {
             try {
                 var profile = await model.get({
@@ -169,7 +126,6 @@ module.exports = function(knex, config) {
             }
 
             debug('##data:download download profile = ', profile)
-
             if (!profile['id']) {
                 debug('##data:download not found record with id = ', id)
                 return ctx.throw(404)
@@ -189,7 +145,6 @@ module.exports = function(knex, config) {
                 debug('##data:download blob not found, path ', path)
             }
         }
-
         ctx.throw(404)
     }
 
@@ -204,7 +159,6 @@ module.exports = function(knex, config) {
             })
 
             debug('##data:delete drop profile = ', profile)
-
             if (profile['fileName']) {
                 const aPath = path.join(config.dataDir, profile.blobName)
 
