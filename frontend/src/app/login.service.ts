@@ -61,7 +61,6 @@ export class LoginService {
         })
 
         router.events.subscribe((event: any) => { 
-            //console.log(event)
             if (event['id'] && event['urlAfterRedirects']) {
                 if (event.url !== '/login') {
                     this.returnUrl = event.urlAfterRedirects
@@ -98,7 +97,6 @@ export class LoginService {
                 },
                 (err) => {
                     this.noticesService.sendAlertMessage('Backend communication problem')
-                    //console.log(err)
                 })
     }
 

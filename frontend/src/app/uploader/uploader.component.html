@@ -1,9 +1,9 @@
 <div class="border p-3 my-3">
 
-    <div *ngFor="let progress of progresses; index as i" class="my-2">
+    <div *ngFor="let item of uploadService.tasks; index as i" class="my-2">
         <div class="progress">
-            <div class="progress-bar" role="progressbar" [ngStyle]="{ width: progresses[i].percent + '%' }">
-                {{ progresses[i].label }}
+            <div class="progress-bar" role="progressbar" [ngStyle]="{ width: item.percent + '%' }">
+                {{ item.name }} {{ item.loaded }}/{{ item.total }}
             </div>
         </div>
     </div>

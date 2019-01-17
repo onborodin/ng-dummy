@@ -14,7 +14,7 @@ export class ApiInterceptor implements HttpInterceptor {
         next: HttpHandler
     ) : Observable<HttpEvent<any>> {
 
-        console.log(req)
+        //console.log(req)
 
         return next.handle(req)
             .pipe(

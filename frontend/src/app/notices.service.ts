@@ -11,6 +11,7 @@ export enum NoticeType {
 export interface Notice {
     type: NoticeType
     message: string
+    autoHide?: boolean
 }
 
 

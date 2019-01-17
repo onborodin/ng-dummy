@@ -37,46 +37,6 @@ export class UploaderComponent implements OnInit {
         this.createUploadForm()
     }
 
-    progresses: Progresses = []
-
-    createProgress(label = "") : string {
-        var nextNum = this.progresses.length
-        var progress: Progress = {
-            id: "xprogress-" + nextNum,
-            percent: 0,
-            label: label
-        }
-        this.progresses.push(progress)
-        return progress.id
-    }
-
-    getProgressPercent(id: string) {
-        var percent = 0
-        this.progresses.forEach((item) => {
-            if (item.id === id) {
-                percent = item.percent
-            }
-        })
-        return percent
-    }
-
-    setProgressPercent(id: string, percent: number) {
-        if (percent >= 0 && percent <= 100) {
-            this.progresses.forEach((item) => {
-                if (item.id === id) {
-                    item.percent = percent
-                }
-            })
-        }
-    }
-
-    dropProgress(id: string) {
-        this.progresses = this.progresses.filter((item) => {
-            if (id === item.id) return false
-            return true
-        })
-    }
-
     createUploadForm() {
         this.formItems = new FormArray([])
         this.uploadForm = new FormGroup({
@@ -161,29 +121,8 @@ export class UploaderComponent implements OnInit {
 
             var file = subForm.controls.file.value
             var name = subForm.controls.secondName.value
-            var progressId = this.createProgress(name)
 
             this.uploadService.uploadFile('/data/upload', file, name)
-                .subscribe(
-                    (event) => {
-                        console.log('#upload event', event)
-                        if (event.type == HttpEventType.UploadProgress) {
-                            var percent = Math.round(100 * event.loaded / event.total)
-                            this.setProgressPercent(progressId, percent)
-                        }
-                        if (event.type == HttpEventType.Response) {
-                            this.noticesService.sendSuccessMessage(`Upload ${name} done`)
-                            setTimeout(() => { this.dropProgress(progressId) }, 700)
-                        }
-
-                    },
-                    (err) => {
-                        console.log('#upload error', name, err)
-                        var errText = JSON.stringify(err)
-                        this.noticesService.sendAlertMessage(`Error when upload ${name}: ${errText}`)
-                        setTimeout(() => { this.dropProgress(progressId) }, 700)
-                    }
-                )
         })
         this.createUploadForm()
     }
