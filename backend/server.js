@@ -7,7 +7,7 @@ const util = require('util')
 const path = require('path')
 const os = require('os')
 
-const body = require('koa-body')
+const bodyparser = require('koa-bodyparser')
 const json = require('koa-json')
 const mount = require('koa-mount')
 const responseTime = require('koa-response-time')
@@ -78,7 +78,7 @@ app.use(session({ runDir: config.runDir }))
 app.use(responseTime())
 //app.use(helmet())
 app.use(json())
-app.use(body())
+app.use(bodyparser())
 app.use(conditional())
 app.use(etag())
 
@@ -180,10 +180,10 @@ if (argv.daemon && !module.parent) {
 
 // *** listener *** //
 
-app.listen({ port: config.port, host: config.host })
-console.log(`#server running on ${config.host}:${config.port}`)
+//app.listen({ port: config.port, host: config.host })
+//console.log(`#server running on ${config.host}:${config.port}`)
 
-/*
+
 const cluster = require('cluster')
 
 if (!module.parent) { 
@@ -198,7 +198,7 @@ if (!module.parent) {
         console.log(`#server running on ${config.host}:${config.port}`)
     }
 }
-*/
+
 
 if (module.parent) { 
     module.exports = app

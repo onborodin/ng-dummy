@@ -2943,7 +2943,7 @@ fi
 
 if test "x$enable_devel_mode" = "xyes"; then :
 
-	APP_LOGDIR="${SRCDIR}/logs"
+	APP_LOGDIR="${SRCDIR}/log"
 
 fi
 

@@ -121,7 +121,7 @@ AC_ARG_WITH(logdir,
 	])
 
 AS_IF([test "x$enable_devel_mode" = "xyes"], [
-	APP_LOGDIR="${SRCDIR}/logs"
+	APP_LOGDIR="${SRCDIR}/log"
 ])
 
 AC_MSG_NOTICE(app_logdir set as ${APP_LOGDIR})

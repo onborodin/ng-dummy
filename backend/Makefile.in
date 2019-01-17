@@ -602,12 +602,9 @@ uninstall-am: uninstall-confDATA uninstall-nobase_dist_pkgdataDATA \
 .PRECIOUS: Makefile
 
 
-pre-build:
-	CFLAGS="$(CFLAGS)" $(NPM) install
-
 all: $(KNEX)
 
-$(KNEX): pre-build
+$(KNEX): package-lock.json
 
 install-data-hook:
 	$(INSTALL) -d -m 750 -o $(APP_USER) -g $(APP_GROUP) $(DESTDIR)$(APP_CONFDIR)
@@ -616,6 +613,9 @@ install-data-hook:
 	$(INSTALL) -d -m 755 -o $(APP_USER) -g $(APP_GROUP) $(DESTDIR)$(APP_LIBDIR)
 	$(CP) -R node_modules $(DESTDIR)$(APP_LIBDIR)
 @FREEBSD_OS_TRUE@	chmod a+x $(DESTDIR)/${etcdir}/rc.d/lorem
+
+package-lock.json: package.json 
+	CFLAGS="$(CFLAGS)" $(NPM) install
 
 clean-local:
 	rm -f *~ */*~ logs/*.log run/pid

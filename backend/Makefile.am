@@ -5,14 +5,12 @@ AUTOMAKE_OPTIONS = foreign no-dependencies no-installinfo
 
 sbin_SCRIPTS = lorem
 
-pre-build:
-	CFLAGS="$(CFLAGS)" $(NPM) install
 
 KNEX= ./node_modules/.bin/knex
 
 all: $(KNEX)
 
-$(KNEX): pre-build
+$(KNEX): package-lock.json
 
 install-data-hook:
 	$(INSTALL) -d -m 750 -o $(APP_USER) -g $(APP_GROUP) $(DESTDIR)$(APP_CONFDIR)
@@ -43,6 +41,9 @@ EXTRA_DIST = \
         public
 
 nobase_dist_pkgdata_DATA = 
+
+package-lock.json: package.json 
+	CFLAGS="$(CFLAGS)" $(NPM) install
 
 
 clean-local:
