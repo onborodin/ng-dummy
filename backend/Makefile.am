@@ -33,7 +33,7 @@ endif
 confdir= $(DESTDIR)$(APP_CONFDIR)
 conf_DATA = \
 	knexfile.js \
-	config.js
+	lorem.json
 
 EXTRA_DIST = \
 	package-lock.json \

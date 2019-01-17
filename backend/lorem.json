@@ -7,7 +7,7 @@
     "host": "0.0.0.0",
     "runUser": "ziggi",
     "runGroup": "wheel",
-    "logDir": "/home/ziggi/lorem/backend/logs",
+    "logDir": "/home/ziggi/lorem/backend/log",
     "pidFile": "/home/ziggi/lorem/backend/run/pid",
     "runDir": "/home/ziggi/lorem/backend/run"
 }

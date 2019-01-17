@@ -76,7 +76,7 @@ app.use(session({ runDir: config.runDir }))
 // *** pligins *** //
 
 app.use(responseTime())
-app.use(helmet())
+//app.use(helmet())
 app.use(json())
 app.use(body())
 app.use(conditional())

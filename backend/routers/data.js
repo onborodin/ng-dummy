@@ -20,6 +20,14 @@ const Router = require('koa-router')
 
 const tools = require('../tools')
 
+const readFile = util.promisify(fs.readFile)
+const writeFile = util.promisify(fs.writeFile)
+const open = util.promisify(fs.open)
+const unlink = util.promisify(fs.unlink)
+const rename = util.promisify(fs.rename)
+
+
+
 function uuid() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
         var r = Math.random() * 16 | 0,
@@ -73,7 +81,7 @@ module.exports = function(knex, config) {
 
                 file.pipe(fs.createWriteStream(blobPath))
 
-                file.on('end', function() {
+                file.on('end', async function() {
                     var type = dataType(blobPath)
 
                     fileList.push({
@@ -81,8 +89,7 @@ module.exports = function(knex, config) {
                         blobName: blobName + type.ext,
                         mimeType: type.mime
                     })
-                    //*** need async !!! ***//
-                    fs.renameSync(blobPath, blobPath + type.ext)
+                    await rename(blobPath, blobPath + type.ext)
                 })
 
             }
@@ -99,7 +106,6 @@ module.exports = function(knex, config) {
             result: dataList,
             id: uuid()
         }
-
     }
 
     async function list(ctx) {
@@ -130,7 +136,6 @@ module.exports = function(knex, config) {
                 debug('##data:download not found record with id = ', id)
                 return ctx.throw(404)
             }
-
             if (profile['blobName']) {
                 var aPath = path.join(config.dataDir, profile.blobName)
                 if (fs.existsSync(aPath)) {
@@ -157,31 +162,38 @@ module.exports = function(knex, config) {
             const profile = await model.get({
                 id: id
             })
-
             debug('##data:delete drop profile = ', profile)
             if (profile['fileName']) {
                 const aPath = path.join(config.dataDir, profile.blobName)
 
                 debug('##data:delete blob found as ', aPath)
 
-                //*** need async !!! ***//
-                if (fs.existsSync(aPath)) {
-                    fs.unlinkSync(aPath)
-                }
+                try {
 
-                //*** need try/catch !!! ***//
-                const result = await model.drop({
-                    id: id
-                })
+                    //*** need async !!! ***//
+                    if (fs.existsSync(aPath)) {
+                        await unlink(aPath)
+                    }
 
-                return ctx.body = {
-                    jsonrpc: "2.0",
-                    result: true,
-                    id: uuid()
+                    const result = await model.drop({
+                        id: id
+                    })
+
+                    return ctx.body = {
+                        jsonrpc: "2.0",
+                        result: true,
+                        id: uuid()
+                    }
+                } catch(err) {
+                    console.log(err)
+                    ctx.body = {
+                        jsonrpc: "2.0",
+                        result: false,
+                        id: uuid()
+                    }
                 }
             }
             debug('##data:delete blob not found, path ', aPath)
-
         }
         ctx.body = {
             jsonrpc: "2.0",
@@ -197,5 +209,7 @@ module.exports = function(knex, config) {
 
     app.use(router.routes())
     app.use(router.allowedMethods())
+
     return app
+
 }

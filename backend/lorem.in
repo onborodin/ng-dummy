@@ -12,7 +12,7 @@ export NODE_PATH
 NODE_ENV=production
 export NODE_ENV
 
-cd @app_libdir@ && @node@ @app_libdir@/server.js $@
+cd @app_libdir@ && @node@ $@ @app_libdir@/server.js
 #EOF
 
 

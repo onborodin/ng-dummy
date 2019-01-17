@@ -12,7 +12,7 @@ export NODE_PATH
 NODE_ENV=production
 export NODE_ENV
 
-cd /home/ziggi/lorem/backend && /usr/local/bin/node /home/ziggi/lorem/backend/server.js $@
+cd /home/ziggi/lorem/backend && /usr/local/bin/node $@ /home/ziggi/lorem/backend/server.js
 #EOF
 
 
