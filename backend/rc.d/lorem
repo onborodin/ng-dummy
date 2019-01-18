@@ -11,7 +11,7 @@ name="lorem"
 rcvar="lorem_enable"
 
 pidfile="/home/ziggi/lorem/backend/run/pid"
-command="/usr/local/sbin/${name}"
+command="/home/ziggi/lorem/backend/${name}"
 command_args="--daemon"
 procname="/usr/local/bin/node"
 #command_interpreter="/usr/local/bin/node"

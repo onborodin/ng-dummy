@@ -61,6 +61,7 @@ AS_IF([test "x$enable_devel_mode" = "xyes"], [
     enable_devel_mode=yes
     prefix=$SRCDIR
     prefix=$SRCDIR
+    sbindir=$prefix
 ])
 
 test "x$prefix" == "xNONE" && prefix=$ac_default_prefix

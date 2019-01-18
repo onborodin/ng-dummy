@@ -11,7 +11,7 @@ name="lorem"
 rcvar="lorem_enable"
 
 pidfile="@APP_RUNDIR@/pid"
-command="@prefix@/sbin/${name}"
+command="@sbindir@/${name}"
 command_args="--daemon"
 procname="@node@"
 #command_interpreter="@node@"
