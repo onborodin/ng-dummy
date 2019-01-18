@@ -6,12 +6,18 @@ module.exports = function(knex) {
 
     var list = function(params) {
         return knex
-            .select([
-                'drivers.*',
-            ])
+            //.select([
+            //    'drivers.*',
+            //])
+            //.from('drivers')
+            //.orderBy('drivers.name')
+            .select(['drivers.*'])
+            .count({ vehicle_count: 'connections.driver_id'})
             .from('drivers')
+            .leftOuterJoin('connections', 'drivers.id', 'connections.driver_id')
+            .groupBy('drivers.id')
             .orderBy('drivers.name')
-    }
+        }
 
     var create = function(params) {
         return knex
