@@ -1,9 +1,18 @@
 <div class="border p-3 my-3">
 
     <div *ngFor="let item of uploadService.tasks; index as i" class="my-2">
-        <div class="progress">
-            <div class="progress-bar" role="progressbar" [ngStyle]="{ width: item.percent + '%' }">
-                {{ item.name }} {{ item.loaded }}/{{ item.total }}
+        <div class="row">
+            <div class="col-11">
+                <div class="progress rounded-0">
+                    <div class="progress-bar" role="progressbar" [ngStyle]="{ width: item.percent + '%' }">
+                        {{ item.name }} {{ item.loaded }}/{{ item.total }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-1">
+                <button type="button" (click)="uploadService.stopUpload(item.id)" class="btn btn-primary btn-sm ml-auto float-right">
+                        <fa-icon [icon]="['fas', 'times']" size="sm"></fa-icon>
+                </button>
             </div>
         </div>
     </div>

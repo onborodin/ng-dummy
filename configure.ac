@@ -52,8 +52,6 @@ if test -d /lib/systemd/system; then
 	AM_CONDITIONAL(SYSTEMD, true)
 fi
 
-
-
 AC_ARG_ENABLE([devel-mode],
     AS_HELP_STRING([--enable-devel-mode], [Enable developmend mode]))
 
@@ -61,6 +59,8 @@ AC_ARG_ENABLE([devel-mode],
 AS_IF([test "x$enable_devel_mode" = "xyes"], [
     SRCDIR=`pwd`/backend
     enable_devel_mode=yes
+    prefix=$SRCDIR
+    prefix=$SRCDIR
 ])
 
 test "x$prefix" == "xNONE" && prefix=$ac_default_prefix
@@ -276,28 +276,28 @@ dnl AC_SUBST(app_libdir, ${prefix}/share/${PACKAGE})
 
 dnl --------------------------------------------------------------------------------------
 
-default_storedir="/var/$PACKAGE"
+default_datadir="/var/$PACKAGE"
 
-AC_ARG_WITH(storedir,
-	AS_HELP_STRING([--with-storedir=PATH],[set data directory (default: $default_storedir)]),
-	[ if test ! -z "$with_storedir" ; then
-		case $with_storedir in
+AC_ARG_WITH(datadir,
+	AS_HELP_STRING([--with-datadir=PATH],[set data directory (default: $default_datadir)]),
+	[ if test ! -z "$with_datadir" ; then
+		case $with_datadir in
 			/*)
-				APP_DATADIR="$with_storedir"
+				APP_DATADIR="$with_datadir"
 				;;
 			*)
-                                AC_MSG_ERROR(You must specify an absolute path to --with-storedir=PATH)
+                                AC_MSG_ERROR(You must specify an absolute path to --with-datadir=PATH)
 				;;
 		esac
 	else
-		APP_DATADIR="$default_storedir"
+		APP_DATADIR="$default_datadir"
 	fi ],
 	[
-	APP_DATADIR="$default_storedir"
+	APP_DATADIR="$default_datadir"
 	])
 
 AS_IF([test "x$enable_devel_mode" = "xyes"], [
-	APP_STOREDIR="${SRCDIR}"
+	APP_DATADIR="${SRCDIR}/data"
 ])
 
 AC_MSG_RESULT(storedir set as ${APP_STOREDIR})

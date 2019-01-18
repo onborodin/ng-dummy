@@ -697,7 +697,7 @@ with_rundir
 with_libdir
 with_user
 with_group
-with_storedir
+with_datadir
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1337,7 +1337,7 @@ Optional Packages:
                           ${PREFIX}/share/${PACKAGE})
   --with-user=${PACKAGE}  set executing user name
   --with-group=${PACKAGE} set executing group name
-  --with-storedir=PATH    set data directory (default: $default_storedir)
+  --with-datadir=PATH     set data directory (default: $default_datadir)
 
 Report bugs to the package provider.
 _ACEOF
@@ -2296,13 +2296,13 @@ _ACEOF
 
 # Some tools Automake needs.
 
-ACLOCAL=${ACLOCAL-"${am_missing_run}aclocal"}
+ACLOCAL=${ACLOCAL-"${am_missing_run}aclocal-${am__api_version}"}
 
 
 AUTOCONF=${AUTOCONF-"${am_missing_run}autoconf"}
 
 
-AUTOMAKE=${AUTOMAKE-"${am_missing_run}automake"}
+AUTOMAKE=${AUTOMAKE-"${am_missing_run}automake-${am__api_version}"}
 
 
 AUTOHEADER=${AUTOHEADER-"${am_missing_run}autoheader"}
@@ -2847,8 +2847,6 @@ fi
 
 fi
 
-
-
 # Check whether --enable-devel-mode was given.
 if test "${enable_devel_mode+set}" = set; then :
   enableval=$enable_devel_mode;
@@ -2860,6 +2858,8 @@ if test "x$enable_devel_mode" = "xyes"; then :
 
     SRCDIR=`pwd`/backend
     enable_devel_mode=yes
+    prefix=$SRCDIR
+    prefix=$SRCDIR
 
 fi
 
@@ -3168,33 +3168,33 @@ app_group="$APP_GROUP"
 
 
 
-default_storedir="/var/$PACKAGE"
+default_datadir="/var/$PACKAGE"
 
 
-# Check whether --with-storedir was given.
-if test "${with_storedir+set}" = set; then :
-  withval=$with_storedir;  if test ! -z "$with_storedir" ; then
-		case $with_storedir in
+# Check whether --with-datadir was given.
+if test "${with_datadir+set}" = set; then :
+  withval=$with_datadir;  if test ! -z "$with_datadir" ; then
+		case $with_datadir in
 			/*)
-				APP_DATADIR="$with_storedir"
+				APP_DATADIR="$with_datadir"
 				;;
 			*)
-                                as_fn_error $? "You must specify an absolute path to --with-storedir=PATH" "$LINENO" 5
+                                as_fn_error $? "You must specify an absolute path to --with-datadir=PATH" "$LINENO" 5
 				;;
 		esac
 	else
-		APP_DATADIR="$default_storedir"
+		APP_DATADIR="$default_datadir"
 	fi
 else
 
-	APP_DATADIR="$default_storedir"
+	APP_DATADIR="$default_datadir"
 
 fi
 
 
 if test "x$enable_devel_mode" = "xyes"; then :
 
-	APP_STOREDIR="${SRCDIR}"
+	APP_DATADIR="${SRCDIR}/data"
 
 fi
 

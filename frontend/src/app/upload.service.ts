@@ -23,7 +23,8 @@ interface UploadTask {
     percent: number,
     total: number,
     loaded: number,
-    status: UploadStatus
+    status: UploadStatus,
+    subscription: any
 }
 
 type UploadTasks = UploadTask[]
@@ -54,6 +55,15 @@ export class UploadService {
             if (item.id === id) return false
             return true
         })
+    }
+
+    stopUpload(id: number) {
+        this.tasks.forEach((item) => {
+            if (item.id === id) {
+                item.subscription.unsubscribe()
+            }
+        })
+        this.deleteItem(id)
     }
 
     uploadFile(url: string, file: File, name: string) : Observable<HttpEvent<any>> {
@@ -92,12 +102,13 @@ export class UploadService {
             percent: 0,
             loaded: 0,
             total: file.size,
-            status: UploadStatus.start
+            status: UploadStatus.start,
+            subscription: null
         }
 
         var id = this.addItem(task)
 
-        let subscribe = observer.subscribe(
+        let subscription = observer.subscribe(
             (event) => {
                 if (event.type == HttpEventType.UploadProgress) {
                     task.percent = Math.round(100 * event.loaded / event.total)
@@ -117,6 +128,10 @@ export class UploadService {
                     this.noticesService.sendAlertMessage(`Error when upload ${task.name}`)
             }
         )
+        task.subscription = subscription
+
+        //setTimeout(() => { task.subscription.unsubscribe() }, 2000 )
+
         return observer
     }
 }
