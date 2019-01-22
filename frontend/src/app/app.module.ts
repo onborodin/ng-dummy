@@ -103,6 +103,8 @@ import { PageNavComponent } from './page-nav/page-nav.component';
 import { PrettyCodePipe } from './pretty-code.pipe';
 import { UploaderComponent } from './uploader/uploader.component';
 
+import { DriverCardComponent } from './driver-card/driver-card.component';
+
 //import { ServiceWorkerModule } from '@angular/service-worker'
 //import { environment } from '../environments/environment'
 
@@ -156,6 +158,7 @@ const routes: Routes = []
         PageNavComponent,
         PrettyCodePipe,
         UploaderComponent,
+        DriverCardComponent,
     ],
     imports: [
         RouterModule.forRoot(routes),

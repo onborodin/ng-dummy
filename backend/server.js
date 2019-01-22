@@ -39,7 +39,7 @@ if (argv.help) {
 
 // *** configuration *** //
 
-const customConfig = require('lorem.json')
+const customConfig = require('./lorem.json')
 var config = {
     port: 3102,
     host: "0.0.0.0"
@@ -151,11 +151,14 @@ app.use(mount('/api/users', users(knex)))
 const drivers = require('./routers/drivers')
 app.use(mount('/api/drivers', drivers(knex)))
 
+const driverFiles = require('./routers/driver-files')
+app.use(mount('/api/driver-files', driverFiles(knex)))
+
 const vehicles = require('./routers/vehicles')
 app.use(mount('/api/vehicles', vehicles(knex)))
 
-const data = require('./routers/data')
-app.use(mount('/data', data(knex, config)))
+const data = require('./routers/files')
+app.use(mount('/files', data(knex, config)))
 
 
 // **** basic routers *** //
@@ -183,7 +186,8 @@ if (argv.daemon && !module.parent) {
 //app.listen({ port: config.port, host: config.host })
 //console.log(`#server running on ${config.host}:${config.port}`)
 
-
+var http = require('http')
+var https = require('https')
 const cluster = require('cluster')
 
 if (!module.parent) { 
@@ -194,8 +198,23 @@ if (!module.parent) {
         }
         daemon.writePid()
     } else {
-        app.listen({ port: config.port, host: config.host })
+        //app.listen({ port: config.port, host: config.host })
         console.log(`#server running on ${config.host}:${config.port}`)
+        //var options = {
+        //    key: fs.readFileSync('server.key'),
+        //    cert: fs.readFileSync('server.crt')
+        //}
+        //http.createServer(app.callback()).listen(3080);
+        //https.createServer(options, app.callback()).listen(3443);
+        app.listen(config.port, config.host, null, function() {
+            //try {
+            //    process.setuid(config.runUser)
+            //    process.setgid(config.runGroup)
+            //} catch (err) {
+            //    console.log('#cannot change process user and group')
+            //    process.exit(1)
+            //}
+        })
     }
 }
 

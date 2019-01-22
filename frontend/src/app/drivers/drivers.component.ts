@@ -8,12 +8,15 @@ import { RPCService, RPCResponce, RPCError } from '../rpc.service'
 import { DriversService } from '../drivers.service'
 import { Driver, Drivers } from '../models/driver.model'
 
+import { Upload, Uploads } from '../upload.service'
+
 export enum Form {
     all = 0,
     createDriver = 1,
     updateDriver = 2,
     dropDriver = 3,
-    listDrivers = 4
+    listDrivers = 4,
+    driverCard = 5
 }
 
 export enum Action {
@@ -46,7 +49,6 @@ export class DriversComponent implements OnInit {
     subject: Subject<Event>
     subscription: any
 
-
     firstElem: number = 0
     pageSize: number = 5
     listLength: number = 0
@@ -59,7 +61,9 @@ export class DriversComponent implements OnInit {
         this.firstElem = eventData
     }
 
-    constructor(private driversService: DriversService) {
+    constructor(
+        private driversService: DriversService,
+    ) {
         this.subject = new Subject<Event>()
         this.subscription = this.subject.subscribe((event: Event) => {
             if (event.destination == Form.listDrivers) {
@@ -69,7 +73,6 @@ export class DriversComponent implements OnInit {
             }
         })
     }
-
 
     showAlertMessage(message: string) {
         this.alertMessage = message
@@ -115,6 +118,10 @@ export class DriversComponent implements OnInit {
                     console.log(err)
                 }
             )
+    }
+
+    sendFiles(uploads: Uploads, driverId: number = -1) {
+        this.driversService.uploadFiles(uploads, driverId)
     }
 
     ngOnInit() {

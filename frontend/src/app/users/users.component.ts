@@ -59,6 +59,7 @@ export class UsersComponent implements OnInit {
 
     constructor(private usersService: UsersService) {
         this.subject = new Subject<Event>()
+
         this.subscription = this.subject.subscribe((event: Event) => {
             if (event.destination == Form.listUsers) {
                 if (event.action == Action.update) {
@@ -66,6 +67,7 @@ export class UsersComponent implements OnInit {
                 }
             }
         })
+
     }
 
     createUser() {

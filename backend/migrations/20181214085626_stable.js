@@ -22,14 +22,14 @@ exports.up = function(knex, Promise) {
             table.timestamp('created_at').defaultTo(knex.fn.now())
             table.timestamp('updated_at').defaultTo(knex.fn.now())
         })
-        .createTable('connections', function(table) {
+        .createTable('relations', function(table) {
             table.increments('id').primary().unique()
             table.integer('driver_id')
             table.integer('vehicle_id')
             table.timestamp('created_at').defaultTo(knex.fn.now())
             table.timestamp('updated_at').defaultTo(knex.fn.now())
         })
-        .createTable('data', function(table) {
+        .createTable('files', function(table) {
             table.increments('id').primary().unique()
             table.string('blob_name')
             table.string('file_name')
@@ -37,13 +37,28 @@ exports.up = function(knex, Promise) {
             table.timestamp('created_at').defaultTo(knex.fn.now())
             table.timestamp('updated_at').defaultTo(knex.fn.now())
         })
-
+        .createTable('driver_files', function(table) {
+            table.increments('id').primary().unique()
+            table.integer('driver_id')
+            table.integer('file_id')
+            table.timestamp('created_at').defaultTo(knex.fn.now())
+            table.timestamp('updated_at').defaultTo(knex.fn.now())
+        })
+        .createTable('vehicle_files', function(table) {
+            table.increments('id').primary().unique()
+            table.integer('vehicle_id')
+            table.integer('file_id')
+            table.timestamp('created_at').defaultTo(knex.fn.now())
+            table.timestamp('updated_at').defaultTo(knex.fn.now())
+        })
 }
 exports.down = function(knex, Promise) {
     return knex.schema
         .dropTable('users')
         .dropTable('drivers')
         .dropTable('vehicles')
-        .dropTable('connections')
-        .dropTable('data')
+        .dropTable('relations')
+        .dropTable('files')
+        .dropTable('driver_files')
+        .dropTable('vehicle_files')
 }

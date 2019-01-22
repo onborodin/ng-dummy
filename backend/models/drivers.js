@@ -6,15 +6,12 @@ module.exports = function(knex) {
 
     var list = function(params) {
         return knex
-            //.select([
-            //    'drivers.*',
-            //])
-            //.from('drivers')
-            //.orderBy('drivers.name')
             .select(['drivers.*'])
-            .count({ vehicle_count: 'connections.driver_id'})
+            .count({ vehicleCount: 'relations.driverId'})
+            .count({ filesCount: 'driverFiles.driverId'})
             .from('drivers')
-            .leftOuterJoin('connections', 'drivers.id', 'connections.driver_id')
+            .leftOuterJoin('relations', 'drivers.id', 'relations.driverId')
+            .leftOuterJoin('driverFiles', 'drivers.id', 'driverFiles.driverId')
             .groupBy('drivers.id')
             .orderBy('drivers.name')
         }
@@ -31,7 +28,6 @@ module.exports = function(knex) {
                 }
                 return false
             })
-
     }
 
     var update = function(params) {

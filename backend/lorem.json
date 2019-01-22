@@ -5,7 +5,7 @@
     "dataDir": "/home/ziggi/lorem/backend/data",
     "port": 3101,
     "host": "0.0.0.0",
-    "runUser": "ziggi",
+    "runUser": "root",
     "runGroup": "wheel",
     "logDir": "/home/ziggi/lorem/backend/log",
     "pidFile": "/home/ziggi/lorem/backend/run/pid",

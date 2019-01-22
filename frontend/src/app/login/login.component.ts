@@ -61,6 +61,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                         this.attemptCounter = 0
                         this.message = 'Login successful'
                         setTimeout(() => {
+                            console.log(`#login navigate to ${this.loginService.returnUrl}`)
                             this.router.navigate([ this.loginService.returnUrl ])
                         }, 300)
                     } else {

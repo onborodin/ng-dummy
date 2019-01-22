@@ -1,12 +1,19 @@
 import { Injectable } from '@angular/core'
 import { HttpClient, HttpParams, HttpRequest, HttpEvent, HttpEventType, HttpResponse } from '@angular/common/http'
 
-import { Observable } from "rxjs"
+import { Subject, Observable } from 'rxjs'
 
 import { throwError, timer, interval, of } from 'rxjs'
 import { timeout, retry, retryWhen, take, concat, share, delayWhen, flatMap } from 'rxjs/operators'
 import { NoticesService } from './notices.service'
 
+
+export interface Upload {
+    name: string
+    file: File
+}
+
+export type Uploads = Upload[]
 
 export enum UploadStatus {
     start = 1,
@@ -36,10 +43,19 @@ export class UploadService {
 
     tasks: UploadTasks = []
 
+    subject: Subject<Upload>
+    subscription: any
+
+
     constructor(
         private httpClient: HttpClient,
         public noticesService: NoticesService,
-    ) {}
+    ) {
+        this.subject = new Subject<Upload>()
+        //this.subscription = this.subject.subscribe((event: Upload) => {
+        //    console.log(event)
+        //})
+    }
 
     nextId: number = 0
 
@@ -66,10 +82,10 @@ export class UploadService {
         this.deleteItem(id)
     }
 
-    uploadFile(url: string, file: File, name: string) : Observable<HttpEvent<any>> {
+    uploadFile(url: string, upload: Upload) : Observable<HttpEvent<any>> {
 
         let formData = new FormData()
-        formData.append(name, file, name)
+        formData.append(name, upload.file, upload.name)
 
         let params = new HttpParams()
         const options = {
@@ -97,11 +113,11 @@ export class UploadService {
         var task: UploadTask = {
             id: -1,
             url: url,
-            file: file,
-            name: name,
+            file: upload.file,
+            name: upload.name,
             percent: 0,
             loaded: 0,
-            total: file.size,
+            total: upload.file.size,
             status: UploadStatus.start,
             subscription: null
         }
@@ -121,6 +137,9 @@ export class UploadService {
                     task.status = UploadStatus.success
                     this.noticesService.sendSuccessMessage(`Upload ${task.name} done`)
                     setTimeout(() => { this.deleteItem(id) }, 700)
+
+                    this.subject.next(upload)
+
                 }
             },
             (err) => {
@@ -129,9 +148,6 @@ export class UploadService {
             }
         )
         task.subscription = subscription
-
-        //setTimeout(() => { task.subscription.unsubscribe() }, 2000 )
-
         return observer
     }
 }

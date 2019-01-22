@@ -10,6 +10,7 @@ import { DriversService } from '../drivers.service'
 import { Driver } from '../models/driver.model'
 
 import { Form, Action, Event } from '../drivers/drivers.component'
+import { openModal, closeModal } from '../css.utils'
 
 declare var $: any
 
@@ -66,11 +67,11 @@ export class DriverCreateComponent implements OnInit, OnDestroy {
     }
 
     openForm() {
-        this.openModal('driver-create-modal')
+        openModal('driver-create-modal')
     }
 
     closeForm() {
-        this.closeModal('driver-create-modal')
+        closeModal('driver-create-modal')
     }
 
     get name() {
@@ -110,19 +111,19 @@ export class DriverCreateComponent implements OnInit, OnDestroy {
             )
     }
 
-    openModal(name: string) {
-        var name = '#' + name
-        $(name).modal({
-            keyboard: false,
-            backdrop: 'static'
-        })
-        $(name).modal('show')
-    }
+    //openModal(name: string) {
+    //    var name = '#' + name
+    //    $(name).modal({
+    //        keyboard: false,
+    //        backdrop: 'static'
+    //    })
+    //    $(name).modal('show')
+    //}
 
-    closeModal(name: string) {
-        var name = '#' + name
-        $(name).modal('hide')
-    }
+    //closeModal(name: string) {
+    //    var name = '#' + name
+    //    $(name).modal('hide')
+    //}
 
     ngOnChanges(changes: SimpleChanges) {
     }

@@ -15,7 +15,8 @@
         </div>
     </div>
 
-    <uploader></uploader>
+    <uploader (sendFiles)="sendFiles($event)"></uploader>
+
 
     <p class="text-center text-danger" *ngIf="alertMessage.length > 0" [@fade]>
         {{ alertMessage }}

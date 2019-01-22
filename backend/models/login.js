@@ -7,10 +7,7 @@ module.exports = function(knex) {
     var login = function(params) {
         return knex
             .select([
-                'users.name',
-                'users.gecos',
-                'users.id',
-                'users.superuser'
+                'users.*',
             ])
             .from('users')
             .where({
@@ -22,7 +19,6 @@ module.exports = function(knex) {
                 if (res.length) return res[0]
                 return {}
             }) 
-
     }
 
     return {

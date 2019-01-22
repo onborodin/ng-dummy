@@ -5,7 +5,7 @@ describe('loading server', function() {
     var server
 
     beforeEach(function() {
-        server = require('./server').listen()
+        server = require('./server').listen(3000)
     })
 
     afterEach(function() {
@@ -16,7 +16,6 @@ describe('loading server', function() {
         request(server)
             .get('/')
             .expect(200, done)
-
     })
 
     it('responds to /blabla', function(done) {

@@ -1,20 +1,12 @@
 import { HttpClient, HttpParams, HttpRequest, HttpEvent, HttpEventType, HttpResponse } from '@angular/common/http'
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
 
 import { FormGroup, FormControl, FormBuilder, FormArray, Validators,  ValidationErrors } from '@angular/forms'
 import { Subject, Observable } from 'rxjs'
 
 import { fadeAnimation, rotateAnimation } from '../app.animations'
 import { NoticesService } from '../notices.service'
-import { UploadService } from '../upload.service'
-
-interface Progress {
-    percent: number
-    label: string
-    id: string
-}
-
-type Progresses = Progress[]
+import { UploadService, Upload, Uploads } from '../upload.service'
 
 @Component({
     selector: 'uploader',
@@ -26,6 +18,8 @@ export class UploaderComponent implements OnInit {
 
     uploadForm: FormGroup
     formItems: FormArray
+
+    @Output() sendFiles = new EventEmitter<Uploads>()
 
     constructor(
         public noticesService: NoticesService,
@@ -117,13 +111,17 @@ export class UploaderComponent implements OnInit {
     sendFile(form) {
         var length = form.controls.formItems.length
 
+        var uploads: Uploads = []
+
         form.controls.formItems.controls.forEach((subForm, i) => {
 
             var file = subForm.controls.file.value
             var name = subForm.controls.secondName.value
-
-            this.uploadService.uploadFile('/data/upload', file, name)
+            uploads.push({ name: name, file: file })
+            //this.uploadService.uploadFile('/files/upload', file, name)
         })
+        /* Send collected result of forms to parent component */
+        this.sendFiles.emit(uploads) 
         this.createUploadForm()
     }
 }

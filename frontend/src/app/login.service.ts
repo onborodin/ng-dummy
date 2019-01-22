@@ -50,14 +50,14 @@ export class LoginService {
         this.loginSubject = new Subject<boolean>()
 
         interval(1000).subscribe((value) => {
-            if (this.isAuth && !Cookies.get(this.cookieName)) {
-                this.noticesService.sendAlertMessage('Your session expired! Please login with your account.')
-                this.isAuth = false
-                Cookies.remove(this.cookieName)
-
-                this.reasonMessage = 'Your session expired'
-                this.router.navigate(['/login'])
-            }
+            //if (this.isAuth && !Cookies.get(this.cookieName)) {
+            //    this.noticesService.sendAlertMessage('Your session expired! Please login with your account.')
+            //    this.isAuth = false
+            //    Cookies.remove(this.cookieName)
+            //
+            //    this.reasonMessage = 'Your session expired'
+            //    this.router.navigate(['/login'])
+            //}
         })
 
         router.events.subscribe((event: any) => { 
@@ -81,6 +81,7 @@ export class LoginService {
             .subscribe(
                 (res) => {
                     if (res.result.id >= 0) {
+                        console.log(`#login service result id ${res.result.id}`)
                         this.userProfile.id = res.result.id
                         this.userProfile.superuser = res.result.superuser
                         this.userProfile.gecos = res.result.gecos
@@ -113,6 +114,10 @@ export class LoginService {
     }
 
     accessLevel() : AccessLevel {
+
+        console.log(`#login service cookie ${this.cookieName} = ${Cookies.get(this.cookieName)}`)
+        console.log(`#login service is auth ${this.isAuth}`)
+
         if (this.isAuth && Cookies.get(this.cookieName) && this.userProfile.superuser) {
             return AccessLevel.superuser
         }
