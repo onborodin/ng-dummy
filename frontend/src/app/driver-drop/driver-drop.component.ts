@@ -10,6 +10,7 @@ import { DriversService } from '../drivers.service'
 import { Driver } from '../models/driver.model'
 
 import { Form, Action, Event } from '../drivers/drivers.component'
+import { openModal, closeModal } from '../css.utils'
 
 declare var $: any
 
@@ -72,11 +73,11 @@ export class DriverDropComponent implements OnInit, OnDestroy {
     }
 
     openForm() {
-        this.openModal('driver-drop-modal')
+        openModal('driver-drop-modal')
     }
 
     closeForm() {
-        this.closeModal('driver-drop-modal')
+        closeModal('driver-drop-modal')
     }
 
     get confirm() {
@@ -115,21 +116,6 @@ export class DriverDropComponent implements OnInit, OnDestroy {
             this.alertMessage = ''
         }, 5000)
     }
-
-    openModal(name: string) {
-        var name = '#' + name
-        $(name).modal({
-            keyboard: false,
-            backdrop: 'static'
-        })
-        $(name).modal('show')
-    }
-
-    closeModal(name: string) {
-        var name = '#' + name
-        $(name).modal('hide')
-    }
-
 
     ngOnDestroy() {
         this.subscription.unsubscribe()

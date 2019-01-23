@@ -10,6 +10,8 @@ import { UsersService } from '../users.service'
 import { User } from '../models/user.model'
 
 import { Form, Action, Event } from '../users/users.component'
+import { openModal, closeModal } from '../css.utils'
+
 
 declare var $: any
 
@@ -80,11 +82,11 @@ export class UserUpdateComponent implements OnInit, OnDestroy {
     }
 
     openForm() {
-        this.openModal('user-update-modal')
+        openModal('user-update-modal')
     }
 
     closeForm() {
-        this.closeModal('user-update-modal')
+        closeModal('user-update-modal')
     }
 
     get name() {
@@ -129,20 +131,6 @@ export class UserUpdateComponent implements OnInit, OnDestroy {
                     this.showAlertMessage('Communication problem')
                 }
             )
-    }
-
-    openModal(name: string) {
-        var name = '#' + name
-        $(name).modal({
-            keyboard: false,
-            backdrop: 'static'
-        })
-        $(name).modal('show')
-    }
-
-    closeModal(name: string) {
-        var name = '#' + name
-        $(name).modal('hide')
     }
 
     ngOnDestroy() {

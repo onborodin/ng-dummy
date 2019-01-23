@@ -10,6 +10,7 @@ import { VehiclesService } from '../vehicles.service'
 import { Vehicle } from '../models/vehicle.model'
 
 import { Form, Action, Event } from '../vehicles/vehicles.component'
+import { openModal, closeModal } from '../css.utils'
 
 declare var $: any
 
@@ -72,11 +73,11 @@ export class VehicleDropComponent implements OnInit, OnDestroy {
     }
 
     openForm() {
-        this.openModal('vehicle-drop-modal')
+        openModal('vehicle-drop-modal')
     }
 
     closeForm() {
-        this.closeModal('vehicle-drop-modal')
+        closeModal('vehicle-drop-modal')
     }
 
     get confirm() {
@@ -115,21 +116,6 @@ export class VehicleDropComponent implements OnInit, OnDestroy {
             this.alertMessage = ''
         }, 5000)
     }
-
-    openModal(name: string) {
-        var name = '#' + name
-        $(name).modal({
-            keyboard: false,
-            backdrop: 'static'
-        })
-        $(name).modal('show')
-    }
-
-    closeModal(name: string) {
-        var name = '#' + name
-        $(name).modal('hide')
-    }
-
 
     ngOnDestroy() {
         this.subscription.unsubscribe()

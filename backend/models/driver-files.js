@@ -16,7 +16,7 @@ module.exports = function(knex) {
             .from('files')
             .innerJoin('driverFiles', 'files.id', 'driverFiles.fileId')
             .where({ 
-                'driverFiles.driverId': params.driverId
+                'driverFiles.driverId': params.id
             })
 
     }

@@ -10,6 +10,7 @@ import { VehiclesService } from '../vehicles.service'
 import { Vehicle } from '../models/vehicle.model'
 
 import { Form, Action, Event } from '../vehicles/vehicles.component'
+import { openModal, closeModal } from '../css.utils'
 
 declare var $: any
 
@@ -66,11 +67,11 @@ export class VehicleCreateComponent implements OnInit, OnDestroy {
     }
 
     openForm() {
-        this.openModal('vehicle-create-modal')
+        openModal('vehicle-create-modal')
     }
 
     closeForm() {
-        this.closeModal('vehicle-create-modal')
+        closeModal('vehicle-create-modal')
     }
 
     get name() {
@@ -108,20 +109,6 @@ export class VehicleCreateComponent implements OnInit, OnDestroy {
                     console.log(err)
                 }
             )
-    }
-
-    openModal(name: string) {
-        var name = '#' + name
-        $(name).modal({
-            keyboard: false,
-            backdrop: 'static'
-        })
-        $(name).modal('show')
-    }
-
-    closeModal(name: string) {
-        var name = '#' + name
-        $(name).modal('hide')
     }
 
     ngOnChanges(changes: SimpleChanges) {

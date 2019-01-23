@@ -9,6 +9,8 @@ import { NoticesService } from './notices.service'
 
 import { User } from './models/user.model'
 
+declare var $: any
+
 export enum AccessLevel {
     guest = 1,
     user = 2,
@@ -50,14 +52,15 @@ export class LoginService {
         this.loginSubject = new Subject<boolean>()
 
         interval(1000).subscribe((value) => {
-            //if (this.isAuth && !Cookies.get(this.cookieName)) {
-            //    this.noticesService.sendAlertMessage('Your session expired! Please login with your account.')
-            //    this.isAuth = false
-            //    Cookies.remove(this.cookieName)
-            //
-            //    this.reasonMessage = 'Your session expired'
-            //    this.router.navigate(['/login'])
-            //}
+            if (this.isAuth && !Cookies.get(this.cookieName)) {
+                //this.noticesService.sendAlertMessage('Your session expired! Please login with your account.')
+                this.isAuth = false
+                Cookies.remove(this.cookieName)
+                $('.modal').modal('hide')
+
+                this.reasonMessage = 'Your session expired'
+                this.router.navigate(['/login'])
+            }
         })
 
         router.events.subscribe((event: any) => { 

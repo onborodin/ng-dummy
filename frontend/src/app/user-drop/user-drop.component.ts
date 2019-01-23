@@ -10,6 +10,7 @@ import { UsersService } from '../users.service'
 import { User } from '../models/user.model'
 
 import { Form, Action, Event } from '../users/users.component'
+import { openModal, closeModal } from '../css.utils'
 
 declare var $: any
 
@@ -72,11 +73,11 @@ export class UserDropComponent implements OnInit, OnDestroy {
     }
 
     openForm() {
-        this.openModal('user-drop-modal')
+        openModal('user-drop-modal')
     }
 
     closeForm() {
-        this.closeModal('user-drop-modal')
+        closeModal('user-drop-modal')
     }
 
     get confirm() {
@@ -114,20 +115,6 @@ export class UserDropComponent implements OnInit, OnDestroy {
         setTimeout(() => {
             this.alertMessage = ''
         }, 5000)
-    }
-
-    openModal(name: string) {
-        var name = '#' + name
-        $(name).modal({
-            keyboard: false,
-            backdrop: 'static'
-        })
-        $(name).modal('show')
-    }
-
-    closeModal(name: string) {
-        var name = '#' + name
-        $(name).modal('hide')
     }
 
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, SimpleChanges } from '@angular/core'
+import { Component, OnInit, OnChanges, OnDestroy, Input, Output, EventEmitter, SimpleChanges } from '@angular/core'
 import { FormGroup, FormControl, FormBuilder, Validators,  ValidationErrors } from '@angular/forms'
 import { Subject, Observable } from 'rxjs'
 
@@ -9,8 +9,13 @@ import { RPCService, RPCResponce, RPCError } from '../rpc.service'
 import { DriversService } from '../drivers.service'
 import { Driver } from '../models/driver.model'
 
+import { DriverFile, DriverFiles } from '../models/driver-file.model'
+
 import { Form, Action, Event } from '../drivers/drivers.component'
 import { openModal, closeModal } from '../css.utils'
+
+import { Upload, Uploads } from '../upload.service'
+
 
 declare var $: any
 
@@ -22,9 +27,10 @@ declare var $: any
 })
 export class DriverCardComponent implements OnInit, OnDestroy {
 
-
     @Input() driver: Driver = { id: -1, name: '' }
     @Input() subject: Subject<Event>
+
+    fileList: DriverFiles = []
 
     private subscription: any
 
@@ -35,7 +41,6 @@ export class DriverCardComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(){
-
         this.subscription = this.subject.subscribe((event: Event) => {
             if (event.destination == Form.driverCard) {
 
@@ -51,25 +56,38 @@ export class DriverCardComponent implements OnInit, OnDestroy {
     }
 
     openForm() {
-        this.openModal('driver-card-modal')
+        openModal('driver-card-modal')
     }
 
     closeForm() {
-        this.closeModal('driver-card-modal')
+        closeModal('driver-card-modal')
     }
 
-    openModal(name: string) {
-        var name = '#' + name
-        $(name).modal({
-            keyboard: false,
-            backdrop: 'static'
-        })
-        $(name).modal('show')
+    ngOnChanges(changes: SimpleChanges) {
+        console.log(`#driver card changer`, changes)
+        if (changes.driver.currentValue.id > 0) {
+            console.log(`#driver card changer`, changes.driver.currentValue.id)
+            this.getfileList()
+        }
     }
 
-    closeModal(name: string) {
-        var name = '#' + name
-        $(name).modal('hide')
+    getfileList() {
+        this.driversService
+            .fileList(this.driver)
+            .subscribe(
+                (res: RPCResponce<DriverFiles>) => {
+                    this.fileList = res.result
+                    console.log(`#driver file list`, this.fileList)
+                },
+                (err) => {
+                    //this.showAlertMessage('Backend error')
+                    console.log(err)
+                }
+            )
+    }
+
+    sendFiles(uploads: Uploads, driverId) {
+        this.driversService.uploadFiles(uploads, driverId)
     }
 
     ngOnDestroy() {

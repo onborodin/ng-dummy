@@ -8,7 +8,7 @@ module.exports = function(knex) {
         return knex
             .select(['drivers.*'])
             .count({ vehicleCount: 'relations.driverId'})
-            .count({ filesCount: 'driverFiles.driverId'})
+            .count({ fileCount: 'driverFiles.driverId'})
             .from('drivers')
             .leftOuterJoin('relations', 'drivers.id', 'relations.driverId')
             .leftOuterJoin('driverFiles', 'drivers.id', 'driverFiles.driverId')

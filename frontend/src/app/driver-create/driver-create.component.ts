@@ -111,20 +111,6 @@ export class DriverCreateComponent implements OnInit, OnDestroy {
             )
     }
 
-    //openModal(name: string) {
-    //    var name = '#' + name
-    //    $(name).modal({
-    //        keyboard: false,
-    //        backdrop: 'static'
-    //    })
-    //    $(name).modal('show')
-    //}
-
-    //closeModal(name: string) {
-    //    var name = '#' + name
-    //    $(name).modal('hide')
-    //}
-
     ngOnChanges(changes: SimpleChanges) {
     }
 

@@ -10,6 +10,7 @@ import { UsersService } from '../users.service'
 import { User } from '../models/user.model'
 
 import { Form, Action, Event } from '../users/users.component'
+import { openModal, closeModal } from '../css.utils'
 
 declare var $: any
 
@@ -71,11 +72,11 @@ export class UserCreateComponent implements OnInit, OnDestroy {
     }
 
     openForm() {
-        this.openModal('user-create-modal')
+        openModal('user-create-modal')
     }
 
     closeForm() {
-        this.closeModal('user-create-modal')
+        closeModal('user-create-modal')
     }
 
     get name() {
@@ -121,20 +122,6 @@ export class UserCreateComponent implements OnInit, OnDestroy {
                     console.log(err)
                 }
             )
-    }
-
-    openModal(name: string) {
-        var name = '#' + name
-        $(name).modal({
-            keyboard: false,
-            backdrop: 'static'
-        })
-        $(name).modal('show')
-    }
-
-    closeModal(name: string) {
-        var name = '#' + name
-        $(name).modal('hide')
     }
 
     ngOnChanges(changes: SimpleChanges) {

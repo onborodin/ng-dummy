@@ -6,6 +6,9 @@
 
     <driver-drop [subject]="subject" [driver]="driver"></driver-drop>
 
+    <driver-card [subject]="subject" [driver]="driver"></driver-card>
+
+
     <div class="row">
         <div class="col">
             <div class="btn btn-primary btn-sm ml-auto float-right mb-3 d-inline-block rounded-circle" (click)="createDriver()">
@@ -15,7 +18,7 @@
         </div>
     </div>
 
-    <uploader (sendFiles)="sendFiles($event)"></uploader>
+    <!-- <uploader (sendFiles)="sendFiles($event)"></uploader> -->
 
 
     <p class="text-center text-danger" *ngIf="alertMessage.length > 0" [@fade]>
@@ -49,6 +52,7 @@
                     <th scope="col">id</th>
                     <th scope="col">name</th>
                     <th scope="col"><fa-icon [icon]="['fas', 'shuttle-van']"></fa-icon></th>
+                    <th scope="col"><fa-icon [icon]="['fas', 'address-card']"></fa-icon></th>
                     <th scope="col"><fa-icon [icon]="['far', 'edit']"></fa-icon></th>
                     <th scope="col"><fa-icon [icon]="['far', 'trash-alt']"></fa-icon></th>
                 </tr>
@@ -65,6 +69,7 @@
                                 <small><fa-icon [icon]="['fas', 'shuttle-van']"></fa-icon></small>
                             </ng-container>
                         </td>
+                        <td><a (click)="driverCard(item)"><fa-icon [icon]="['fas', 'address-card']"></fa-icon></a></td>
                         <td><a (click)="updateDriver(item)"><fa-icon [icon]="['far', 'edit']"></fa-icon></a></td>
                         <td><a (click)="dropDriver(item)"><fa-icon [icon]="['far', 'trash-alt']"></fa-icon></a></td>
                     </ng-container>

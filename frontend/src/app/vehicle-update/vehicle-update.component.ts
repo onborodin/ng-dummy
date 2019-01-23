@@ -10,6 +10,7 @@ import { VehiclesService } from '../vehicles.service'
 import { Vehicle } from '../models/vehicle.model'
 
 import { Form, Action, Event } from '../vehicles/vehicles.component'
+import { openModal, closeModal } from '../css.utils'
 
 declare var $: any
 
@@ -75,11 +76,11 @@ export class VehicleUpdateComponent implements OnInit, OnDestroy {
     }
 
     openForm() {
-        this.openModal('vehicle-update-modal')
+        openModal('vehicle-update-modal')
     }
 
     closeForm() {
-        this.closeModal('vehicle-update-modal')
+        closeModal('vehicle-update-modal')
     }
 
     get name() {
@@ -117,20 +118,6 @@ export class VehicleUpdateComponent implements OnInit, OnDestroy {
                     this.showAlertMessage('Communication problem')
                 }
             )
-    }
-
-    openModal(name: string) {
-        var name = '#' + name
-        $(name).modal({
-            keyboard: false,
-            backdrop: 'static'
-        })
-        $(name).modal('show')
-    }
-
-    closeModal(name: string) {
-        var name = '#' + name
-        $(name).modal('hide')
     }
 
     ngOnDestroy() {

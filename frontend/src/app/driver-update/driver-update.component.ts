@@ -10,6 +10,7 @@ import { DriversService } from '../drivers.service'
 import { Driver } from '../models/driver.model'
 
 import { Form, Action, Event } from '../drivers/drivers.component'
+import { openModal, closeModal } from '../css.utils'
 
 declare var $: any
 
@@ -75,11 +76,11 @@ export class DriverUpdateComponent implements OnInit, OnDestroy {
     }
 
     openForm() {
-        this.openModal('driver-update-modal')
+        openModal('driver-update-modal')
     }
 
     closeForm() {
-        this.closeModal('driver-update-modal')
+        closeModal('driver-update-modal')
     }
 
     get name() {
@@ -117,20 +118,6 @@ export class DriverUpdateComponent implements OnInit, OnDestroy {
                     this.showAlertMessage('Communication problem')
                 }
             )
-    }
-
-    openModal(name: string) {
-        var name = '#' + name
-        $(name).modal({
-            keyboard: false,
-            backdrop: 'static'
-        })
-        $(name).modal('show')
-    }
-
-    closeModal(name: string) {
-        var name = '#' + name
-        $(name).modal('hide')
     }
 
     ngOnDestroy() {

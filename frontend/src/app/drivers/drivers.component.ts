@@ -39,7 +39,7 @@ export interface Event {
 })
 export class DriversComponent implements OnInit {
 
-    drivers: Driver[] = []
+    drivers: Drivers = []
     driver: Driver = { id: -1, name: '' }
     timestamp: Date
     alertMessage: string = ''
@@ -105,6 +105,14 @@ export class DriversComponent implements OnInit {
         })
     }
 
+    driverCard(driver) {
+        this.driver = driver
+        this.subject.next({ 
+            destination: Form.driverCard,
+            action: Action.open
+        })
+    }
+
     getList() {
         this.driversService
             .list()
@@ -120,9 +128,9 @@ export class DriversComponent implements OnInit {
             )
     }
 
-    sendFiles(uploads: Uploads, driverId: number = -1) {
-        this.driversService.uploadFiles(uploads, driverId)
-    }
+    //sendFiles(uploads: Uploads, driverId: number = -1) {
+    //    this.driversService.uploadFiles(uploads, driverId)
+    //}
 
     ngOnInit() {
         this.getList()
