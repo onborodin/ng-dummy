@@ -14,13 +14,13 @@ export interface Notice {
     autoHide?: boolean
 }
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class NoticesService {
 
     subject: Subject<Notice>
+    lastId: number = 0
 
     constructor() {
         this.subject = new Subject<Notice>()

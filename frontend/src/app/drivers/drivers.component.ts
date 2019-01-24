@@ -107,7 +107,7 @@ export class DriversComponent implements OnInit {
 
     driverCard(driver) {
         this.driver = driver
-        this.subject.next({ 
+        this.subject.next({
             destination: Form.driverCard,
             action: Action.open
         })

@@ -73,10 +73,11 @@ export class DriverCardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        //console.log(`#driver card changer`, changes)
-        if (changes.driver.currentValue.id > 0) {
-            //console.log(`#driver card changer`, changes.driver.currentValue.id)
+        console.log(`#driver card changer`, changes)
             this.getfileList()
+
+        if (changes.driver.currentValue.id > 0) {
+            console.log(`#driver card changer`, changes.driver.currentValue.id)
         }
     }
 
@@ -87,7 +88,7 @@ export class DriverCardComponent implements OnInit, OnChanges, OnDestroy {
             .subscribe(
                 (res: RPCResponce<DriverFiles>) => {
                     this.fileList = res.result
-                    //console.log(`#driver file list`, this.fileList)
+                    console.log(`#driver card: got file list`, this.fileList)
                 },
                 (err) => {
                     //this.showAlertMessage('Backend error')
