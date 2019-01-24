@@ -3,7 +3,7 @@ import { Observable } from 'rxjs'
 import { RPCService, RPCResponce, RPCError } from './rpc.service'
 
 import { Driver, Drivers } from './models/driver.model'
-import { UploadService, Upload, Uploads } from './upload.service'
+import { UploadService, Upload, Uploads, UploadResult, UploadResults } from './upload.service'
 import { DriverFile, DriverFiles } from './models/driver-file.model'
 
 interface UploadTask {
@@ -12,12 +12,6 @@ interface UploadTask {
 }
 
 type UploadTasks = UploadTask[]
-
-interface DriverFileLink {
-    id?: number
-    driverId?: number
-    fileId?: number
-}
 
 @Injectable({
   providedIn: 'root'
@@ -32,18 +26,38 @@ export class DriversService {
         private rpcService: RPCService,
         public uploadService: UploadService,
     ) {
-
-        this.uploadSubscription = this.uploadService.subject.subscribe((upload: Upload) => {
-            console.log('#driver service upload', upload)
-            this.uploadTasks.forEach((task) => {
-                if (upload === task.upload) {
-                    console.log('#upload task found', task)
-                }
-            })
-            //this.linkFile(fileId, driverId)
-        })
-
+        this.setUploadHandler()
     }
+
+    setUploadHandler() {
+        this.uploadSubscription = this.uploadService.subject
+            .subscribe((upload: Upload) => {
+                console.log('#driver service upload', upload)
+
+                this.uploadTasks.forEach((task) => {
+                    if (upload === task.upload) {
+                        console.log('#driver service: upload task found', task)
+                        var driverFile: DriverFile = {
+                            driverId: task.driverId,
+                            fileId: upload.result[0].id
+                        }
+                        //var driverId = task.driverId
+                        //var fileId = upload.result[0].id
+                        //console.log(`#driver service: driverId=${driverId}, fileId=${fileId}`)
+                    this.linkFile(driverFile)
+                    }
+                })
+            })
+    }
+
+    linkFile(driverFile: DriverFile) {
+        this.rpcService
+            .request<DriverFile, boolean>('/api/driver-files', 'create', driverFile)
+            .subscribe((event) => {
+                console.log('driver service: file link result', event)
+            })
+    }
+
 
     list() {
         return this.rpcService
@@ -65,27 +79,21 @@ export class DriversService {
             .request<Driver, DriverFiles>('/api/driver-files', 'list', driver)
     }
 
-    linkFile(fileId : number, driverId: number) {
-        var driverFile: DriverFile = {
-            driverId: driverId,
-            fileId: fileId
-        }
-        //return this.rpcService
-        //    .request<DriverFile, boolean>('/api/driver-files', 'create', )
-    }
-
-    //unlinkFile() {
-    //}
 
     fileList(driver: Driver) {
         return this.rpcService
             .request<Driver, DriverFiles>('/api/driver-files', 'list', driver)
     }
 
-    uploadFiles(uploads: Uploads, driverId: number) {
+    addUploadTasks(uploads: Uploads, driverId: number) {
+
         uploads.forEach((item) => {
-            this.uploadTasks.push({ upload: item, driverId: driverId })
-            this.uploadService.uploadFile('/files/upload', item)
+            console.log('driver service add upload task', uploads, driverId)
+            this.uploadTasks.push({
+                upload: item,
+                driverId: driverId
+            })
+            this.uploadService.addUploadTask('/files/upload', item)
         })
 
     }

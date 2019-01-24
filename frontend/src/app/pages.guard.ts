@@ -21,20 +21,20 @@ export class PagesGuard implements CanActivate {
         routerState: RouterStateSnapshot
     ) : Observable<boolean> | Promise<boolean> | boolean {
 
-        console.log(`#can activate url ${routerState.url}`)
+        //console.log(`#can activate url ${routerState.url}`)
 
         var url = routerState.url
         var userAccessLevel = this.loginService.accessLevel()
 
-        console.log(`#access level ${userAccessLevel}`)
+        //console.log(`#access level ${userAccessLevel}`)
 
 
         if (this.pageService.computeAccess(url, userAccessLevel)) {
-            console.log(`#compute access as true`)
+            //console.log(`#compute access as true`)
             return true
         }
 
-        console.log(`#compute access to page as false`)
+        //console.log(`#compute access to page as false`)
 
         this.loginService.reasonMessage = 'An appropriate access level is required'
 

@@ -1,4 +1,4 @@
-<div id="driver-card-modal" class="modal fade" tabindex="-1" role="dialog">
+<div id="driver-card-modal" class="modal modal-lg fade" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="dialog">
         <div class="modal-content">
 
@@ -22,12 +22,12 @@
 
                     </tbody>
                 </table>
-
+                <h6>Files</h6>
                 <table class="table table-striped table-hover table-sm">
                     <tbody>
-                        <tr *ngFor="let item of fileList; let i = index">
+                        <tr *ngFor="let item of fileList ; let i = index">
                             <td>{{ i }}</td>
-                            <td>{{ item.fileName }}</td>
+                            <td>{{ item.fileName.substring(0, 20) }}</td>
                             <td>{{ item.createdAt | date:"yyyy LLLL dd" }}</td>
                             <td>
                                 <a href="/files/download/{{ item.id }}" rel="nofollow noopener">
@@ -38,8 +38,7 @@
                     </tbody>
                 </table>
 
-                <uploader (sendFiles)="sendFiles($event)"></uploader>
-
+                <uploader (uploadListEmitter)="addUploadTasks($event)"></uploader>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-sm btn-secondary" (click)="closeForm()">Close</button>

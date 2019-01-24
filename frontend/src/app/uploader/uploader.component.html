@@ -21,7 +21,7 @@
     <button type="button" class="btn btn-primary btn-sm mb-2" (click)="addFormItem()">Add file</button>
 
 
-    <form accept-charset="UTF-8" [formGroup]="uploadForm" (ngSubmit)="sendFile(uploadForm)">
+    <form accept-charset="UTF-8" [formGroup]="uploadForm" (ngSubmit)="emitUploadList(uploadForm)">
         <div formArrayName="formItems">
 
             <div *ngFor="let subForm of formItems.controls; index as i">

@@ -14,8 +14,7 @@ import { DriverFile, DriverFiles } from '../models/driver-file.model'
 import { Form, Action, Event } from '../drivers/drivers.component'
 import { openModal, closeModal } from '../css.utils'
 
-import { Upload, Uploads } from '../upload.service'
-
+import { UploadService, Upload, Uploads, UploadResult, UploadResults } from '../upload.service'
 
 declare var $: any
 
@@ -25,7 +24,7 @@ declare var $: any
     styleUrls: ['./driver-card.component.scss'],
     animations: [ fadeAnimation ]
 })
-export class DriverCardComponent implements OnInit, OnDestroy {
+export class DriverCardComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() driver: Driver = { id: -1, name: '' }
     @Input() subject: Subject<Event>
@@ -33,12 +32,20 @@ export class DriverCardComponent implements OnInit, OnDestroy {
     fileList: DriverFiles = []
 
     private subscription: any
+    private uploadSubscription: any
 
     constructor(
         private formBuilder: FormBuilder,
         private driversService: DriversService,
-        private noticesService: NoticesService
-    ) {}
+        private noticesService: NoticesService,
+        public uploadService: UploadService,
+    ) {
+        this.uploadSubscription = this.uploadService.subject
+            .subscribe((upload: Upload) => {
+                console.log('#drive card: received upload sergvice event')
+                setTimeout(() => { this.getfileList() }, 700)
+            })
+    }
 
     ngOnInit(){
         this.subscription = this.subject.subscribe((event: Event) => {
@@ -57,27 +64,30 @@ export class DriverCardComponent implements OnInit, OnDestroy {
 
     openForm() {
         openModal('driver-card-modal')
+        this.getfileList()
     }
 
     closeForm() {
         closeModal('driver-card-modal')
+        this.fileList = []
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        console.log(`#driver card changer`, changes)
+        //console.log(`#driver card changer`, changes)
         if (changes.driver.currentValue.id > 0) {
-            console.log(`#driver card changer`, changes.driver.currentValue.id)
+            //console.log(`#driver card changer`, changes.driver.currentValue.id)
             this.getfileList()
         }
     }
 
     getfileList() {
+        this.fileList = []
         this.driversService
             .fileList(this.driver)
             .subscribe(
                 (res: RPCResponce<DriverFiles>) => {
                     this.fileList = res.result
-                    console.log(`#driver file list`, this.fileList)
+                    //console.log(`#driver file list`, this.fileList)
                 },
                 (err) => {
                     //this.showAlertMessage('Backend error')
@@ -86,12 +96,12 @@ export class DriverCardComponent implements OnInit, OnDestroy {
             )
     }
 
-    sendFiles(uploads: Uploads, driverId) {
-        this.driversService.uploadFiles(uploads, driverId)
+    addUploadTasks(uploads: Uploads) {
+        console.log('#driver card add upload tasks', uploads, this.driver.id)
+        this.driversService.addUploadTasks(uploads, this.driver.id)
     }
 
     ngOnDestroy() {
         this.subscription.unsubscribe()
     }
-
 }

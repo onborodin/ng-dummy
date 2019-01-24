@@ -84,7 +84,7 @@ export class LoginService {
             .subscribe(
                 (res) => {
                     if (res.result.id >= 0) {
-                        console.log(`#login service result id ${res.result.id}`)
+                        //console.log(`#login service result id ${res.result.id}`)
                         this.userProfile.id = res.result.id
                         this.userProfile.superuser = res.result.superuser
                         this.userProfile.gecos = res.result.gecos
@@ -118,8 +118,8 @@ export class LoginService {
 
     accessLevel() : AccessLevel {
 
-        console.log(`#login service cookie ${this.cookieName} = ${Cookies.get(this.cookieName)}`)
-        console.log(`#login service is auth ${this.isAuth}`)
+        //console.log(`#login service cookie ${this.cookieName} = ${Cookies.get(this.cookieName)}`)
+        //console.log(`#login service is auth ${this.isAuth}`)
 
         if (this.isAuth && Cookies.get(this.cookieName) && this.userProfile.superuser) {
             return AccessLevel.superuser

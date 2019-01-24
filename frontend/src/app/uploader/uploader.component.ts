@@ -19,7 +19,7 @@ export class UploaderComponent implements OnInit {
     uploadForm: FormGroup
     formItems: FormArray
 
-    @Output() sendFiles = new EventEmitter<Uploads>()
+    @Output() uploadListEmitter = new EventEmitter<Uploads>()
 
     constructor(
         public noticesService: NoticesService,
@@ -108,7 +108,7 @@ export class UploaderComponent implements OnInit {
         form.controls.secondName.setValue(event.target.files[0].name)
     }
 
-    sendFile(form) {
+    emitUploadList(form) {
         var length = form.controls.formItems.length
 
         var uploads: Uploads = []
@@ -118,10 +118,9 @@ export class UploaderComponent implements OnInit {
             var file = subForm.controls.file.value
             var name = subForm.controls.secondName.value
             uploads.push({ name: name, file: file })
-            //this.uploadService.uploadFile('/files/upload', file, name)
         })
-        /* Send collected result of forms to parent component */
-        this.sendFiles.emit(uploads) 
+
+        this.uploadListEmitter.emit(uploads)
         this.createUploadForm()
     }
 }

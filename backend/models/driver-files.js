@@ -18,7 +18,6 @@ module.exports = function(knex) {
             .where({ 
                 'driverFiles.driverId': params.id
             })
-
     }
 
     function create(params) {

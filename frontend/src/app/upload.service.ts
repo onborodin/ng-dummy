@@ -7,10 +7,21 @@ import { throwError, timer, interval, of } from 'rxjs'
 import { timeout, retry, retryWhen, take, concat, share, delayWhen, flatMap } from 'rxjs/operators'
 import { NoticesService } from './notices.service'
 
+export interface UploadResult {
+    blobName: string
+    fileName: string
+    id: number
+    createdAt?: string
+    updatedAt?: string
+    mimeType: string
+}
+
+export type UploadResults = UploadResult[]
 
 export interface Upload {
     name: string
     file: File
+    result?: UploadResults
 }
 
 export type Uploads = Upload[]
@@ -43,19 +54,12 @@ export class UploadService {
 
     tasks: UploadTasks = []
 
-    subject: Subject<Upload>
-    subscription: any
-
+    subject: Subject<Upload> = new Subject<Upload>()
 
     constructor(
         private httpClient: HttpClient,
         public noticesService: NoticesService,
-    ) {
-        this.subject = new Subject<Upload>()
-        //this.subscription = this.subject.subscribe((event: Upload) => {
-        //    console.log(event)
-        //})
-    }
+    ) { }
 
     nextId: number = 0
 
@@ -82,7 +86,9 @@ export class UploadService {
         this.deleteItem(id)
     }
 
-    uploadFile(url: string, upload: Upload) : Observable<HttpEvent<any>> {
+    addUploadTask(url: string, upload: Upload) {
+
+        console.log('#upload service: add upload task', url, upload)
 
         let formData = new FormData()
         formData.append(name, upload.file, upload.name)
@@ -136,10 +142,10 @@ export class UploadService {
                     task.percent = 100
                     task.status = UploadStatus.success
                     this.noticesService.sendSuccessMessage(`Upload ${task.name} done`)
+                    console.log('#upload service: upload done', event)
                     setTimeout(() => { this.deleteItem(id) }, 700)
-
+                    upload.result = event.body.result
                     this.subject.next(upload)
-
                 }
             },
             (err) => {
@@ -148,6 +154,5 @@ export class UploadService {
             }
         )
         task.subscription = subscription
-        return observer
     }
 }
